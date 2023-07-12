@@ -54,3 +54,7 @@ body {
 .icon-f {
   font-family: "FluentSystemIcons-Filled";
 }
+
+.h-scroll {
+  height: var(--content-h);
+}
