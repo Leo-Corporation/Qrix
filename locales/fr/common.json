@@ -10,5 +10,7 @@
   "barcode": "Code Barre",
   "qrcode": "QR Code",
   "tools": "Outils",
-  "pinned": "Epinglé"
+  "pinned": "Epinglé",
+  "create": "Créer",
+  "enter-content": "Entrez le contenu du code barre"
 }

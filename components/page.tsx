@@ -81,7 +81,7 @@ export function PageContent({ children, page }: PageProps) {
                 className:
                   "mx-2 my-1 h-auto w-full pl-0 pr-3 text-black dark:text-white",
               })}
-              href={"/home"}
+              href={"/"}
             >
               <div className="rounded-md bg-gradient-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
                 <Home20Filled className="text-white" />
@@ -120,7 +120,7 @@ export function PageContent({ children, page }: PageProps) {
             <Link
               className={buttonVariants({
                 size: "nav",
-                variant: page == "generate" ? "navselect2" : "nav2",
+                variant: page == "barcode" ? "navselect2" : "nav2",
                 className: "mx-2 my-1 w-full text-[#8B2DF0]",
               })}
               href={"/barcode"}
@@ -131,7 +131,7 @@ export function PageContent({ children, page }: PageProps) {
             <Link
               className={buttonVariants({
                 size: "nav",
-                variant: page == "strength" ? "navselect2" : "nav2",
+                variant: page == "qrcode" ? "navselect2" : "nav2",
                 className: "mx-2 my-1 w-full text-[#8B2DF0]",
               })}
               href={"/qrcode"}

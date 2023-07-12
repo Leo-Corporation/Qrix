@@ -10,5 +10,7 @@
   "barcode": "Bar Code",
   "qrcode": "QR Code",
   "tools": "Tools",
-  "pinned": "Pinned"
+  "pinned": "Pinned",
+  "create": "Create",
+  "enter-content": "Enter the content of the bar code"
 }
