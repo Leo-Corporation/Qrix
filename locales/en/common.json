@@ -3,7 +3,10 @@
   "afternoon": "Good afternoon.",
   "evening": "Good evening.",
   "night": "Good night.",
-  "title": "Passliss",
+  "title": "Qrix",
   "home": "Home",
-  "settings": "Settings"
+  "settings": "Settings",
+  "history": "History",
+  "barcode": "Bar Code",
+  "qrcode": "QR Code"
 }
