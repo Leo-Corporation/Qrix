@@ -95,7 +95,7 @@ export default function BarcodePage() {
               {t("create")}
             </Button>
           </div>
-          <canvas id="barcode"></canvas>
+          <canvas className="max-w-full" id="barcode"></canvas>
         </div>
       </PageContent>
     </Layout>
