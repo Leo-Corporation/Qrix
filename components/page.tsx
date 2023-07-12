@@ -14,6 +14,7 @@ import useTranslation from "next-translate/useTranslation";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 export interface PageProps {
   children: React.ReactNode;
@@ -65,6 +66,86 @@ export function PageContent({ children, page }: PageProps) {
   return (
     <div className="h-screen overflow-hidden bg-white dark:bg-black">
       <header className="flex space-x-2 p-2 pt-5">
+        <Sheet>
+          <SheetTrigger>
+            <Button className="md:hidden" variant="ghost">
+              <Navigation24Regular />
+            </Button>
+          </SheetTrigger>
+          <SheetContent
+            side="left"
+            className="bg-white dark:bg-slate-900 border-0"
+          >
+            <nav>
+              <h3 className="m-2 mt-0 text-xs font-bold">{t("pinned")}</h3>
+              <Link
+                className={buttonVariants({
+                  size: "sm",
+                  variant: page == "home" ? "navselect" : "nav",
+                  className:
+                    "mx-2 my-1 h-auto w-full pl-0 pr-3 text-black dark:text-white",
+                })}
+                href={"/"}
+              >
+                <div className="rounded-md bg-gradient-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
+                  <Home20Filled className="text-white" />
+                </div>
+                <p className="ml-2 font-bold">{t("home")}</p>
+              </Link>
+              <Link
+                className={buttonVariants({
+                  size: "sm",
+                  variant: page == "history" ? "navselect" : "nav",
+                  className:
+                    " mx-2 my-1 h-auto w-full pl-0 pr-3 text-black dark:text-white",
+                })}
+                href={"/history"}
+              >
+                <div className="rounded-md bg-gradient-to-br from-[#6F00FF] to-[#9A21E0] p-[5px]">
+                  <History20Filled className="text-white" />
+                </div>
+                <p className="ml-2 font-bold">{t("history")}</p>
+              </Link>
+              <Link
+                className={buttonVariants({
+                  size: "sm",
+                  variant: page == "settings" ? "navselect" : "nav",
+                  className:
+                    " mx-2 my-1 h-auto w-full pl-0 pr-3 text-black dark:text-white",
+                })}
+                href={"/settings"}
+              >
+                <div className="rounded-md bg-gradient-to-br from-[#B1B1B1] to-[#343C51] p-[5px]">
+                  <Settings20Filled className="text-white" />
+                </div>
+                <p className="ml-2 font-bold">{t("settings")}</p>
+              </Link>
+              <h3 className="m-2 text-xs font-bold">{t("tools")}</h3>
+              <Link
+                className={buttonVariants({
+                  size: "nav",
+                  variant: page == "barcode" ? "navselect2" : "nav2",
+                  className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                })}
+                href={"/barcode"}
+              >
+                <Calendar3Day20Regular />
+                <p className="ml-2 font-bold">{t("barcode")}</p>
+              </Link>
+              <Link
+                className={buttonVariants({
+                  size: "nav",
+                  variant: page == "qrcode" ? "navselect2" : "nav2",
+                  className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                })}
+                href={"/qrcode"}
+              >
+                <QrCode20Regular />
+                <p className="ml-2 font-bold">{t("qrcode")}</p>
+              </Link>
+            </nav>
+          </SheetContent>
+        </Sheet>
         <div>
           <h1 className="text-4xl font-bold">{t("title")}</h1>
           <p className="font-bold">{GetWelcomeMessage()}</p>
