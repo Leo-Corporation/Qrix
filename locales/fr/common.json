@@ -12,5 +12,6 @@
   "tools": "Outils",
   "pinned": "Epinglé",
   "create": "Créer",
-  "enter-content": "Entrez le contenu du code barre"
+  "enter-content": "Entrez le contenu du Code Barre",
+  "enter-content-qr": "Entrer le contenu du QR Code"
 }

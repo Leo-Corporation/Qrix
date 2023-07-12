@@ -63,7 +63,7 @@ export function PageContent({ children, page }: PageProps) {
   }
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden bg-white dark:bg-black">
       <header className="flex space-x-2 p-2 pt-5">
         <div>
           <h1 className="text-4xl font-bold">{t("title")}</h1>

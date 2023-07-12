@@ -12,5 +12,6 @@
   "tools": "Tools",
   "pinned": "Pinned",
   "create": "Create",
-  "enter-content": "Enter the content of the bar code"
+  "enter-content": "Enter the content of the Bar Code",
+  "enter-content-qr": "Enter the content of the QR Code"
 }

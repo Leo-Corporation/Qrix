@@ -58,35 +58,39 @@ export default function BarcodePage() {
         </div>
         <div className="flex w-full flex-col items-center">
           <div className="m-5 flex w-full space-x-2">
-            <Input
-              onChange={handleInputChange}
-              type="text"
-              id="prompt-txt"
-              placeholder={t("enter-content")}
-              className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 shadow-md dark:bg-slate-800"
-            />
-            <Select defaultValue="code128" onValueChange={setType}>
-              <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 border-0 shadow-md h-auto px-2 py-1">
-                <SelectValue defaultValue="code128" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem className="" value="code128">
-                  Code128
-                </SelectItem>
-                <SelectItem className="" value="code11">
-                  Code11
-                </SelectItem>
-                <SelectItem className="" value="upca">
-                  UPC-A
-                </SelectItem>
-                <SelectItem className="" value="msi">
-                  MSI
-                </SelectItem>
-                <SelectItem className="" value="isbn">
-                  ISBN
-                </SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="shadow-md w-full rounded-md">
+              <Input
+                onChange={handleInputChange}
+                type="text"
+                id="prompt-txt"
+                placeholder={t("enter-content")}
+                className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
+              />
+            </div>
+            <div className="shadow-md rounded-md">
+              <Select defaultValue="code128" onValueChange={setType}>
+                <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1">
+                  <SelectValue defaultValue="code128" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem className="" value="code128">
+                    Code128
+                  </SelectItem>
+                  <SelectItem className="" value="code11">
+                    Code11
+                  </SelectItem>
+                  <SelectItem className="" value="upca">
+                    UPC-A
+                  </SelectItem>
+                  <SelectItem className="" value="msi">
+                    MSI
+                  </SelectItem>
+                  <SelectItem className="" value="isbn">
+                    ISBN
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             <Button
               onClick={genBarcode}
               variant="default"
