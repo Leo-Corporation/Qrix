@@ -13,5 +13,8 @@
   "pinned": "Pinned",
   "create": "Create",
   "enter-content": "Enter the content of the Bar Code",
-  "enter-content-qr": "Enter the content of the QR Code"
+  "enter-content-qr": "Enter the content of the QR Code",
+  "recommended": "Recommended",
+  "generate-barcode": "Generate different types of Bar Codes using Qrix.",
+  "generate-qrcode": "Generate QR Codes easily and quickly within a click."
 }
