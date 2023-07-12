@@ -1,9 +1,11 @@
 import Link from "next/link";
 import {
+  Calendar3Day20Regular,
   History20Filled,
   Home20Filled,
   LockClosed20Regular,
   Navigation24Regular,
+  QrCode20Regular,
   Settings20Filled,
   Shield20Regular,
   Translate20Regular,
@@ -123,7 +125,7 @@ export function PageContent({ children, page }: PageProps) {
               })}
               href={"/barcode"}
             >
-              <LockClosed20Regular />
+              <Calendar3Day20Regular />
               <p className="ml-2 font-bold">{t("barcode")}</p>
             </Link>
             <Link
@@ -134,7 +136,7 @@ export function PageContent({ children, page }: PageProps) {
               })}
               href={"/qrcode"}
             >
-              <Shield20Regular />
+              <QrCode20Regular />
               <p className="ml-2 font-bold">{t("qrcode")}</p>
             </Link>
           </nav>

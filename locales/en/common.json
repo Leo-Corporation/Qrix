@@ -8,5 +8,7 @@
   "settings": "Settings",
   "history": "History",
   "barcode": "Bar Code",
-  "qrcode": "QR Code"
+  "qrcode": "QR Code",
+  "tools": "Tools",
+  "pinned": "Pinned"
 }

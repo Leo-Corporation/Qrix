@@ -8,5 +8,7 @@
   "settings": "Paramètres",
   "history": "Historique",
   "barcode": "Code Barre",
-  "qrcode": "QR Code"
+  "qrcode": "QR Code",
+  "tools": "Outils",
+  "pinned": "Epinglé"
 }
