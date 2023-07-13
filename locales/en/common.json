@@ -18,5 +18,10 @@
   "generate-barcode": "Generate different types of Bar Codes using Qrix.",
   "generate-qrcode": "Generate QR Codes easily and quickly within a click.",
   "history-empty": "The history is empty. When you generate Bar Codes or QR Codes, you will see them appear here.",
-  "empty-history": "Empty history"
+  "empty-history": "Empty history",
+  "history-delete": "Delete history",
+  "history-delete-confirm": "Are you sure you want to erase the history? This action cannot be canceled.",
+  "yes": "Yes",
+  "no": "No",
+  "cancel": "Cancel"
 }
