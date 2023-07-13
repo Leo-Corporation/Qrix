@@ -41,7 +41,7 @@ export default function SettingsPage() {
       </Head>
       <PageContent page="history">
         <div className="mb-2 flex items-center space-x-2">
-          <History20Regular primaryFill="#0088FF" className="text-white" />
+          <History20Regular primaryFill="#8B2DF0" className="text-white" />
 
           <p className="ml-2 font-bold">{t("history")}</p>
         </div>
