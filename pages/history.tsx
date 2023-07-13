@@ -7,12 +7,30 @@ import useTranslation from "next-translate/useTranslation";
 import { GetHistory } from "@/lib/browser-storage";
 import HistoryCard from "@/components/history-card";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Router } from "next/dist/client/router";
 
 export default function SettingsPage() {
   const { t } = useTranslation("common");
   let h = GetHistory();
   const [barCodes, setBarCodes] = useState(h.barCodes);
   const [qrCodes, setQrCodes] = useState(h.qrCodes);
+
+  function RemoveHistory() {
+    localStorage.removeItem("history");
+    Router.prototype.reload();
+  }
   return (
     <Layout>
       <Head>
@@ -31,6 +49,34 @@ export default function SettingsPage() {
           <TabsList className="bg-slate-200 dark:bg-slate-900">
             <TabsTrigger value="barcode">{t("barcode")}</TabsTrigger>
             <TabsTrigger value="qrcode">{t("qrcode")}</TabsTrigger>
+            {(barCodes.length > 0 || qrCodes.length > 0) && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button
+                    className="h-auto px-2 py-1 font-bold"
+                    variant="destructiveghost"
+                  >
+                    {t("history-delete")}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="border-0">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>{t("history")}</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      {t("history-delete-confirm")}
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogAction onClick={RemoveHistory}>
+                      {t("yes")}
+                    </AlertDialogAction>
+                    <AlertDialogCancel className="border-0">
+                      {t("cancel")}
+                    </AlertDialogCancel>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </TabsList>
           <TabsContent value="barcode">
             <div className={barCodes.length > 0 ? "flex flex-wrap" : ""}>
