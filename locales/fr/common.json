@@ -16,5 +16,7 @@
   "enter-content-qr": "Entrer le contenu du QR Code",
   "recommended": "Recommandé",
   "generate-barcode": "Générer différents types de Codes Barres avec Qrix.",
-  "generate-qrcode": "Générer des QR Codes facilement and rapidement en un clic."
+  "generate-qrcode": "Générer des QR Codes facilement and rapidement en un clic.",
+  "history-empty": "L'historique est vide. Lorsque vous générez des codes-barres ou des codes QR, vous les verrez apparaître ici",
+  "empty-history": "Vider l'historique"
 }
