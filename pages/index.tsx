@@ -44,9 +44,10 @@ export default function Home() {
           <p className="ml-2 mt-2 font-bold">{t("recommended")}</p>
         </div>
         <div className="flex flex-wrap items-center justify-center md:justify-start">
-          {cards.map((el) => {
+          {cards.map((el, i) => {
             return (
               <DashboardCard
+                key={i}
                 link={el.link}
                 title={el.title}
                 description={el.description}
