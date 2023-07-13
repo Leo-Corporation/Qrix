@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { AddHistory } from "@/lib/browser-storage";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -36,6 +37,18 @@ export default function BarcodePage() {
         textxalign: "center", // Always good to set this
         backgroundcolor: "FFFFFF",
       });
+      AddHistory(
+        {
+          bcid: "qrcode", // Barcode type
+          text: content, // Text to encode
+          scale: 3, // 3x scaling factor
+          //height: 20, // Bar height, in millimeters
+          includetext: true, // Show human-readable text
+          textxalign: "center", // Always good to set this
+          backgroundcolor: "FFFFFF",
+        },
+        "qrcode"
+      );
     } catch (e) {
       // `e` may be a string or Error object
       console.error(e);
