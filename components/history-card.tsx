@@ -70,7 +70,7 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
     });
   }
   return (
-    <div className="p-5 m-2 bg-white dark:bg-slate-800 shadow-md rounded-md flex items-center">
+    <div className="p-3 m-2 bg-white dark:bg-slate-800 shadow-md rounded-md flex flex-col justify-center items-center w-[230px]">
       <canvas className="hidden" id={"code" + props.item.text}></canvas>
       <span>
         <Image
@@ -81,7 +81,7 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
           alt={props.item.text}
         />
       </span>
-      <div className="flex space-x-2 m-4 mr-0">
+      <div className="flex space-x-2 m-4">
         <Button
           onClick={copyBtn}
           variant="outline"
@@ -97,6 +97,11 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
           <Save16Regular />
         </Button>
       </div>
+      {props.item.bcid == "qrcode" ? (
+        <p className="text-center text-wrap mt-2">{props.item.text}</p>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }
