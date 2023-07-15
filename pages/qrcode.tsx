@@ -6,6 +6,7 @@ import {
   Calendar3Day20Regular,
   Copy16Regular,
   QrCode20Regular,
+  Save16Regular,
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AddHistory } from "@/lib/browser-storage";
+import saveAs from "file-saver";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -95,6 +97,14 @@ export default function BarcodePage() {
       }
     );
   }
+  function saveBtn() {
+    let canvas = document.getElementById("qrcode") as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      if (blob) {
+        saveAs(blob, `${content}.png`);
+      }
+    });
+  }
   return (
     <Layout>
       <Head>
@@ -136,6 +146,13 @@ export default function BarcodePage() {
               className="h-auto px-2 py-1"
             >
               <Copy16Regular />
+            </Button>
+            <Button
+              onClick={saveBtn}
+              variant="outline"
+              className="h-auto px-2 py-1"
+            >
+              <Save16Regular />
             </Button>
           </div>
         </div>
