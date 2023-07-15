@@ -23,5 +23,21 @@
   "history-delete-confirm": "Are you sure you want to erase the history? This action cannot be canceled.",
   "yes": "Yes",
   "no": "No",
-  "cancel": "Cancel"
+  "cancel": "Cancel"  ,
+  "see-licenses": "See licenses",
+  "licenses": "Licenses",
+  "version": "Version",
+  "web": "Web",
+  "theme": "Theme",
+  "change-theme": "Change the theme of Qrix.",
+  "language": "Language",
+  "change-language": "Change the language of Qrix.",
+  "data": "Your data",
+  "manage-data": "Manage your data.",
+  "import-settings": "Import settings",
+  "export-settings": "Export settings",
+  "reset-settings": "Reset settings",
+  "reset-settings-msg": "Are you sure you want to reset all settings? This operation cannot be canceled.",
+  "default": "Default",
+  "ok": "Ok"
 }

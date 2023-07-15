@@ -23,5 +23,21 @@
   "history-delete-confirm": "Êtes-vous sûr de vouloir effacer l'historique ? Cette action ne peut pas être annulée",
   "yes": "Oui",
   "no": "Non",
-  "cancel": "Annuler"
+  "cancel": "Annuler",
+  "see-licenses": "Voir les licences",
+  "licenses": "Licences",
+  "version": "Version",
+  "web": "Web",
+  "theme": "Thème",
+  "change-theme": "Changer le thème de Qrix.",
+  "language": "Langue",
+  "change-language": "Changer la langue de Qrix.",
+  "data": "Vos données",
+  "manage-data": "Gérer vos données.",
+  "import-settings": "Importer les paramètres",
+  "export-settings": "Exporter les paramètres",
+  "reset-settings": "Réinitialiser les paramètres",
+  "reset-settings-msg": "Êtes-vous sûr de vouloir réinitialiser tous les réglages ? Cette opération ne peut pas être annulée.",
+  "default": "Par défaut",
+  "ok": "Ok"
 }
