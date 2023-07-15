@@ -2,10 +2,10 @@ import useTranslation from "next-translate/useTranslation";
 import { Layout } from "@/components/layout";
 import Head from "next/head";
 import { PageContent } from "@/components/page";
-import { Calendar3Day20Regular } from "@fluentui/react-icons";
 import {
   Calendar3Day20Regular,
   Copy16Regular,
+  Save16Regular,
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { AddHistory } from "@/lib/browser-storage";
+import saveAs from "file-saver";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -42,7 +43,6 @@ export default function BarcodePage() {
         textxalign: "center", // Always good to set this
         backgroundcolor: "FFFFFF",
       });
-
       AddHistory(
         {
           bcid: type, // Barcode type
@@ -98,11 +98,18 @@ export default function BarcodePage() {
       }
     );
   }
+  function saveBtn() {
+    let canvas = document.getElementById("barcode") as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      if (blob) {
+        saveAs(blob, `${content}.png`);
+      }
+    });
+  }
   return (
     <Layout>
       <Head>
         <title>Qrix</title>
-
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -163,6 +170,13 @@ export default function BarcodePage() {
               className="h-auto px-2 py-1"
             >
               <Copy16Regular />
+            </Button>
+            <Button
+              onClick={saveBtn}
+              variant="outline"
+              className="h-auto px-2 py-1"
+            >
+              <Save16Regular />
             </Button>
           </div>
         </div>
