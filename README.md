@@ -10,10 +10,9 @@
   </a>
 
 <h1 align="center">Qrix</h1>
-Qrix is a web app that lets you create and customize bar codes and QR codes in various formats and colors.
 <p align="center">
-
-    <br />
+  Qrix is a web app that lets you create and customize bar codes and QR codes in various formats and colors.
+  <br />
     <a href="https://qrix.leocorporation.dev"><strong>Launch »</strong></a>
     <br />
     <a href="https://github.com/Leo-Corporation/Qrix/issues/new?assignees=&labels=bug&template=bug-report.yml&title=%5BBug%5D+">Report Bug</a>
