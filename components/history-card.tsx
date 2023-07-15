@@ -5,6 +5,12 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import { Copy16Regular, Save16Regular } from "@fluentui/react-icons";
 import saveAs from "file-saver";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 export default function HistoryItem(props: { item: GeneratedItem }) {
   const [url, setURL] = useState("");
@@ -73,13 +79,22 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
     <div className="p-3 m-2 bg-white dark:bg-slate-800 shadow-md rounded-md flex flex-col justify-center items-center w-[230px]">
       <canvas className="hidden" id={"code" + props.item.text}></canvas>
       <span>
-        <Image
-          width={150}
-          height={150}
-          className="max-w-[150px]"
-          src={url}
-          alt={props.item.text}
-        />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Image
+                width={150}
+                height={150}
+                className="max-w-[150px]"
+                src={url}
+                alt={props.item.text}
+              />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{props.item.text}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </span>
       <div className="flex space-x-2 m-4">
         <Button
