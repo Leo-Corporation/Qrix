@@ -3,6 +3,10 @@ import { Layout } from "@/components/layout";
 import Head from "next/head";
 import { PageContent } from "@/components/page";
 import { Calendar3Day20Regular } from "@fluentui/react-icons";
+import {
+  Calendar3Day20Regular,
+  Copy16Regular,
+} from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import bwipjs from "bwip-js";
@@ -55,6 +59,44 @@ export default function BarcodePage() {
       // `e` may be a string or Error object
       console.error(e);
     }
+  }
+
+  function copyCanvasContentsToClipboard(
+    canvas: HTMLCanvasElement,
+    onDone: () => void,
+    onError: (err: Error) => void
+  ) {
+    canvas.toBlob((blob) => {
+      // check for null blob
+      if (blob) {
+        let data = [new ClipboardItem({ [blob.type]: blob })];
+        navigator.clipboard.write(data).then(
+          () => {
+            onDone();
+          },
+          (err) => {
+            onError(err);
+          }
+        );
+      } else {
+        // handle null blob case
+        onError(new Error("Blob is null"));
+      }
+    });
+  }
+  function copyBtn() {
+    let canvas: HTMLCanvasElement = document.getElementById(
+      "barcode"
+    ) as HTMLCanvasElement;
+    copyCanvasContentsToClipboard(
+      canvas,
+      () => {
+        console.log("Copied successfully");
+      },
+      (err) => {
+        console.error(err);
+      }
+    );
   }
   return (
     <Layout>
@@ -114,6 +156,15 @@ export default function BarcodePage() {
             </Button>
           </div>
           <canvas className="max-w-full" id="barcode"></canvas>
+          <div className="flex space-x-2 m-4">
+            <Button
+              onClick={copyBtn}
+              variant="outline"
+              className="h-auto px-2 py-1"
+            >
+              <Copy16Regular />
+            </Button>
+          </div>
         </div>
       </PageContent>
     </Layout>
