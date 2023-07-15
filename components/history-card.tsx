@@ -98,7 +98,11 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
         </Button>
       </div>
       {props.item.bcid == "qrcode" ? (
-        <p className="text-center text-wrap mt-2">{props.item.text}</p>
+        <p className="text-center text-wrap mt-2">
+          {props.item.text.length > 30
+            ? props.item.text.substring(0, 27) + "..."
+            : props.item.text}
+        </p>
       ) : (
         <></>
       )}
