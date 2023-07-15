@@ -11,8 +11,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import useTranslation from "next-translate/useTranslation";
 
 export default function HistoryItem(props: { item: GeneratedItem }) {
+  const { t } = useTranslation("common");
+
   const [url, setURL] = useState("");
   function genBarcode() {
     try {
@@ -97,20 +100,38 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
         </TooltipProvider>
       </span>
       <div className="flex space-x-2 m-4">
-        <Button
-          onClick={copyBtn}
-          variant="outline"
-          className="h-auto px-2 py-1"
-        >
-          <Copy16Regular />
-        </Button>
-        <Button
-          onClick={saveBtn}
-          variant="outline"
-          className="h-auto px-2 py-1"
-        >
-          <Save16Regular />
-        </Button>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                onClick={copyBtn}
+                variant="outline"
+                className="h-auto px-2 py-1"
+              >
+                <Copy16Regular />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t("copy")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                onClick={saveBtn}
+                variant="outline"
+                className="h-auto px-2 py-1"
+              >
+                <Save16Regular />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t("save")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
       {props.item.bcid == "qrcode" ? (
         <p className="text-center text-wrap mt-2">

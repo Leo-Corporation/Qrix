@@ -21,6 +21,12 @@ import {
 } from "@/components/ui/select";
 import { AddHistory } from "@/lib/browser-storage";
 import saveAs from "file-saver";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -140,20 +146,38 @@ export default function BarcodePage() {
           </div>
           <canvas className="max-w-full" id="qrcode"></canvas>
           <div className="flex space-x-2 m-4">
-            <Button
-              onClick={copyBtn}
-              variant="outline"
-              className="h-auto px-2 py-1"
-            >
-              <Copy16Regular />
-            </Button>
-            <Button
-              onClick={saveBtn}
-              variant="outline"
-              className="h-auto px-2 py-1"
-            >
-              <Save16Regular />
-            </Button>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={copyBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Copy16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("copy")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={saveBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Save16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("save")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
         </div>
       </PageContent>

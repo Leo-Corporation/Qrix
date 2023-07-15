@@ -39,5 +39,7 @@
   "reset-settings": "Reset settings",
   "reset-settings-msg": "Are you sure you want to reset all settings? This operation cannot be canceled.",
   "default": "Default",
-  "ok": "Ok"
+  "ok": "Ok",
+  "save": "Save",
+  "copy": "Copy"
 }

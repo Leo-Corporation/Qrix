@@ -39,5 +39,7 @@
   "reset-settings": "Réinitialiser les paramètres",
   "reset-settings-msg": "Êtes-vous sûr de vouloir réinitialiser tous les réglages ? Cette opération ne peut pas être annulée.",
   "default": "Par défaut",
-  "ok": "Ok"
+  "ok": "Ok",
+  "save": "Enregistrer",
+  "copy": "Copier"
 }
