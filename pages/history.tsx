@@ -89,7 +89,14 @@ export default function HistoryPage() {
           <TabsContent value="barcode">
             <div className={barCodes.length > 0 ? "flex flex-wrap" : ""}>
               {barCodes.length > 0 ? (
-                barCodes.map((item, i) => <HistoryCard key={i} item={item} />)
+                barCodes.map((item, i) => (
+                  <HistoryCard
+                    index={i}
+                    key={item.text + i}
+                    item={item}
+                    deleteEvent={deleteItem}
+                  />
+                ))
               ) : (
                 <div className="flex flex-col items-center py-16">
                   <p className="icon my-2 mr-2 text-6xl font-normal">
@@ -105,7 +112,14 @@ export default function HistoryPage() {
           <TabsContent value="qrcode">
             <div className={qrCodes.length > 0 ? "flex flex-wrap" : ""}>
               {qrCodes.length > 0 ? (
-                qrCodes.map((item, i) => <HistoryCard key={i} item={item} />)
+                qrCodes.map((item, i) => (
+                  <HistoryCard
+                    index={i}
+                    key={item.text + i}
+                    item={item}
+                    deleteEvent={deleteItem}
+                  />
+                ))
               ) : (
                 <div className="flex flex-col items-center py-16">
                   <p className="icon my-2 mr-2 text-6xl font-normal">
