@@ -18,6 +18,8 @@ export interface GeneratedItem {
     | "justify"
     | undefined; // Always good to set this
   backgroundcolor: string;
+  barcolor: string,
+  textcolor: string
 }
 
 export type ItemType = "barcode" | "qrcode";
