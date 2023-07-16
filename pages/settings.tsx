@@ -52,6 +52,8 @@ export default function SettingsPage() {
   const { setTheme } = useTheme();
 
   const settings: Settings = GetSettings();
+  const [barFg, setBarFg] = useState(settings.barcodeFg);
+  const [barBg, setBarBg] = useState(settings.barcodeBg);
 
   let ver = "1.0";
 
@@ -226,7 +228,7 @@ export default function SettingsPage() {
                   <div className="flex space-x-2 items-center">
                     <p>{t("foreground-color")}</p>
                     <input
-                      defaultValue={settings.barcodeFg}
+                      defaultValue={barFg}
                       className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
                       type="color"
                       name="fg"
@@ -234,13 +236,14 @@ export default function SettingsPage() {
                       onChange={(e) => {
                         settings.barcodeFg = e.target.value;
                         SetSettings(settings);
+                        setBarFg(e.target.value);
                       }}
                     />
                   </div>
                   <div className="flex space-x-2 items-center">
                     <p>{t("background-color")}</p>
                     <input
-                      defaultValue={settings.barcodeBg}
+                      defaultValue={barBg}
                       className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
                       type="color"
                       name="bg"
