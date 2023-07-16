@@ -27,15 +27,56 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import * as React from "react";
 
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Check20Regular,
+  Checkmark16Regular,
+  ChevronDown16Regular,
+} from "@fluentui/react-icons";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
+  const barcodeTypes = [
+    {
+      value: "code128",
+      label: "Code128",
+    },
+    {
+      value: "code11",
+      label: "Code11",
+    },
+    {
+      value: "upca",
+      label: "UPC-A",
+    },
+    {
+      value: "msi",
+      label: "MSI",
+    },
+    {
+      value: "isbn",
+      label: "ISBN",
+    },
+  ];
 
   const [content, setContent] = useState("");
   const [type, setType] = useState("code128");
   const [fg, setFg] = useState("#000000");
   const [bg, setBg] = useState("#FFFFFF");
-
+  const [open, setOpen] = React.useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -145,28 +186,47 @@ export default function BarcodePage() {
               />
             </div>
             <div className="shadow-md rounded-md">
-              <Select defaultValue="code128" onValueChange={setType}>
-                <SelectTrigger className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1">
-                  <SelectValue defaultValue="code128" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem className="" value="code128">
-                    Code128
-                  </SelectItem>
-                  <SelectItem className="" value="code11">
-                    Code11
-                  </SelectItem>
-                  <SelectItem className="" value="upca">
-                    UPC-A
-                  </SelectItem>
-                  <SelectItem className="" value="msi">
-                    MSI
-                  </SelectItem>
-                  <SelectItem className="" value="isbn">
-                    ISBN
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
+                  >
+                    {type
+                      ? barcodeTypes.find((code) => code.value === type)?.label
+                      : "Select code..."}
+                    <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-[180px] p-0 dark:border-0">
+                  <Command>
+                    <CommandInput placeholder={t("search-barcode")} />
+                    <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                    <CommandGroup>
+                      {barcodeTypes.map((code) => (
+                        <CommandItem
+                          key={code.value}
+                          onSelect={(currentValue) => {
+                            if (currentValue === "upc-a") currentValue = "upca";
+                            setType(currentValue === type ? "" : currentValue);
+                            setOpen(false);
+                          }}
+                        >
+                          <Checkmark16Regular
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              type === code.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {code.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
             <Button
               onClick={genBarcode}
