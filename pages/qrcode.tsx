@@ -7,6 +7,7 @@ import {
   Copy16Regular,
   QrCode20Regular,
   Save16Regular,
+  Settings20Regular,
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +33,9 @@ export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
 
   const [content, setContent] = useState("");
+
+  const [fg, setFg] = useState("000000");
+  const [bg, setBg] = useState("FFFFFF");
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -47,7 +51,9 @@ export default function BarcodePage() {
         //height: 20, // Bar height, in millimeters
         includetext: true, // Show human-readable text
         textxalign: "center", // Always good to set this
-        backgroundcolor: "FFFFFF",
+        backgroundcolor: bg.substring(1),
+        barcolor: fg.substring(1),
+        textcolor: fg.substring(1),
       });
       AddHistory(
         {
@@ -57,7 +63,10 @@ export default function BarcodePage() {
           //height: 20, // Bar height, in millimeters
           includetext: true, // Show human-readable text
           textxalign: "center", // Always good to set this
-          backgroundcolor: "FFFFFF",
+
+          backgroundcolor: bg.substring(1),
+          barcolor: fg.substring(1),
+          textcolor: fg.substring(1),
         },
         "qrcode"
       );
@@ -178,6 +187,33 @@ export default function BarcodePage() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
+        </section>
+        <section className="mb-2 flex items-center space-x-2">
+          <Settings20Regular primaryFill="#8B2DF0" className="text-white" />
+
+          <p className="ml-2 font-bold">{t("options")}</p>
+        </section>
+        <section className="w-full space-y-2">
+          <div className="flex space-x-2 items-center">
+            <p>{t("foreground-color")}</p>
+            <input
+              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+              type="color"
+              name="fg"
+              id="foreground-color"
+              onChange={(e) => setFg(e.target.value)}
+            />
+          </div>
+          <div className="flex space-x-2 items-center">
+            <p>{t("background-color")}</p>
+            <input
+              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+              type="color"
+              name="bg"
+              id="background-color"
+              onChange={(e) => setBg(e.target.value)}
+            />
           </div>
         </section>
       </PageContent>
