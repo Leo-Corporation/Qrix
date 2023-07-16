@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AddHistory } from "@/lib/browser-storage";
+import { AddHistory, GetSettings } from "@/lib/browser-storage";
 import saveAs from "file-saver";
 import {
   Tooltip,
@@ -28,14 +28,16 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Settings } from "@/types/settings";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
+  const settings: Settings = GetSettings();
 
   const [content, setContent] = useState("");
 
-  const [fg, setFg] = useState("#000000");
-  const [bg, setBg] = useState("#FFFFFF");
+  const [fg, setFg] = useState(settings.qrFg);
+  const [bg, setBg] = useState(settings.qrBg);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -198,7 +200,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("foreground-color")}</p>
             <input
-              defaultValue="#000000"
+              defaultValue={fg}
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="fg"
@@ -209,7 +211,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("background-color")}</p>
             <input
-              defaultValue="#FFFFFF"
+              defaultValue={bg}
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="bg"

@@ -54,6 +54,8 @@ export default function SettingsPage() {
   const settings: Settings = GetSettings();
   const [barFg, setBarFg] = useState(settings.barcodeFg);
   const [barBg, setBarBg] = useState(settings.barcodeBg);
+  const [qrFg, setQrFg] = useState(settings.qrFg);
+  const [qrBg, setQrBg] = useState(settings.qrBg);
 
   let ver = "1.0";
 
@@ -251,6 +253,56 @@ export default function SettingsPage() {
                       onChange={(e) => {
                         settings.barcodeBg = e.target.value;
                         SetSettings(settings);
+                        setBarBg(e.target.value);
+                      }}
+                    />
+                  </div>
+                </section>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="qrcode">
+              <AccordionTrigger>
+                <div className="grid grid-cols-[auto,1fr] items-center">
+                  <p className="icon my-2 mr-2 text-3xl font-normal">
+                    {"\uF635"}
+                  </p>
+                  <div>
+                    <h4 className="text-left text-lg">{t("qrcode")}</h4>
+                    <p className="text-left text-sm font-normal">
+                      {t("qrcode-settings")}
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <section className="space-y-2">
+                  <div className="flex space-x-2 items-center">
+                    <p>{t("foreground-color")}</p>
+                    <input
+                      defaultValue={qrFg}
+                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      type="color"
+                      name="qrfg"
+                      id="qr-foreground-color"
+                      onChange={(e) => {
+                        settings.qrFg = e.target.value;
+                        SetSettings(settings);
+                        setQrBg(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="flex space-x-2 items-center">
+                    <p>{t("background-color")}</p>
+                    <input
+                      defaultValue={qrBg}
+                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      type="color"
+                      name="qrbg"
+                      id="qr-background-color"
+                      onChange={(e) => {
+                        settings.qrBg = e.target.value;
+                        SetSettings(settings);
+                        setQrFg(e.target.value);
                       }}
                     />
                   </div>
