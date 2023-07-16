@@ -120,12 +120,12 @@ export default function BarcodePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContent page="qrcode">
-        <div className="mb-2 flex items-center space-x-2">
+        <section className="mb-2 flex items-center space-x-2">
           <QrCode20Regular primaryFill="#8B2DF0" className="text-white" />
 
           <p className="ml-2 font-bold">{t("qrcode")}</p>
-        </div>
-        <div className="flex w-full flex-col items-center">
+        </section>
+        <section className="flex w-full flex-col items-center">
           <div className="m-5 flex w-full space-x-2">
             <div className="shadow-md w-full rounded-md">
               <Input
@@ -179,7 +179,7 @@ export default function BarcodePage() {
               </Tooltip>
             </TooltipProvider>
           </div>
-        </div>
+        </section>
       </PageContent>
     </Layout>
   );

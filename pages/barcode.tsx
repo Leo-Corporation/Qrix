@@ -128,12 +128,12 @@ export default function BarcodePage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageContent page="barcode">
-        <div className="mb-2 flex items-center space-x-2">
+        <section className="mb-2 flex items-center space-x-2">
           <Calendar3Day20Regular primaryFill="#8B2DF0" className="text-white" />
 
           <p className="ml-2 font-bold">{t("barcode")}</p>
-        </div>
-        <div className="flex w-full flex-col items-center">
+        </section>
+        <section className="flex w-full flex-col items-center">
           <div className="m-5 flex flex-col sm:flex-row w-full sm:space-x-2 space-y-2 sm:space-y-0">
             <div className="shadow-md w-full rounded-md">
               <Input
@@ -211,13 +211,13 @@ export default function BarcodePage() {
               </Tooltip>
             </TooltipProvider>
           </div>
-        </div>
-        <div className="mb-2 flex items-center space-x-2">
+        </section>
+        <section className="mb-2 flex items-center space-x-2">
           <Settings20Regular primaryFill="#8B2DF0" className="text-white" />
 
           <p className="ml-2 font-bold">{t("options")}</p>
-        </div>
-        <div className="w-full space-y-2">
+        </section>
+        <section className="w-full space-y-2">
           <div className="flex space-x-2 items-center">
             <p>{t("foreground-color")}</p>
             <input
@@ -238,7 +238,7 @@ export default function BarcodePage() {
               onChange={(e) => setBg(e.target.value)}
             />
           </div>
-        </div>
+        </section>
       </PageContent>
     </Layout>
   );
