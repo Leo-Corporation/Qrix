@@ -4,7 +4,7 @@ import { PageContent } from "@/components/page";
 import { History20Regular } from "@fluentui/react-icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useTranslation from "next-translate/useTranslation";
-import { GetHistory } from "@/lib/browser-storage";
+import { GetHistory, RemoveHistoryItem } from "@/lib/browser-storage";
 import HistoryCard from "@/components/history-card";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -20,8 +20,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Router } from "next/dist/client/router";
+import { ItemType } from "@/types/history";
 
-export default function SettingsPage() {
+export default function HistoryPage() {
   const { t } = useTranslation("common");
   let h = GetHistory();
   const [barCodes, setBarCodes] = useState(h.barCodes);
@@ -30,6 +31,13 @@ export default function SettingsPage() {
   function RemoveHistory() {
     localStorage.removeItem("history");
     Router.prototype.reload();
+  }
+
+  function deleteItem(i: number, type: ItemType) {
+    RemoveHistoryItem(i, type);
+    h = GetHistory();
+    setBarCodes(h.barCodes);
+    setQrCodes(h.qrCodes);
   }
   return (
     <Layout>

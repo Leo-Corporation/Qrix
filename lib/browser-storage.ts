@@ -34,3 +34,12 @@ export function AddHistory(item: GeneratedItem, type: ItemType) {
   }
   localStorage.setItem("history", JSON.stringify(h));
 }
+export function RemoveHistoryItem(i: number, type: ItemType) {
+  let h: History = GetHistory();
+  if (type === "barcode") {
+    h.barCodes.splice(i, 1);
+  } else {
+    h.qrCodes.splice(i, 1);
+  }
+  localStorage.setItem("history", JSON.stringify(h));
+}

@@ -46,5 +46,6 @@
   "foreground-color": "Foreground color",
   "background-color": "Background color",
   "barcode-settings": "Customize Bar Code related options.",
-  "qrcode-settings": "Customize QR Code related options."
+  "qrcode-settings": "Customize QR Code related options.",
+  "delete": "Delete"
 }

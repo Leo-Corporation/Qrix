@@ -3,7 +3,11 @@ import bwipjs from "bwip-js";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import { Copy16Regular, Save16Regular } from "@fluentui/react-icons";
+import {
+  Copy16Regular,
+  Delete16Regular,
+  Save16Regular,
+} from "@fluentui/react-icons";
 import saveAs from "file-saver";
 import {
   Tooltip,
@@ -13,14 +17,21 @@ import {
 } from "./ui/tooltip";
 import useTranslation from "next-translate/useTranslation";
 
-export default function HistoryItem(props: { item: GeneratedItem }) {
+export default function HistoryItem(props: {
+  item: GeneratedItem;
+  index: number;
+  deleteEvent: Function;
+}) {
   const { t } = useTranslation("common");
 
   const [url, setURL] = useState("");
   function genBarcode() {
     try {
       // The return value is the canvas element
-      let canvas = bwipjs.toCanvas("code" + props.item.text, props.item);
+      let canvas = bwipjs.toCanvas(
+        `code-${props.item.text}-${props.index}`,
+        props.item
+      );
       setURL(canvas.toDataURL());
     } catch (e) {
       // `e` may be a string or Error object
@@ -30,7 +41,6 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
   useEffect(() => {
     genBarcode();
   }, []);
-
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
@@ -78,9 +88,18 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
       }
     });
   }
+  function deleteBtn() {
+    props.deleteEvent(
+      props.index,
+      props.item.bcid == "qrcode" ? "qrcode" : "barcode"
+    );
+  }
   return (
     <div className="p-3 m-2 bg-white dark:bg-slate-800 shadow-md rounded-md flex flex-col justify-center items-center w-[230px]">
-      <canvas className="hidden" id={"code" + props.item.text}></canvas>
+      <canvas
+        className="hidden"
+        id={`code-${props.item.text}-${props.index}`}
+      ></canvas>
       <span>
         <TooltipProvider>
           <Tooltip>
@@ -129,6 +148,22 @@ export default function HistoryItem(props: { item: GeneratedItem }) {
             </TooltipTrigger>
             <TooltipContent>
               <p>{t("save")}</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                onClick={deleteBtn}
+                variant="outline"
+                className="h-auto px-2 py-1"
+              >
+                <Delete16Regular />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>{t("delete")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
