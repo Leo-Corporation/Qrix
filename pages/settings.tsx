@@ -44,7 +44,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { Settings } from "@/types/settings";
 import { GetSettings, SetSettings } from "@/lib/browser-storage";
 export default function SettingsPage() {
@@ -58,6 +58,35 @@ export default function SettingsPage() {
   const [qrBg, setQrBg] = useState(settings.qrBg);
 
   let ver = "1.0";
+  function isSettings(object: any): object is Settings {
+    return (
+      typeof object === "object" &&
+      typeof object.barcodeType === "string" &&
+      typeof object.barcodeBg === "string" &&
+      typeof object.barcodeFg === "string" &&
+      typeof object.qrBg === "string" &&
+      typeof object.qrFg === "string"
+    );
+  }
+  function Import(event: any) {
+    if (!event.target) return;
+    let file = event.target.files[0]; // get the selected file
+    let reader = new FileReader(); // create a FileReader object
+    reader.onload = function (event) {
+      let text: string = event.target?.result as string; // get the file content as text
+      let json: Settings = JSON.parse(text); // parse the text as JSON
+      if (!isSettings(json)) {
+        alert("Invalid file");
+        return;
+      }
+      setBarFg(json.barcodeFg);
+      setBarBg(json.barcodeBg);
+      setQrFg(json.qrFg);
+      setQrBg(json.qrBg);
+      localStorage.setItem("qrix_settings", JSON.stringify(json)); // store the JSON in localstorage
+    };
+    reader.readAsText(file); // read the file as text
+  }
 
   async function SelectChanged(val: string) {
     await setLanguage(val);
@@ -361,6 +390,7 @@ export default function SettingsPage() {
                     id="FileSelector"
                     accept="application/json"
                     className="hidden"
+                    onChange={Import}
                   ></Input>
 
                   <AlertDialog>
