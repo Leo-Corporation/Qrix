@@ -33,8 +33,8 @@ export default function BarcodePage() {
 
   const [content, setContent] = useState("");
   const [type, setType] = useState("code128");
-  const [fg, setFg] = useState("000000");
-  const [bg, setBg] = useState("FFFFFF");
+  const [fg, setFg] = useState("#000000");
+  const [bg, setBg] = useState("#FFFFFF");
 
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
@@ -221,6 +221,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("foreground-color")}</p>
             <input
+              defaultValue="#000000"
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="fg"
@@ -231,6 +232,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("background-color")}</p>
             <input
+              defaultValue="#FFFFFF"
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="bg"
