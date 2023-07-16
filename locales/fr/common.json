@@ -49,5 +49,6 @@
   "qrcode-settings": "Personnaliser les options relatives au QR Code",
   "delete": "Supprimer",
   "search-barcode": "Rechercher des types de Codes Barres",
-  "no-barcode-found": "Aucun Code Barre n'a été trouvé"
+  "no-barcode-found": "Aucun Code Barre n'a été trouvé",
+  "barcode-default": "Type de Code Barre par défaut"
 }

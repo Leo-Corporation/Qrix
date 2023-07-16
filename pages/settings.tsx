@@ -47,6 +47,26 @@ import {
 import { ChangeEventHandler, useState } from "react";
 import { Settings } from "@/types/settings";
 import { GetSettings, SetSettings } from "@/lib/browser-storage";
+import * as React from "react";
+
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Check20Regular,
+  Checkmark16Regular,
+  ChevronDown16Regular,
+} from "@fluentui/react-icons";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -56,7 +76,31 @@ export default function SettingsPage() {
   const [barBg, setBarBg] = useState(settings.barcodeBg);
   const [qrFg, setQrFg] = useState(settings.qrFg);
   const [qrBg, setQrBg] = useState(settings.qrBg);
+  const [type, setType] = useState(settings.barcodeType);
+  const [open, setOpen] = useState(false);
 
+  const barcodeTypes = [
+    {
+      value: "code128",
+      label: "Code128",
+    },
+    {
+      value: "code11",
+      label: "Code11",
+    },
+    {
+      value: "upca",
+      label: "UPC-A",
+    },
+    {
+      value: "msi",
+      label: "MSI",
+    },
+    {
+      value: "isbn",
+      label: "ISBN",
+    },
+  ];
   let ver = "1.0";
   function isSettings(object: any): object is Settings {
     return (
@@ -83,6 +127,7 @@ export default function SettingsPage() {
       setBarBg(json.barcodeBg);
       setQrFg(json.qrFg);
       setQrBg(json.qrBg);
+      setType(json.barcodeType);
       localStorage.setItem("qrix_settings", JSON.stringify(json)); // store the JSON in localstorage
     };
     reader.readAsText(file); // read the file as text
@@ -255,6 +300,60 @@ export default function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
+                <section className="flex space-x-2 items-center">
+                  <p>{t("barcode-default")}</p>
+                  <div className="shadow-md rounded-md">
+                    <Popover open={open} onOpenChange={setOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
+                        >
+                          {type
+                            ? barcodeTypes.find((code) => code.value === type)
+                                ?.label
+                            : "Select code..."}
+                          <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[180px] p-0 dark:border-0">
+                        <Command>
+                          <CommandInput placeholder={t("search-barcode")} />
+                          <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                          <CommandGroup>
+                            {barcodeTypes.map((code) => (
+                              <CommandItem
+                                key={code.value}
+                                onSelect={(currentValue) => {
+                                  if (currentValue === "upc-a")
+                                    currentValue = "upca";
+                                  setType(
+                                    currentValue === type ? "" : currentValue
+                                  );
+                                  setOpen(false);
+                                  settings.barcodeType = currentValue;
+                                  SetSettings(settings);
+                                }}
+                              >
+                                <Checkmark16Regular
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    type === code.value
+                                      ? "opacity-100"
+                                      : "opacity-0"
+                                  )}
+                                />
+                                {code.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </section>
                 <section className="space-y-2">
                   <div className="flex space-x-2 items-center">
                     <p>{t("foreground-color")}</p>

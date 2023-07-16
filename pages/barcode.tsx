@@ -74,9 +74,8 @@ export default function BarcodePage() {
       label: "ISBN",
     },
   ];
-
   const [content, setContent] = useState("");
-  const [type, setType] = useState("code128");
+  const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
   const [open, setOpen] = React.useState(false);
