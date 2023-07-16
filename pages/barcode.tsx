@@ -6,6 +6,7 @@ import {
   Calendar3Day20Regular,
   Copy16Regular,
   Save16Regular,
+  Settings20Regular,
 } from "@fluentui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,6 +33,9 @@ export default function BarcodePage() {
 
   const [content, setContent] = useState("");
   const [type, setType] = useState("code128");
+  const [fg, setFg] = useState("000000");
+  const [bg, setBg] = useState("FFFFFF");
+
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -47,7 +51,9 @@ export default function BarcodePage() {
         height: 10, // Bar height, in millimeters
         includetext: true, // Show human-readable text
         textxalign: "center", // Always good to set this
-        backgroundcolor: "FFFFFF",
+        backgroundcolor: bg.substring(1),
+        barcolor: fg.substring(1),
+        textcolor: fg.substring(1),
       });
       AddHistory(
         {
@@ -57,7 +63,9 @@ export default function BarcodePage() {
           height: 10, // Bar height, in millimeters
           includetext: true, // Show human-readable text
           textxalign: "center", // Always good to set this
-          backgroundcolor: "FFFFFF",
+          backgroundcolor: bg.substring(1),
+          barcolor: fg.substring(1),
+          textcolor: fg.substring(1),
         },
         "barcode"
       );
@@ -126,7 +134,7 @@ export default function BarcodePage() {
           <p className="ml-2 font-bold">{t("barcode")}</p>
         </div>
         <div className="flex w-full flex-col items-center">
-          <div className="m-5 flex w-full space-x-2">
+          <div className="m-5 flex flex-col sm:flex-row w-full sm:space-x-2 space-y-2 sm:space-y-0">
             <div className="shadow-md w-full rounded-md">
               <Input
                 onChange={handleInputChange}
@@ -138,7 +146,7 @@ export default function BarcodePage() {
             </div>
             <div className="shadow-md rounded-md">
               <Select defaultValue="code128" onValueChange={setType}>
-                <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1">
+                <SelectTrigger className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1">
                   <SelectValue defaultValue="code128" />
                 </SelectTrigger>
                 <SelectContent>
@@ -202,6 +210,33 @@ export default function BarcodePage() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+          </div>
+        </div>
+        <div className="mb-2 flex items-center space-x-2">
+          <Settings20Regular primaryFill="#8B2DF0" className="text-white" />
+
+          <p className="ml-2 font-bold">{t("options")}</p>
+        </div>
+        <div className="w-full space-y-2">
+          <div className="flex space-x-2 items-center">
+            <p>{t("foreground-color")}</p>
+            <input
+              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+              type="color"
+              name="fg"
+              id="foreground-color"
+              onChange={(e) => setFg(e.target.value)}
+            />
+          </div>
+          <div className="flex space-x-2 items-center">
+            <p>{t("background-color")}</p>
+            <input
+              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+              type="color"
+              name="bg"
+              id="background-color"
+              onChange={(e) => setBg(e.target.value)}
+            />
           </div>
         </div>
       </PageContent>
