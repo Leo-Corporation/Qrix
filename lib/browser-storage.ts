@@ -1,4 +1,5 @@
 import { GeneratedItem, History, ItemType } from "@/types/history";
+import { Settings } from "@/types/settings";
 
 export function GetHistory(): History {
   if (typeof window !== "undefined") {
@@ -42,4 +43,29 @@ export function RemoveHistoryItem(i: number, type: ItemType) {
     h.qrCodes.splice(i, 1);
   }
   localStorage.setItem("history", JSON.stringify(h));
+}
+
+export function GetSettings(): Settings {
+  if (typeof window !== "undefined") {
+    return JSON.parse(
+      localStorage.getItem("qrix_settings") ||
+        JSON.stringify({
+          barcodeType: "code128",
+          barcodeFg: "#000000",
+          barcodeBg: "#FFFFFF",
+          qrFg: "#000000",
+          qrBg: "#FFFFFF",
+        })
+    );
+  }
+  return {
+    barcodeType: "code128",
+    barcodeBg: "#FFFFFF",
+    barcodeFg: "#000000",
+    qrBg: "#FFFFFF",
+    qrFg: "#000000",
+  };
+}
+export function SetSettings(settings: Settings) {
+  localStorage.setItem("qrix_settings", JSON.stringify(settings));
 }
