@@ -47,5 +47,7 @@
   "background-color": "Couleur d'arrière plan",
   "barcode-settings": "Personnaliser les options relatives au Code Barre",
   "qrcode-settings": "Personnaliser les options relatives au QR Code",
-  "delete": "Supprimer"
+  "delete": "Supprimer",
+  "search-barcode": "Rechercher des types de Codes Barres",
+  "no-barcode-found": "Aucun Code Barre n'a été trouvé"
 }
