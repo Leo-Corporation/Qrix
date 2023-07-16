@@ -41,5 +41,10 @@
   "default": "Par défaut",
   "ok": "Ok",
   "save": "Enregistrer",
-  "copy": "Copier"
+  "copy": "Copier",
+  "options": "Options",
+  "foreground-color": "Couleur de premier-plan",
+  "background-color": "Couleur d'arrière plan",
+  "barcode-settings": "Personnaliser les options relatives au Code Barre",
+  "qrcode-settings": "Personnaliser les options relatives au QR Code"
 }

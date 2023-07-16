@@ -23,7 +23,7 @@
   "history-delete-confirm": "Are you sure you want to erase the history? This action cannot be canceled.",
   "yes": "Yes",
   "no": "No",
-  "cancel": "Cancel"  ,
+  "cancel": "Cancel",
   "see-licenses": "See licenses",
   "licenses": "Licenses",
   "version": "Version",
@@ -41,5 +41,10 @@
   "default": "Default",
   "ok": "Ok",
   "save": "Save",
-  "copy": "Copy"
+  "copy": "Copy",
+  "options": "Options",
+  "foreground-color": "Foreground color",
+  "background-color": "Background color",
+  "barcode-settings": "Customize Bar Code related options.",
+  "qrcode-settings": "Customize QR Code related options."
 }
