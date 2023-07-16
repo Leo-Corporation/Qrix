@@ -38,6 +38,7 @@ export default function BarcodePage() {
 
   const [fg, setFg] = useState(settings.qrFg);
   const [bg, setBg] = useState(settings.qrBg);
+  const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -72,6 +73,7 @@ export default function BarcodePage() {
         },
         "qrcode"
       );
+      setVis(true);
     } catch (e) {
       // `e` may be a string or Error object
       console.error(e);
@@ -155,8 +157,12 @@ export default function BarcodePage() {
               {t("create")}
             </Button>
           </div>
-          <canvas className="max-w-full" id="qrcode"></canvas>
-          <div className="flex space-x-2 m-4">
+          {vis ? <></> : <p>{t("qr-placeholder")}</p>}
+          <canvas
+            className={vis ? "max-w-full" : "hidden"}
+            id="qrcode"
+          ></canvas>
+          <div className={vis ? "flex space-x-2 m-4" : "hidden"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

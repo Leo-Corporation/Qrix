@@ -78,7 +78,8 @@ export default function BarcodePage() {
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -112,6 +113,7 @@ export default function BarcodePage() {
         },
         "barcode"
       );
+      setVis(true);
     } catch (e) {
       // `e` may be a string or Error object
       console.error(e);
@@ -238,8 +240,12 @@ export default function BarcodePage() {
               {t("create")}
             </Button>
           </div>
-          <canvas className="max-w-full" id="barcode"></canvas>
-          <div className="flex space-x-2 m-4">
+          {vis ? <></> : <p>{t("barcode-placeholder")}</p>}
+          <canvas
+            className={vis ? "max-w-full" : "hidden"}
+            id="barcode"
+          ></canvas>
+          <div className={vis ? "flex space-x-2 m-4" : "hidden"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>

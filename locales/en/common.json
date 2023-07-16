@@ -50,5 +50,7 @@
   "delete": "Delete",
   "search-barcode": "Search Bar Code types",
   "no-barcode-found": "No Bar Codes were found",
-  "barcode-default": "Default Bar Code type"
+  "barcode-default": "Default Bar Code type",
+  "barcode-placeholder": "The Bar Code will appear here.",
+  "qr-placeholder": "The QR Code will appear here."
 }
