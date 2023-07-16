@@ -66,7 +66,7 @@ export default function HistoryItem(props: {
   }
   function copyBtn() {
     let canvas: HTMLCanvasElement = document.getElementById(
-      "code" + props.item.text
+      `code-${props.item.text}-${props.index}`
     ) as HTMLCanvasElement;
     copyCanvasContentsToClipboard(
       canvas,
@@ -80,7 +80,7 @@ export default function HistoryItem(props: {
   }
   function saveBtn() {
     let canvas = document.getElementById(
-      "code" + props.item.text
+      `code-${props.item.text}-${props.index}`
     ) as HTMLCanvasElement;
     canvas.toBlob(function (blob) {
       if (blob) {
