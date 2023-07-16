@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AddHistory } from "@/lib/browser-storage";
+import { AddHistory, GetSettings } from "@/lib/browser-storage";
 import saveAs from "file-saver";
 import {
   Tooltip,
@@ -47,8 +47,11 @@ import {
   Checkmark16Regular,
   ChevronDown16Regular,
 } from "@fluentui/react-icons";
+import { Settings } from "@/types/settings";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
+  const settings: Settings = GetSettings();
+
   const barcodeTypes = [
     {
       value: "code128",
@@ -74,8 +77,8 @@ export default function BarcodePage() {
 
   const [content, setContent] = useState("");
   const [type, setType] = useState("code128");
-  const [fg, setFg] = useState("#000000");
-  const [bg, setBg] = useState("#FFFFFF");
+  const [fg, setFg] = useState(settings.barcodeFg);
+  const [bg, setBg] = useState(settings.barcodeBg);
   const [open, setOpen] = React.useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
@@ -281,7 +284,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("foreground-color")}</p>
             <input
-              defaultValue="#000000"
+              defaultValue={settings.barcodeFg}
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="fg"
@@ -292,7 +295,7 @@ export default function BarcodePage() {
           <div className="flex space-x-2 items-center">
             <p>{t("background-color")}</p>
             <input
-              defaultValue="#FFFFFF"
+              defaultValue={settings.barcodeBg}
               className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
               type="color"
               name="bg"

@@ -44,9 +44,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState } from "react";
+import { Settings } from "@/types/settings";
+import { GetSettings, SetSettings } from "@/lib/browser-storage";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
+
+  const settings: Settings = GetSettings();
 
   let ver = "1.0";
 
@@ -202,7 +207,53 @@ export default function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-
+            <AccordionItem value="barcode">
+              <AccordionTrigger>
+                <div className="grid grid-cols-[auto,1fr] items-center">
+                  <p className="icon my-2 mr-2 text-3xl font-normal">
+                    {"\uF20F"}
+                  </p>
+                  <div>
+                    <h4 className="text-left text-lg">{t("barcode")}</h4>
+                    <p className="text-left text-sm font-normal">
+                      {t("barcode-settings")}
+                    </p>
+                  </div>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <section className="space-y-2">
+                  <div className="flex space-x-2 items-center">
+                    <p>{t("foreground-color")}</p>
+                    <input
+                      defaultValue={settings.barcodeFg}
+                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      type="color"
+                      name="fg"
+                      id="foreground-color"
+                      onChange={(e) => {
+                        settings.barcodeFg = e.target.value;
+                        SetSettings(settings);
+                      }}
+                    />
+                  </div>
+                  <div className="flex space-x-2 items-center">
+                    <p>{t("background-color")}</p>
+                    <input
+                      defaultValue={settings.barcodeBg}
+                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      type="color"
+                      name="bg"
+                      id="background-color"
+                      onChange={(e) => {
+                        settings.barcodeBg = e.target.value;
+                        SetSettings(settings);
+                      }}
+                    />
+                  </div>
+                </section>
+              </AccordionContent>
+            </AccordionItem>
             <AccordionItem value="data">
               <AccordionTrigger>
                 <div className="grid grid-cols-[auto,1fr] items-center">
