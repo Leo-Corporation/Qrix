@@ -283,7 +283,7 @@ export default function SettingsPage() {
                       "data:text/plain;charset=UTF-8," +
                       encodeURIComponent(
                         typeof window !== "undefined"
-                          ? localStorage.getItem("settings") || "{}"
+                          ? localStorage.getItem("qrix_settings") || "{}"
                           : "{}"
                       )
                     }
@@ -334,7 +334,7 @@ export default function SettingsPage() {
                           onClick={() => {
                             setTheme("system");
                             localStorage.setItem(
-                              "settings",
+                              "qrix_settings",
                               JSON.stringify({})
                             );
                           }}
