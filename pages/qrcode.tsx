@@ -120,7 +120,7 @@ export default function BarcodePage() {
     let canvas = document.getElementById("qrcode") as HTMLCanvasElement;
     canvas.toBlob(function (blob) {
       if (blob) {
-        saveAs(blob, `${content}.png`);
+        saveAs(blob, `${content}.${settings.format}`);
       }
     });
   }

@@ -55,6 +55,7 @@ export function GetSettings(): Settings {
           barcodeBg: "#FFFFFF",
           qrFg: "#000000",
           qrBg: "#FFFFFF",
+          format: "png",
         })
     );
   }
@@ -64,6 +65,7 @@ export function GetSettings(): Settings {
     barcodeFg: "#000000",
     qrBg: "#FFFFFF",
     qrFg: "#000000",
+    format: "png",
   };
 }
 export function SetSettings(settings: Settings) {

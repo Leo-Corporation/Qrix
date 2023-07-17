@@ -16,6 +16,7 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import useTranslation from "next-translate/useTranslation";
+import { GetSettings } from "@/lib/browser-storage";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -23,7 +24,7 @@ export default function HistoryItem(props: {
   deleteEvent: Function;
 }) {
   const { t } = useTranslation("common");
-
+  const settings = GetSettings();
   const [url, setURL] = useState("");
   function genBarcode() {
     try {
@@ -84,7 +85,7 @@ export default function HistoryItem(props: {
     ) as HTMLCanvasElement;
     canvas.toBlob(function (blob) {
       if (blob) {
-        saveAs(blob, `${props.item.text}.png`);
+        saveAs(blob, `${props.item.text}.${settings.format}`);
       }
     });
   }

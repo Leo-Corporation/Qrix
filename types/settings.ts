@@ -4,4 +4,5 @@ export interface Settings {
   barcodeBg: string;
   qrFg: string;
   qrBg: string;
+  format: "png" | "jpg" | "jpeg" | "bmp";
 }
