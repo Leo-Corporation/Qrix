@@ -64,7 +64,7 @@ export function PageContent({ children, page }: PageProps) {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-white dark:bg-black">
+    <div className="h-screen overflow-hidden">
       <header className="flex space-x-2 p-2 pt-5">
         <Sheet>
           <SheetTrigger>
