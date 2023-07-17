@@ -48,32 +48,11 @@ import {
   ChevronDown16Regular,
 } from "@fluentui/react-icons";
 import { Settings } from "@/types/settings";
+import { barcodeTypes } from "@/lib/barcodeTypes";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
 
-  const barcodeTypes = [
-    {
-      value: "code128",
-      label: "Code128",
-    },
-    {
-      value: "code11",
-      label: "Code11",
-    },
-    {
-      value: "upca",
-      label: "UPC-A",
-    },
-    {
-      value: "msi",
-      label: "MSI",
-    },
-    {
-      value: "isbn",
-      label: "ISBN",
-    },
-  ];
   const [content, setContent] = useState("");
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);

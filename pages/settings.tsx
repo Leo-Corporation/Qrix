@@ -67,6 +67,7 @@ import {
   Checkmark16Regular,
   ChevronDown16Regular,
 } from "@fluentui/react-icons";
+import { barcodeTypes } from "@/lib/barcodeTypes";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -78,29 +79,6 @@ export default function SettingsPage() {
   const [qrBg, setQrBg] = useState(settings.qrBg);
   const [type, setType] = useState(settings.barcodeType);
   const [open, setOpen] = useState(false);
-
-  const barcodeTypes = [
-    {
-      value: "code128",
-      label: "Code128",
-    },
-    {
-      value: "code11",
-      label: "Code11",
-    },
-    {
-      value: "upca",
-      label: "UPC-A",
-    },
-    {
-      value: "msi",
-      label: "MSI",
-    },
-    {
-      value: "isbn",
-      label: "ISBN",
-    },
-  ];
   let ver = "1.0";
   function isSettings(object: any): object is Settings {
     return (
