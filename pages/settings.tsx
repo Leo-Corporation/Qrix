@@ -286,7 +286,7 @@ export default function SettingsPage() {
                 }}
               >
                 <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
-                  <SelectValue placeholder={t("language")} />
+                  <SelectValue placeholder={"PNG"} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="bmp">BMP</SelectItem>
@@ -528,6 +528,12 @@ export default function SettingsPage() {
                               "qrix_settings",
                               JSON.stringify({})
                             );
+                            setBarFg("#000000");
+                            setBarBg("#FFFFFF");
+                            setQrFg("#000000");
+                            setQrBg("#FFFFFF");
+                            setType("code128");
+                            setFormat("png");
                           }}
                         >
                           {t("continue")}
