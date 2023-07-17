@@ -15,6 +15,7 @@ import useTranslation from "next-translate/useTranslation";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import InstallSection from "./install-app";
 
 export interface PageProps {
   children: React.ReactNode;
@@ -143,6 +144,7 @@ export function PageContent({ children, page }: PageProps) {
                 <QrCode20Regular />
                 <p className="ml-2 font-bold">{t("qrcode")}</p>
               </Link>
+              <InstallSection />
             </nav>
           </SheetContent>
         </Sheet>
@@ -220,6 +222,7 @@ export function PageContent({ children, page }: PageProps) {
               <QrCode20Regular />
               <p className="ml-2 font-bold">{t("qrcode")}</p>
             </Link>
+            <InstallSection />
           </nav>
         </ScrollArea>
         <ScrollArea className="h-scroll col-span-5 p-2 md:col-start-2">
