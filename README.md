@@ -26,6 +26,8 @@
 
 ## What is it?
 
+![Banner](.github/images/banner.png)
+
 Welcome to Qrix, a web app that lets you create and customize bar codes and QR
 codes with ease. Qrix is designed to be simple, fast, and user-friendly. You can
 generate codes in various formats, such as Code128, Code11, UPC-A, ISBN, and
