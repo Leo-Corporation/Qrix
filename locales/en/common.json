@@ -56,5 +56,7 @@
   "app": "Get the App",
   "install": "Install",
   "save-option": "Save Options",
-  "default-format": "Set the default file format when saving a Bar Code or QR Code."
+  "default-format": "Set the default file format when saving a Bar Code or QR Code.",
+  "welcome": "Welcome to Qrix",
+  "welcome-msg": "Qrix is a simple yet powerful Bar Code and QR Code generator. Click on a link below to get started."
 }

@@ -56,5 +56,7 @@
   "app": "Obtenir l'appli",
   "install": "Installer",
   "save-option": "Options d'enregistrement",
-  "default-format": "Définir le format de fichier par défaut lors de l'enregistrement d'un Code Barre ou d'un QR Code."
+  "default-format": "Définir le format de fichier par défaut lors de l'enregistrement d'un Code Barre ou d'un QR Code.",
+  "welcome": "Bienvenue sur Qrix",
+  "welcome-msg": "Qrix est un générateur de Codes Barre et de QR Codes à la fois simple et puissant. Cliquez sur un lien ci-dessous pour commencer."
 }
