@@ -81,7 +81,7 @@ export default function SettingsPage() {
   const [format, setFormat] = useState(settings.format);
   const [open, setOpen] = useState(false);
 
-  let ver = "1.0";
+  const ver = "1.0.0.2307";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
