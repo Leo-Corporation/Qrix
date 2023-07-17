@@ -54,5 +54,7 @@
   "barcode-placeholder": "Le Code Barre apparaîtra ici.",
   "qr-placeholder": "Le QR Code apparaîtra ici.",
   "app": "Obtenir l'appli",
-  "install": "Installer"
+  "install": "Installer",
+  "save-option": "Options d'enregistrement",
+  "default-format": "Définir le format de fichier par défaut lors de l'enregistrement d'un Code Barre ou d'un QR Code."
 }

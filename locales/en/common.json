@@ -54,5 +54,7 @@
   "barcode-placeholder": "The Bar Code will appear here.",
   "qr-placeholder": "The QR Code will appear here.",
   "app": "Get the App",
-  "install": "Install"
+  "install": "Install",
+  "save-option": "Save Options",
+  "default-format": "Set the default file format when saving a Bar Code or QR Code."
 }
