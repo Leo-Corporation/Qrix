@@ -305,8 +305,7 @@ export default function SettingsPage() {
                               <CommandItem
                                 key={code.value}
                                 onSelect={(currentValue) => {
-                                  if (currentValue === "upc-a")
-                                    currentValue = "upca";
+                                  currentValue = currentValue.replace("-", "");
                                   setType(
                                     currentValue === type ? "" : currentValue
                                   );

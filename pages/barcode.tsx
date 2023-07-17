@@ -192,7 +192,7 @@ export default function BarcodePage() {
                         <CommandItem
                           key={code.value}
                           onSelect={(currentValue) => {
-                            if (currentValue === "upc-a") currentValue = "upca";
+                            currentValue = currentValue.replace("-", "");
                             setType(currentValue === type ? "" : currentValue);
                             setOpen(false);
                           }}
