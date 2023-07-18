@@ -175,7 +175,7 @@ export default function BarcodePage() {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
+                    className="sm:w-[180px] w-full bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
                   >
                     {type
                       ? barcodeTypes.find((code) => code.value === type)?.label
@@ -183,7 +183,7 @@ export default function BarcodePage() {
                     <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-[180px] p-0 dark:border-0">
+                <PopoverContent className="sm:w-[180px] w-full p-0 dark:border-0">
                   <Command>
                     <CommandInput placeholder={t("search-barcode")} />
                     <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
