@@ -24,7 +24,7 @@
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.14",
     "bwip-js": "^3.4.3",
-    "class-variance-authority": "^0.6.1",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
     "eslint": "8.44.0",
