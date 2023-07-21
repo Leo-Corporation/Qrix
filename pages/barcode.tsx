@@ -183,7 +183,7 @@ export default function BarcodePage() {
                     <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="sm:w-[180px] w-full p-0 dark:border-0">
+                <PopoverContent className="sm:w-[180px] w-full p-0 border-slate-200 dark:border-slate-700">
                   <Command>
                     <CommandInput placeholder={t("search-barcode")} />
                     <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>

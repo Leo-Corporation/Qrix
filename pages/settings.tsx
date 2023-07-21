@@ -313,14 +313,14 @@ export default function SettingsPage() {
               <AccordionContent>
                 <section className="flex space-x-2 items-center">
                   <p>{t("barcode-default")}</p>
-                  <div className="shadow-md rounded-md">
+                  <div className="border-slate-200 dark:border-slate-700 rounded-md border-0.5">
                     <Popover open={open} onOpenChange={setOpen}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
                           role="combobox"
                           aria-expanded={open}
-                          className="sm:w-[180px] bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
+                          className="sm:w-[180px] h-auto px-2 py-1 justify-between"
                         >
                           {type
                             ? barcodeTypes.find((code) => code.value === type)
@@ -329,7 +329,7 @@ export default function SettingsPage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[180px] p-0 dark:border-0">
+                      <PopoverContent className="w-[180px] p-0 border-slate-200 dark:border-slate-700">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
