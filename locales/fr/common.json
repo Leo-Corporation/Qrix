@@ -59,5 +59,17 @@
   "default-format": "Définir le format de fichier par défaut lors de l'enregistrement d'un Code Barre ou d'un QR Code.",
   "welcome": "Bienvenue sur Qrix",
   "welcome-msg": "Qrix est un générateur de Codes Barre et de QR Codes à la fois simple et puissant. Cliquez sur un lien ci-dessous pour commencer.",
-  "continue": "Continuer"
+  "continue": "Continuer",
+  "text-x-align": "Alignement du texte (axe X)",
+  "text-y-align": "Alignement du texte (axe Y)",
+  "left": "Gauche",
+  "right": "Droite",
+  "center": "Centre",
+  "justify": "Justifier",
+  "offleft": "Tout à gauche",
+  "offright": "Tout à droite",
+  "below": "Dessous",
+  "above": "Au-dessus",
+  "font-size": "Taille de la police",
+  "alt-text": "Texte alternatif"
 }

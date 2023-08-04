@@ -49,14 +49,23 @@ import {
 } from "@fluentui/react-icons";
 import { Settings } from "@/types/settings";
 import { barcodeTypes } from "@/lib/barcodeTypes";
+import { TextXAlign } from "@/types/text-x-align";
+import { TextYAlign } from "@/types/text-y-align";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
+  if (settings.textsize === undefined) settings.textsize = 8;
+  if (settings.textxalign === undefined) settings.textxalign = "center";
+  if (settings.textyalign === undefined) settings.textyalign = "below";
 
   const [content, setContent] = useState("");
+  const [alt, setAlt] = useState("");
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
+  const [textxalign, setTextXAlign] = useState<TextXAlign>(settings.textxalign);
+  const [textyalign, setTextYAlign] = useState<TextYAlign>(settings.textyalign);
+  const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
@@ -64,6 +73,44 @@ export default function BarcodePage() {
   }) => {
     setContent(event.target.value);
   };
+  const handleAltChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setAlt(event.target.value);
+  };
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(event.target.value);
+    setFontSize(newValue);
+  };
+
+  function toTextAlign(s: string): TextXAlign {
+    switch (s) {
+      case "offleft":
+        return "offleft";
+      case "left":
+        return "left";
+      case "right":
+        return "right";
+      case "offright":
+        return "offright";
+      case "justify":
+        return "justify";
+      default:
+        return "center";
+    }
+  }
+
+  function toTextYAlign(s: string): TextYAlign {
+    switch (s) {
+      case "above":
+        return "above";
+      case "below":
+        return "below";
+      default:
+        return "center";
+    }
+  }
+
   function genBarcode() {
     try {
       // The return value is the canvas element
@@ -73,10 +120,13 @@ export default function BarcodePage() {
         scale: 3, // 3x scaling factor
         height: 10, // Bar height, in millimeters
         includetext: true, // Show human-readable text
-        textxalign: "center", // Always good to set this
+        textxalign: textxalign, // Always good to set this
+        textyalign: textyalign,
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
+        textsize: fontSize,
+        alttext: alt,
       });
       AddHistory(
         {
@@ -85,10 +135,13 @@ export default function BarcodePage() {
           scale: 3, // 3x scaling factor
           height: 10, // Bar height, in millimeters
           includetext: true, // Show human-readable text
-          textxalign: "center", // Always good to set this
+          textxalign: textxalign, // Always good to set this
+          textyalign: textyalign,
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
+          textsize: fontSize,
+          alttext: alt,
         },
         "barcode"
       );
@@ -264,27 +317,78 @@ export default function BarcodePage() {
 
           <p className="ml-2 font-bold">{t("options")}</p>
         </section>
-        <section className="w-full space-y-2">
-          <div className="flex space-x-2 items-center">
-            <p>{t("foreground-color")}</p>
-            <input
-              defaultValue={settings.barcodeFg}
-              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-              type="color"
-              name="fg"
-              id="foreground-color"
-              onChange={(e) => setFg(e.target.value)}
+        <section className="grid grid-cols-[auto,1fr] gap-2 items-center grid-rows-6">
+          <p>{t("foreground-color")}</p>
+          <input
+            defaultValue={settings.barcodeFg}
+            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            type="color"
+            name="fg"
+            id="foreground-color"
+            onChange={(e) => setFg(e.target.value)}
+          />
+          <p>{t("background-color")}</p>
+          <input
+            defaultValue={settings.barcodeBg}
+            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            type="color"
+            name="bg"
+            id="background-color"
+            onChange={(e) => setBg(e.target.value)}
+          />
+          <p>{t("text-x-align")}</p>
+          <Select
+            defaultValue={textxalign}
+            onValueChange={(e) => {
+              setTextXAlign(toTextAlign(e));
+            }}
+          >
+            <SelectTrigger className="w-[150px] h-auto p-1">
+              <SelectValue placeholder={t("text-x-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="offleft">{t("offleft")}</SelectItem>
+              <SelectItem value="left">{t("left")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="right">{t("right")}</SelectItem>
+              <SelectItem value="offright">{t("offright")}</SelectItem>
+              <SelectItem value="justify">{t("justify")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("text-y-align")}</p>
+          <Select
+            defaultValue={textyalign}
+            onValueChange={(e) => {
+              setTextYAlign(toTextYAlign(e));
+            }}
+          >
+            <SelectTrigger className="w-[150px] h-auto p-1">
+              <SelectValue placeholder={t("text-y-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="above">{t("above")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="below">{t("below")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("font-size")}</p>
+          <div className="dark:bg-slate-800 bg-white shadow-md w-[50px] rounded-md">
+            <Input
+              onChange={handleFontSizeChange}
+              min={1}
+              max={120}
+              defaultValue={fontSize}
+              className="h-[28px] p-2 border-0"
+              type="number"
             />
           </div>
-          <div className="flex space-x-2 items-center">
-            <p>{t("background-color")}</p>
-            <input
-              defaultValue={settings.barcodeBg}
-              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-              type="color"
-              name="bg"
-              id="background-color"
-              onChange={(e) => setBg(e.target.value)}
+          <p>{t("alt-text")}</p>
+          <div className="shadow-md w-full rounded-md">
+            <Input
+              onChange={handleAltChange}
+              type="text"
+              placeholder={t("alt-text")}
+              className="h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
             />
           </div>
         </section>

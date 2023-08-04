@@ -59,5 +59,17 @@
   "default-format": "Set the default file format when saving a Bar Code or QR Code.",
   "welcome": "Welcome to Qrix",
   "welcome-msg": "Qrix is a simple yet powerful Bar Code and QR Code generator. Click on a link below to get started.",
-  "continue": "Continue"
+  "continue": "Continue",
+  "text-x-align": "Text align (X axis)",
+  "text-y-align": "Text align (Y axis)",
+  "left": "Left",
+  "right": "Right",
+  "center": "Center",
+  "justify": "Justify",
+  "offleft": "Off left",
+  "offright": "Off right",
+  "below": "Below",
+  "above": "Above",
+  "font-size": "Font size",
+  "alt-text": "Alt text"
 }
