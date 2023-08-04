@@ -383,7 +383,7 @@ export default function BarcodePage() {
             />
           </div>
           <p>{t("alt-text")}</p>
-          <div className="shadow-md w-full rounded-md">
+          <div className="shadow-md w-[150px] rounded-md">
             <Input
               onChange={handleAltChange}
               type="text"
