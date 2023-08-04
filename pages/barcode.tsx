@@ -56,6 +56,7 @@ export default function BarcodePage() {
   const settings: Settings = GetSettings();
 
   const [content, setContent] = useState("");
+  const [alt, setAlt] = useState("");
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
@@ -68,6 +69,11 @@ export default function BarcodePage() {
     target: { value: SetStateAction<string> };
   }) => {
     setContent(event.target.value);
+  };
+  const handleAltChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setAlt(event.target.value);
   };
   const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(event.target.value);
@@ -117,6 +123,7 @@ export default function BarcodePage() {
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
         textsize: fontSize,
+        alttext: alt,
       });
       AddHistory(
         {
@@ -131,6 +138,7 @@ export default function BarcodePage() {
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
           textsize: fontSize,
+          alttext: alt,
         },
         "barcode"
       );
@@ -359,6 +367,15 @@ export default function BarcodePage() {
               defaultValue={fontSize}
               className="h-[28px] p-2 border-0"
               type="number"
+            />
+          </div>
+          <p>{t("alt-text")}</p>
+          <div className="shadow-md w-full rounded-md">
+            <Input
+              onChange={handleAltChange}
+              type="text"
+              placeholder={t("alt-text")}
+              className="h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
             />
           </div>
         </section>
