@@ -56,6 +56,9 @@ export function GetSettings(): Settings {
           qrFg: "#000000",
           qrBg: "#FFFFFF",
           format: "png",
+          textxalign: "center",
+          textyalign: "below",
+          textsize: 8,
         })
     );
   }
@@ -66,6 +69,9 @@ export function GetSettings(): Settings {
     qrBg: "#FFFFFF",
     qrFg: "#000000",
     format: "png",
+    textxalign: "center",
+    textyalign: "below",
+    textsize: 8,
   };
 }
 export function SetSettings(settings: Settings) {

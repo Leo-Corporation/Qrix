@@ -66,9 +66,9 @@
   "right": "Droite",
   "center": "Centre",
   "justify": "Justifier",
-  "offleft": "En dehors à gauche",
-  "offright": "En dehors à droite",
-  "below": "Sous",
+  "offleft": "Tout à gauche",
+  "offright": "Tout à droite",
+  "below": "Dessous",
   "above": "Au-dessus",
   "font-size": "Taille de la police",
   "alt-text": "Texte alternatif"

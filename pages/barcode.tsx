@@ -54,15 +54,18 @@ import { TextYAlign } from "@/types/text-y-align";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
+  if (settings.textsize === undefined) settings.textsize = 8;
+  if (settings.textxalign === undefined) settings.textxalign = "center";
+  if (settings.textyalign === undefined) settings.textyalign = "below";
 
   const [content, setContent] = useState("");
   const [alt, setAlt] = useState("");
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
-  const [textxalign, setTextXAlign] = useState("center");
-  const [textyalign, setTextYAlign] = useState("below");
-  const [fontSize, setFontSize] = useState(8);
+  const [textxalign, setTextXAlign] = useState<TextXAlign>(settings.textxalign);
+  const [textyalign, setTextYAlign] = useState<TextYAlign>(settings.textyalign);
+  const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
@@ -117,8 +120,8 @@ export default function BarcodePage() {
         scale: 3, // 3x scaling factor
         height: 10, // Bar height, in millimeters
         includetext: true, // Show human-readable text
-        textxalign: toTextAlign(textxalign), // Always good to set this
-        textyalign: toTextYAlign(textyalign),
+        textxalign: textxalign, // Always good to set this
+        textyalign: textyalign,
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
@@ -132,8 +135,8 @@ export default function BarcodePage() {
           scale: 3, // 3x scaling factor
           height: 10, // Bar height, in millimeters
           includetext: true, // Show human-readable text
-          textxalign: toTextAlign(textxalign), // Always good to set this
-          textyalign: toTextYAlign(textyalign),
+          textxalign: textxalign, // Always good to set this
+          textyalign: textyalign,
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
@@ -334,7 +337,12 @@ export default function BarcodePage() {
             onChange={(e) => setBg(e.target.value)}
           />
           <p>{t("text-x-align")}</p>
-          <Select defaultValue="center" onValueChange={setTextXAlign}>
+          <Select
+            defaultValue={textxalign}
+            onValueChange={(e) => {
+              setTextXAlign(toTextAlign(e));
+            }}
+          >
             <SelectTrigger className="w-[150px] h-auto p-1">
               <SelectValue placeholder={t("text-x-align")} />
             </SelectTrigger>
@@ -348,7 +356,12 @@ export default function BarcodePage() {
             </SelectContent>
           </Select>
           <p>{t("text-y-align")}</p>
-          <Select defaultValue="below" onValueChange={setTextYAlign}>
+          <Select
+            defaultValue={textyalign}
+            onValueChange={(e) => {
+              setTextYAlign(toTextYAlign(e));
+            }}
+          >
             <SelectTrigger className="w-[150px] h-auto p-1">
               <SelectValue placeholder={t("text-y-align")} />
             </SelectTrigger>

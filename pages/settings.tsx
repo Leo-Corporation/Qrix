@@ -68,17 +68,26 @@ import {
   ChevronDown16Regular,
 } from "@fluentui/react-icons";
 import { barcodeTypes } from "@/lib/barcodeTypes";
+import { TextXAlign } from "@/types/text-x-align";
+import { TextYAlign } from "@/types/text-y-align";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
 
   const settings: Settings = GetSettings();
+  if (settings.textsize === undefined) settings.textsize = 8;
+  if (settings.textxalign === undefined) settings.textxalign = "center";
+  if (settings.textyalign === undefined) settings.textyalign = "below";
+
   const [barFg, setBarFg] = useState(settings.barcodeFg);
   const [barBg, setBarBg] = useState(settings.barcodeBg);
   const [qrFg, setQrFg] = useState(settings.qrFg);
   const [qrBg, setQrBg] = useState(settings.qrBg);
   const [type, setType] = useState(settings.barcodeType);
   const [format, setFormat] = useState(settings.format);
+  const [xalign, setXAlign] = useState<TextXAlign>(settings.textxalign);
+  const [yalign, setYAlign] = useState<TextYAlign>(settings.textyalign);
+  const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
 
   const ver = "1.0.2.2307";
@@ -120,7 +129,39 @@ export default function SettingsPage() {
     date.setTime(date.getTime() + expireMs);
     document.cookie = `NEXT_LOCALE=${val};expires=${date.toUTCString()};path=/`;
   }
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(event.target.value);
+    setFontSize(newValue);
+    settings.textsize = newValue;
+    SetSettings(settings);
+  };
+  function toTextAlign(s: string): TextXAlign {
+    switch (s) {
+      case "offleft":
+        return "offleft";
+      case "left":
+        return "left";
+      case "right":
+        return "right";
+      case "offright":
+        return "offright";
+      case "justify":
+        return "justify";
+      default:
+        return "center";
+    }
+  }
 
+  function toTextYAlign(s: string): TextYAlign {
+    switch (s) {
+      case "above":
+        return "above";
+      case "below":
+        return "below";
+      default:
+        return "center";
+    }
+  }
   return (
     <Layout>
       <Head>
@@ -311,7 +352,7 @@ export default function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <section className="flex space-x-2 items-center">
+                <section className="grid grid-cols-[auto,1fr] grid-rows-6 gap-2 items-center">
                   <p>{t("barcode-default")}</p>
                   <div className="border-slate-200 dark:border-slate-700 rounded-md border-0.5">
                     <Popover open={open} onOpenChange={setOpen}>
@@ -363,38 +404,80 @@ export default function SettingsPage() {
                       </PopoverContent>
                     </Popover>
                   </div>
-                </section>
-                <section className="space-y-2">
-                  <div className="flex space-x-2 items-center">
-                    <p>{t("foreground-color")}</p>
-                    <input
-                      defaultValue={barFg}
-                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-                      type="color"
-                      name="fg"
-                      id="foreground-color"
-                      onChange={(e) => {
-                        settings.barcodeFg = e.target.value;
-                        SetSettings(settings);
-                        setBarFg(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div className="flex space-x-2 items-center">
-                    <p>{t("background-color")}</p>
-                    <input
-                      defaultValue={barBg}
-                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-                      type="color"
-                      name="bg"
-                      id="background-color"
-                      onChange={(e) => {
-                        settings.barcodeBg = e.target.value;
-                        SetSettings(settings);
-                        setBarBg(e.target.value);
-                      }}
-                    />
-                  </div>
+                  <p>{t("foreground-color")}</p>
+                  <input
+                    defaultValue={barFg}
+                    className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                    type="color"
+                    name="fg"
+                    id="foreground-color"
+                    onChange={(e) => {
+                      settings.barcodeFg = e.target.value;
+                      SetSettings(settings);
+                      setBarFg(e.target.value);
+                    }}
+                  />
+                  <p>{t("background-color")}</p>
+                  <input
+                    defaultValue={barBg}
+                    className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                    type="color"
+                    name="bg"
+                    id="background-color"
+                    onChange={(e) => {
+                      settings.barcodeBg = e.target.value;
+                      SetSettings(settings);
+                      setBarBg(e.target.value);
+                    }}
+                  />
+                  <p>{t("text-x-align")}</p>
+                  <Select
+                    defaultValue={xalign}
+                    onValueChange={(e) => {
+                      settings.textxalign = toTextAlign(e);
+                      SetSettings(settings);
+                      setXAlign(toTextAlign(e));
+                    }}
+                  >
+                    <SelectTrigger className="w-[150px] h-auto p-1">
+                      <SelectValue placeholder={t("text-x-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="offleft">{t("offleft")}</SelectItem>
+                      <SelectItem value="left">{t("left")}</SelectItem>
+                      <SelectItem value="center">{t("center")}</SelectItem>
+                      <SelectItem value="right">{t("right")}</SelectItem>
+                      <SelectItem value="offright">{t("offright")}</SelectItem>
+                      <SelectItem value="justify">{t("justify")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p>{t("text-y-align")}</p>
+                  <Select
+                    defaultValue={yalign}
+                    onValueChange={(e) => {
+                      settings.textyalign = toTextYAlign(e);
+                      SetSettings(settings);
+                      setYAlign(toTextYAlign(e));
+                    }}
+                  >
+                    <SelectTrigger className="w-[150px] h-auto p-1">
+                      <SelectValue placeholder={t("text-y-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="above">{t("above")}</SelectItem>
+                      <SelectItem value="center">{t("center")}</SelectItem>
+                      <SelectItem value="below">{t("below")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p>{t("font-size")}</p>
+                  <Input
+                    defaultValue={fontSize}
+                    onChange={handleFontSizeChange}
+                    min={1}
+                    max={120}
+                    className="h-[28px] w-[50px] p-2 border dark:border-slate-700 border-slate-200"
+                    type="number"
+                  />
                 </section>
               </AccordionContent>
             </AccordionItem>
