@@ -61,12 +61,17 @@ export default function BarcodePage() {
   const [bg, setBg] = useState(settings.barcodeBg);
   const [textxalign, setTextXAlign] = useState("center");
   const [textyalign, setTextYAlign] = useState("below");
+  const [fontSize, setFontSize] = useState(8);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
     setContent(event.target.value);
+  };
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(event.target.value);
+    setFontSize(newValue);
   };
 
   function toTextAlign(s: string): TextXAlign {
@@ -111,6 +116,7 @@ export default function BarcodePage() {
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
+        textsize: fontSize,
       });
       AddHistory(
         {
@@ -124,6 +130,7 @@ export default function BarcodePage() {
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
+          textsize: fontSize,
         },
         "barcode"
       );
@@ -343,6 +350,17 @@ export default function BarcodePage() {
               <SelectItem value="below">{t("below")}</SelectItem>
             </SelectContent>
           </Select>
+          <p>{t("font-size")}</p>
+          <div className="dark:bg-slate-800 bg-white shadow-md w-[50px] rounded-md">
+            <Input
+              onChange={handleFontSizeChange}
+              min={1}
+              max={120}
+              defaultValue={fontSize}
+              className="h-[28px] p-2 border-0"
+              type="number"
+            />
+          </div>
         </section>
       </PageContent>
     </Layout>

@@ -17,6 +17,7 @@ export interface GeneratedItem {
   backgroundcolor: string;
   barcolor: string;
   textcolor: string;
+  textsize?: number;
 }
 
 export type ItemType = "barcode" | "qrcode";
