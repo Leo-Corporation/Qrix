@@ -49,6 +49,7 @@ import {
 } from "@fluentui/react-icons";
 import { Settings } from "@/types/settings";
 import { barcodeTypes } from "@/lib/barcodeTypes";
+import { TextXAlign } from "@/types/text-x-align";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
@@ -66,16 +67,7 @@ export default function BarcodePage() {
     setContent(event.target.value);
   };
 
-  function toTextAlign(
-    s: string
-  ):
-    | "center"
-    | "offleft"
-    | "left"
-    | "right"
-    | "offright"
-    | "justify"
-    | undefined {
+  function toTextAlign(s: string): TextXAlign {
     switch (s) {
       case "offleft":
         return "offleft";
