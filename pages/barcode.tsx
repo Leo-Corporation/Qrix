@@ -264,29 +264,25 @@ export default function BarcodePage() {
 
           <p className="ml-2 font-bold">{t("options")}</p>
         </section>
-        <section className="w-full space-y-2">
-          <div className="flex space-x-2 items-center">
-            <p>{t("foreground-color")}</p>
-            <input
-              defaultValue={settings.barcodeFg}
-              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-              type="color"
-              name="fg"
-              id="foreground-color"
-              onChange={(e) => setFg(e.target.value)}
-            />
-          </div>
-          <div className="flex space-x-2 items-center">
-            <p>{t("background-color")}</p>
-            <input
-              defaultValue={settings.barcodeBg}
-              className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
-              type="color"
-              name="bg"
-              id="background-color"
-              onChange={(e) => setBg(e.target.value)}
-            />
-          </div>
+        <section className="grid grid-cols-[auto,1fr] gap-2 items-center grid-rows-6">
+          <p>{t("foreground-color")}</p>
+          <input
+            defaultValue={settings.barcodeFg}
+            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            type="color"
+            name="fg"
+            id="foreground-color"
+            onChange={(e) => setFg(e.target.value)}
+          />
+          <p>{t("background-color")}</p>
+          <input
+            defaultValue={settings.barcodeBg}
+            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            type="color"
+            name="bg"
+            id="background-color"
+            onChange={(e) => setBg(e.target.value)}
+          />
         </section>
       </PageContent>
     </Layout>
