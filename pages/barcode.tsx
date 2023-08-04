@@ -57,6 +57,7 @@ export default function BarcodePage() {
   const [type, setType] = useState(settings.barcodeType);
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
+  const [textxalign, setTextXAlign] = useState("center");
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
@@ -64,6 +65,33 @@ export default function BarcodePage() {
   }) => {
     setContent(event.target.value);
   };
+
+  function toTextAlign(
+    s: string
+  ):
+    | "center"
+    | "offleft"
+    | "left"
+    | "right"
+    | "offright"
+    | "justify"
+    | undefined {
+    switch (s) {
+      case "offleft":
+        return "offleft";
+      case "left":
+        return "left";
+      case "right":
+        return "right";
+      case "offright":
+        return "offright";
+      case "justify":
+        return "justify";
+      default:
+        return "center";
+    }
+  }
+
   function genBarcode() {
     try {
       // The return value is the canvas element
@@ -73,7 +101,7 @@ export default function BarcodePage() {
         scale: 3, // 3x scaling factor
         height: 10, // Bar height, in millimeters
         includetext: true, // Show human-readable text
-        textxalign: "center", // Always good to set this
+        textxalign: toTextAlign(textxalign), // Always good to set this
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
@@ -85,7 +113,7 @@ export default function BarcodePage() {
           scale: 3, // 3x scaling factor
           height: 10, // Bar height, in millimeters
           includetext: true, // Show human-readable text
-          textxalign: "center", // Always good to set this
+          textxalign: toTextAlign(textxalign), // Always good to set this
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
@@ -283,6 +311,20 @@ export default function BarcodePage() {
             id="background-color"
             onChange={(e) => setBg(e.target.value)}
           />
+          <p>{t("text-x-align")}</p>
+          <Select defaultValue="center" onValueChange={setTextXAlign}>
+            <SelectTrigger className="w-[150px] h-auto p-1">
+              <SelectValue placeholder={t("text-x-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="offleft">{t("offleft")}</SelectItem>
+              <SelectItem value="left">{t("left")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="right">{t("right")}</SelectItem>
+              <SelectItem value="offright">{t("offright")}</SelectItem>
+              <SelectItem value="justify">{t("justify")}</SelectItem>
+            </SelectContent>
+          </Select>
         </section>
       </PageContent>
     </Layout>
