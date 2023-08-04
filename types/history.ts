@@ -1,3 +1,6 @@
+import { TextXAlign } from "./text-x-align";
+import { TextYAlign } from "./text-y-align";
+
 export interface History {
   barCodes: GeneratedItem[];
   qrCodes: GeneratedItem[];
@@ -9,17 +12,11 @@ export interface GeneratedItem {
   scale: number; // 3x scaling factor
   height?: number; // Bar height, in millimeters
   includetext: boolean; // Show human-readable text
-  textxalign:
-    | "offleft"
-    | "left"
-    | "center"
-    | "right"
-    | "offright"
-    | "justify"
-    | undefined; // Always good to set this
+  textxalign: TextXAlign; // Always good to set this
+  textyalign?: TextYAlign;
   backgroundcolor: string;
-  barcolor: string,
-  textcolor: string
+  barcolor: string;
+  textcolor: string;
 }
 
 export type ItemType = "barcode" | "qrcode";

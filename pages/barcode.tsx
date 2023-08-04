@@ -50,6 +50,7 @@ import {
 import { Settings } from "@/types/settings";
 import { barcodeTypes } from "@/lib/barcodeTypes";
 import { TextXAlign } from "@/types/text-x-align";
+import { TextYAlign } from "@/types/text-y-align";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
@@ -59,6 +60,7 @@ export default function BarcodePage() {
   const [fg, setFg] = useState(settings.barcodeFg);
   const [bg, setBg] = useState(settings.barcodeBg);
   const [textxalign, setTextXAlign] = useState("center");
+  const [textyalign, setTextYAlign] = useState("below");
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
   const handleInputChange = (event: {
@@ -84,6 +86,17 @@ export default function BarcodePage() {
     }
   }
 
+  function toTextYAlign(s: string): TextYAlign {
+    switch (s) {
+      case "above":
+        return "above";
+      case "below":
+        return "below";
+      default:
+        return "center";
+    }
+  }
+
   function genBarcode() {
     try {
       // The return value is the canvas element
@@ -94,6 +107,7 @@ export default function BarcodePage() {
         height: 10, // Bar height, in millimeters
         includetext: true, // Show human-readable text
         textxalign: toTextAlign(textxalign), // Always good to set this
+        textyalign: toTextYAlign(textyalign),
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
@@ -106,6 +120,7 @@ export default function BarcodePage() {
           height: 10, // Bar height, in millimeters
           includetext: true, // Show human-readable text
           textxalign: toTextAlign(textxalign), // Always good to set this
+          textyalign: toTextYAlign(textyalign),
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
@@ -315,6 +330,17 @@ export default function BarcodePage() {
               <SelectItem value="right">{t("right")}</SelectItem>
               <SelectItem value="offright">{t("offright")}</SelectItem>
               <SelectItem value="justify">{t("justify")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("text-y-align")}</p>
+          <Select defaultValue="below" onValueChange={setTextYAlign}>
+            <SelectTrigger className="w-[150px] h-auto p-1">
+              <SelectValue placeholder={t("text-y-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="above">{t("above")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="below">{t("below")}</SelectItem>
             </SelectContent>
           </Select>
         </section>
