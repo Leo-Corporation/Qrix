@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "customConditions": ["browser"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -13,7 +14,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -33,7 +34,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
   ],
   "exclude": [
     "node_modules"
