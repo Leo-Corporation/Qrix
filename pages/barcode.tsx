@@ -51,6 +51,7 @@ import { Settings } from "@/types/settings";
 import { barcodeTypes } from "@/lib/barcodeTypes";
 import { TextXAlign } from "@/types/text-x-align";
 import { TextYAlign } from "@/types/text-y-align";
+import { ScrollArea } from "@/components/ui/scroll-area";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
@@ -241,24 +242,30 @@ export default function BarcodePage() {
                     <CommandInput placeholder={t("search-barcode")} />
                     <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
                     <CommandGroup>
-                      {barcodeTypes.map((code) => (
-                        <CommandItem
-                          key={code.value}
-                          onSelect={(currentValue) => {
-                            currentValue = currentValue.replace("-", "");
-                            setType(currentValue === type ? "" : currentValue);
-                            setOpen(false);
-                          }}
-                        >
-                          <Checkmark16Regular
-                            className={cn(
-                              "mr-2 h-4 w-4",
-                              type === code.value ? "opacity-100" : "opacity-0"
-                            )}
-                          />
-                          {code.label}
-                        </CommandItem>
-                      ))}
+                      <ScrollArea className="h-[190px]">
+                        {barcodeTypes.map((code) => (
+                          <CommandItem
+                            key={code.value}
+                            onSelect={(currentValue) => {
+                              currentValue = currentValue.replace("-", "");
+                              setType(
+                                currentValue === type ? "" : currentValue
+                              );
+                              setOpen(false);
+                            }}
+                          >
+                            <Checkmark16Regular
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                type === code.value
+                                  ? "opacity-100"
+                                  : "opacity-0"
+                              )}
+                            />
+                            {code.label}
+                          </CommandItem>
+                        ))}
+                      </ScrollArea>
                     </CommandGroup>
                   </Command>
                 </PopoverContent>
