@@ -71,7 +71,7 @@ export default function BarcodePage() {
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
         },
-        "qrcode"
+        "qrcode",
       );
       setVis(true);
     } catch (e) {
@@ -82,7 +82,7 @@ export default function BarcodePage() {
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
-    onError: (err: Error) => void
+    onError: (err: Error) => void,
   ) {
     canvas.toBlob((blob) => {
       // check for null blob
@@ -94,7 +94,7 @@ export default function BarcodePage() {
           },
           (err) => {
             onError(err);
-          }
+          },
         );
       } else {
         // handle null blob case
@@ -104,7 +104,7 @@ export default function BarcodePage() {
   }
   function copyBtn() {
     let canvas: HTMLCanvasElement = document.getElementById(
-      "qrcode"
+      "qrcode",
     ) as HTMLCanvasElement;
     copyCanvasContentsToClipboard(
       canvas,
@@ -113,7 +113,7 @@ export default function BarcodePage() {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
   function saveBtn() {
@@ -140,13 +140,13 @@ export default function BarcodePage() {
         </section>
         <section className="flex w-full flex-col items-center">
           <div className="m-5 flex w-full space-x-2">
-            <div className="shadow-md w-full rounded-md">
+            <div className="w-full rounded-md shadow-md">
               <Input
                 onChange={handleInputChange}
                 type="text"
                 id="prompt-txt"
                 placeholder={t("enter-content-qr")}
-                className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800 focus:shadow-sm"
+                className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
               />
             </div>
             <Button
@@ -162,7 +162,7 @@ export default function BarcodePage() {
             className={vis ? "max-w-full" : "hidden"}
             id="qrcode"
           ></canvas>
-          <div className={vis ? "flex space-x-2 m-4" : "hidden"}>
+          <div className={vis ? "m-4 flex space-x-2" : "hidden"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -202,11 +202,11 @@ export default function BarcodePage() {
 
           <p className="ml-2 font-bold">{t("options")}</p>
         </section>
-        <section className="grid grid-cols-[auto,1fr] gap-2 items-center grid-rows-6">
+        <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
           <p>{t("foreground-color")}</p>
           <input
             defaultValue={fg}
-            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
             type="color"
             name="fg"
             id="foreground-color"
@@ -215,7 +215,7 @@ export default function BarcodePage() {
           <p>{t("background-color")}</p>
           <input
             defaultValue={bg}
-            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
             type="color"
             name="bg"
             id="background-color"

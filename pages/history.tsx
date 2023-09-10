@@ -102,7 +102,7 @@ export default function HistoryPage() {
                   <p className="icon my-2 mr-2 text-6xl font-normal">
                     {"\uF47F"}
                   </p>
-                  <h2 className="text-xl font-bold text-center">
+                  <h2 className="text-center text-xl font-bold">
                     {t("history-empty")}
                   </h2>
                 </div>
@@ -125,7 +125,7 @@ export default function HistoryPage() {
                   <p className="icon my-2 mr-2 text-6xl font-normal">
                     {"\uF47F"}
                   </p>
-                  <h2 className="text-xl font-bold text-center">
+                  <h2 className="text-center text-xl font-bold">
                     {t("history-empty")}
                   </h2>
                 </div>
