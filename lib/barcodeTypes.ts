@@ -20,6 +20,10 @@ export const barcodeTypes = [
     label: "Code39",
   },
   {
+    value: "code39ext",
+    label: "Code39 Extended",
+  },
+  {
     value: "code49",
     label: "Code49",
   },

@@ -385,10 +385,16 @@ export default function SettingsPage() {
                                       "-",
                                       ""
                                     );
-                                    currentValue =
-                                      currentValue === "code25"
-                                        ? "code2of5"
-                                        : currentValue;
+                                    switch (currentValue) {
+                                      case "code25":
+                                        currentValue = "code2of5";
+                                        break;
+                                      case "code39 extended":
+                                        currentValue = "code39ext";
+                                        break;
+                                      default:
+                                        break;
+                                    }
                                     setType(
                                       currentValue === type ? "" : currentValue
                                     );
