@@ -248,6 +248,10 @@ export default function BarcodePage() {
                             key={code.value}
                             onSelect={(currentValue) => {
                               currentValue = currentValue.replace("-", "");
+                              currentValue =
+                                currentValue === "code25"
+                                  ? "code2of5"
+                                  : currentValue;
                               setType(
                                 currentValue === type ? "" : currentValue
                               );

@@ -12,6 +12,10 @@ export const barcodeTypes = [
     label: "Code16k",
   },
   {
+    value: "code2of5",
+    label: "Code25",
+  },
+  {
     value: "code39",
     label: "Code39",
   },
