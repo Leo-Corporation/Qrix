@@ -255,6 +255,9 @@ export default function BarcodePage() {
                                 case "code39 extended":
                                   currentValue = "code39ext";
                                   break;
+                                case "code93 extended":
+                                  currentValue = "code93ext";
+                                  break;
                                 default:
                                   break;
                               }
