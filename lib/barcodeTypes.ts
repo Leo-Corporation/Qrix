@@ -56,6 +56,10 @@ export const barcodeTypes = [
     label: "UPC-A",
   },
   {
+    value: "upce",
+    label: "UPC-E",
+  },
+  {
     value: "msi",
     label: "MSI",
   },
