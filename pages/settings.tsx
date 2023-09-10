@@ -70,6 +70,7 @@ import {
 import { barcodeTypes } from "@/lib/barcodeTypes";
 import { TextXAlign } from "@/types/text-x-align";
 import { TextYAlign } from "@/types/text-y-align";
+import { ScrollArea } from "@/components/ui/scroll-area";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -90,7 +91,7 @@ export default function SettingsPage() {
   const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
 
-  const ver = "1.1.1.2308";
+  const ver = "1.2.0.2309";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -194,7 +195,7 @@ export default function SettingsPage() {
                   {t("see-licenses")}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px] bg-white dark:bg-slate-900 border-0">
+              <DialogContent className="border-0 bg-white dark:bg-slate-900 sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>{t("licenses")}</DialogTitle>
                 </DialogHeader>
@@ -352,16 +353,16 @@ export default function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <section className="grid grid-cols-[auto,1fr] grid-rows-6 gap-2 items-center">
+                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
-                  <div className="border-slate-200 dark:border-slate-700 rounded-md border-0.5">
+                  <div className="border-0.5 rounded-md border-slate-200 dark:border-slate-700">
                     <Popover open={open} onOpenChange={setOpen}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
                           role="combobox"
                           aria-expanded={open}
-                          className="sm:w-[180px] h-auto px-2 py-1 justify-between"
+                          className="h-auto justify-between px-2 py-1 sm:w-[180px]"
                         >
                           {type
                             ? barcodeTypes.find((code) => code.value === type)
@@ -370,35 +371,53 @@ export default function SettingsPage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-[180px] p-0 border-slate-200 dark:border-slate-700">
+                      <PopoverContent className="w-[180px] border-slate-200 p-0 dark:border-slate-700">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
                           <CommandGroup>
-                            {barcodeTypes.map((code) => (
-                              <CommandItem
-                                key={code.value}
-                                onSelect={(currentValue) => {
-                                  currentValue = currentValue.replace("-", "");
-                                  setType(
-                                    currentValue === type ? "" : currentValue
-                                  );
-                                  setOpen(false);
-                                  settings.barcodeType = currentValue;
-                                  SetSettings(settings);
-                                }}
-                              >
-                                <Checkmark16Regular
-                                  className={cn(
-                                    "mr-2 h-4 w-4",
-                                    type === code.value
-                                      ? "opacity-100"
-                                      : "opacity-0"
-                                  )}
-                                />
-                                {code.label}
-                              </CommandItem>
-                            ))}
+                            <ScrollArea className="h-[190px]">
+                              {barcodeTypes.map((code) => (
+                                <CommandItem
+                                  key={code.value}
+                                  onSelect={(currentValue) => {
+                                    currentValue = currentValue.replace(
+                                      "-",
+                                      "",
+                                    );
+                                    switch (currentValue) {
+                                      case "code25":
+                                        currentValue = "code2of5";
+                                        break;
+                                      case "code39 extended":
+                                        currentValue = "code39ext";
+                                        break;
+                                      case "code93 extended":
+                                        currentValue = "code93ext";
+                                        break;
+                                      default:
+                                        break;
+                                    }
+                                    setType(
+                                      currentValue === type ? "" : currentValue,
+                                    );
+                                    setOpen(false);
+                                    settings.barcodeType = currentValue;
+                                    SetSettings(settings);
+                                  }}
+                                >
+                                  <Checkmark16Regular
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      type === code.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {code.label}
+                                </CommandItem>
+                              ))}
+                            </ScrollArea>
                           </CommandGroup>
                         </Command>
                       </PopoverContent>
@@ -407,7 +426,7 @@ export default function SettingsPage() {
                   <p>{t("foreground-color")}</p>
                   <input
                     defaultValue={barFg}
-                    className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                    className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
                     type="color"
                     name="fg"
                     id="foreground-color"
@@ -420,7 +439,7 @@ export default function SettingsPage() {
                   <p>{t("background-color")}</p>
                   <input
                     defaultValue={barBg}
-                    className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                    className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
                     type="color"
                     name="bg"
                     id="background-color"
@@ -439,7 +458,7 @@ export default function SettingsPage() {
                       setXAlign(toTextAlign(e));
                     }}
                   >
-                    <SelectTrigger className="w-[150px] h-auto p-1">
+                    <SelectTrigger className="h-auto w-[150px] p-1">
                       <SelectValue placeholder={t("text-x-align")} />
                     </SelectTrigger>
                     <SelectContent>
@@ -460,7 +479,7 @@ export default function SettingsPage() {
                       setYAlign(toTextYAlign(e));
                     }}
                   >
-                    <SelectTrigger className="w-[150px] h-auto p-1">
+                    <SelectTrigger className="h-auto w-[150px] p-1">
                       <SelectValue placeholder={t("text-y-align")} />
                     </SelectTrigger>
                     <SelectContent>
@@ -475,7 +494,7 @@ export default function SettingsPage() {
                     onChange={handleFontSizeChange}
                     min={1}
                     max={120}
-                    className="h-[28px] w-[50px] p-2 border dark:border-slate-700 border-slate-200"
+                    className="h-[28px] w-[50px] border border-slate-200 p-2 dark:border-slate-700"
                     type="number"
                   />
                 </section>
@@ -497,11 +516,11 @@ export default function SettingsPage() {
               </AccordionTrigger>
               <AccordionContent>
                 <section className="space-y-2">
-                  <div className="flex space-x-2 items-center">
+                  <div className="flex items-center space-x-2">
                     <p>{t("foreground-color")}</p>
                     <input
                       defaultValue={qrFg}
-                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
                       type="color"
                       name="qrfg"
                       id="qr-foreground-color"
@@ -512,11 +531,11 @@ export default function SettingsPage() {
                       }}
                     />
                   </div>
-                  <div className="flex space-x-2 items-center">
+                  <div className="flex items-center space-x-2">
                     <p>{t("background-color")}</p>
                     <input
                       defaultValue={qrBg}
-                      className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+                      className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
                       type="color"
                       name="qrbg"
                       id="qr-background-color"
@@ -557,7 +576,7 @@ export default function SettingsPage() {
                       encodeURIComponent(
                         typeof window !== "undefined"
                           ? localStorage.getItem("qrix_settings") || "{}"
-                          : "{}"
+                          : "{}",
                       )
                     }
                     download={"settings.json"}
@@ -570,7 +589,7 @@ export default function SettingsPage() {
                     onClick={() =>
                       (
                         document.getElementById(
-                          "FileSelector"
+                          "FileSelector",
                         ) as HTMLInputElement
                       ).click()
                     }
@@ -609,7 +628,7 @@ export default function SettingsPage() {
                             setTheme("system");
                             localStorage.setItem(
                               "qrix_settings",
-                              JSON.stringify({})
+                              JSON.stringify({}),
                             );
                             setBarFg("#000000");
                             setBarBg("#FFFFFF");

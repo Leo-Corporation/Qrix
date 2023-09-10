@@ -52,7 +52,7 @@ export function PageContent({ children, page }: PageProps) {
       let height = document.documentElement.clientHeight;
       document.documentElement.style.setProperty(
         "--content-h",
-        `${height - headerHeight}px`
+        `${height - headerHeight}px`,
       );
     }
   }
@@ -75,7 +75,7 @@ export function PageContent({ children, page }: PageProps) {
           </SheetTrigger>
           <SheetContent
             side="left"
-            className="bg-white dark:bg-slate-900 border-0"
+            className="border-0 bg-white dark:bg-slate-900"
           >
             <nav>
               <h3 className="m-2 mt-0 text-xs font-bold">{t("pinned")}</h3>

@@ -39,7 +39,7 @@ export default function Home() {
           <p className="ml-2 font-bold">{t("home")}</p>
         </div>
         <div className="m-4 text-center">
-          <h2 className="font-bold text-4xl">{t("welcome")}</h2>
+          <h2 className="text-4xl font-bold">{t("welcome")}</h2>
           <p>{t("welcome-msg")}</p>
         </div>
         <div className="mb-2 flex items-center space-x-2">

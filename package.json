@@ -1,6 +1,6 @@
 {
   "name": "qrix",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fluentui/react-icons": "^2.0.210",
+    "@fluentui/react-icons": "^2.0.212",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-alert-dialog": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.4",
@@ -19,31 +19,33 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.6",
-    "@types/node": "20.5.0",
-    "@types/react": "18.2.20",
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
-    "bwip-js": "^4.0.0",
+    "bwip-js": "^4.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",
-    "eslint": "8.47.0",
-    "eslint-config-next": "13.4.16",
+    "eslint": "8.48.0",
+    "eslint-config-next": "13.4.19",
     "file-saver": "^2.0.5",
-    "next": "13.4.16",
+    "next": "13.4.19",
     "next-pwa": "^5.6.0",
     "next-themes": "^0.2.1",
     "next-translate": "^2.5.3",
     "next-translate-plugin": "^2.5.3",
-    "postcss": "8.4.27",
+    "postcss": "8.4.29",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
-    "tailwindcss-animate": "^1.0.6",
-    "typescript": "5.1.6"
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.2.2"
   },
   "devDependencies": {
-    "@types/file-saver": "^2.0.5"
+    "@types/file-saver": "^2.0.5",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.4"
   }
 }

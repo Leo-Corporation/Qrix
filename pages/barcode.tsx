@@ -5,6 +5,7 @@ import { PageContent } from "@/components/page";
 import {
   Calendar3Day20Regular,
   Copy16Regular,
+  DismissCircle16Filled,
   Save16Regular,
   Settings20Regular,
 } from "@fluentui/react-icons";
@@ -69,6 +70,8 @@ export default function BarcodePage() {
   const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [errOccured, setErrOccured] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -115,6 +118,7 @@ export default function BarcodePage() {
   function genBarcode() {
     try {
       // The return value is the canvas element
+      setErrOccured(false);
       let canvas = bwipjs.toCanvas("barcode", {
         bcid: type, // Barcode type
         text: content, // Text to encode
@@ -144,19 +148,21 @@ export default function BarcodePage() {
           textsize: fontSize,
           alttext: alt,
         },
-        "barcode"
+        "barcode",
       );
       setVis(true);
-    } catch (e) {
+    } catch (e: any) {
       // `e` may be a string or Error object
       console.error(e);
+      setErrOccured(true);
+      setErrMsg(e.toString().split(":")[2]);
     }
   }
 
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
-    onError: (err: Error) => void
+    onError: (err: Error) => void,
   ) {
     canvas.toBlob((blob) => {
       // check for null blob
@@ -168,7 +174,7 @@ export default function BarcodePage() {
           },
           (err) => {
             onError(err);
-          }
+          },
         );
       } else {
         // handle null blob case
@@ -178,7 +184,7 @@ export default function BarcodePage() {
   }
   function copyBtn() {
     let canvas: HTMLCanvasElement = document.getElementById(
-      "barcode"
+      "barcode",
     ) as HTMLCanvasElement;
     copyCanvasContentsToClipboard(
       canvas,
@@ -187,7 +193,7 @@ export default function BarcodePage() {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
   function saveBtn() {
@@ -212,8 +218,8 @@ export default function BarcodePage() {
           <p className="ml-2 font-bold">{t("barcode")}</p>
         </section>
         <section className="flex w-full flex-col items-center">
-          <div className="m-5 flex flex-col sm:flex-row w-full sm:space-x-2 space-y-2 sm:space-y-0">
-            <div className="shadow-md w-full rounded-md">
+          <div className="m-5 mb-2 flex w-full flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+            <div className="w-full rounded-md shadow-md">
               <Input
                 onChange={handleInputChange}
                 type="text"
@@ -222,14 +228,14 @@ export default function BarcodePage() {
                 className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
               />
             </div>
-            <div className="shadow-md rounded-md">
+            <div className="rounded-md shadow-md">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="sm:w-[180px] w-full bg-white dark:bg-slate-800 border-0 h-auto px-2 py-1 justify-between"
+                    className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
                   >
                     {type
                       ? barcodeTypes.find((code) => code.value === type)?.label
@@ -237,7 +243,7 @@ export default function BarcodePage() {
                     <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="sm:w-[180px] w-full p-0 border-slate-200 dark:border-slate-700">
+                <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
                   <Command>
                     <CommandInput placeholder={t("search-barcode")} />
                     <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
@@ -248,8 +254,21 @@ export default function BarcodePage() {
                             key={code.value}
                             onSelect={(currentValue) => {
                               currentValue = currentValue.replace("-", "");
+                              switch (currentValue) {
+                                case "code25":
+                                  currentValue = "code2of5";
+                                  break;
+                                case "code39 extended":
+                                  currentValue = "code39ext";
+                                  break;
+                                case "code93 extended":
+                                  currentValue = "code93ext";
+                                  break;
+                                default:
+                                  break;
+                              }
                               setType(
-                                currentValue === type ? "" : currentValue
+                                currentValue === type ? "" : currentValue,
                               );
                               setOpen(false);
                             }}
@@ -259,7 +278,7 @@ export default function BarcodePage() {
                                 "mr-2 h-4 w-4",
                                 type === code.value
                                   ? "opacity-100"
-                                  : "opacity-0"
+                                  : "opacity-0",
                               )}
                             />
                             {code.label}
@@ -279,12 +298,20 @@ export default function BarcodePage() {
               {t("create")}
             </Button>
           </div>
+          {errOccured ? (
+            <div className="flex w-full items-center space-x-2">
+              <DismissCircle16Filled color="red" />
+              <p>{errMsg}</p>
+            </div>
+          ) : (
+            <></>
+          )}
           {vis ? <></> : <p>{t("barcode-placeholder")}</p>}
           <canvas
             className={vis ? "max-w-full" : "hidden"}
             id="barcode"
           ></canvas>
-          <div className={vis ? "flex space-x-2 m-4" : "hidden"}>
+          <div className={vis ? "m-4 flex space-x-2" : "hidden"}>
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
@@ -324,11 +351,11 @@ export default function BarcodePage() {
 
           <p className="ml-2 font-bold">{t("options")}</p>
         </section>
-        <section className="grid grid-cols-[auto,1fr] gap-2 items-center grid-rows-6">
+        <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
           <p>{t("foreground-color")}</p>
           <input
             defaultValue={settings.barcodeFg}
-            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
             type="color"
             name="fg"
             id="foreground-color"
@@ -337,7 +364,7 @@ export default function BarcodePage() {
           <p>{t("background-color")}</p>
           <input
             defaultValue={settings.barcodeBg}
-            className="border-0 rounded-full h-8 w-8 outline-0 colorpicker"
+            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
             type="color"
             name="bg"
             id="background-color"
@@ -350,7 +377,7 @@ export default function BarcodePage() {
               setTextXAlign(toTextAlign(e));
             }}
           >
-            <SelectTrigger className="w-[150px] h-auto p-1">
+            <SelectTrigger className="h-auto w-[150px] p-1">
               <SelectValue placeholder={t("text-x-align")} />
             </SelectTrigger>
             <SelectContent>
@@ -369,7 +396,7 @@ export default function BarcodePage() {
               setTextYAlign(toTextYAlign(e));
             }}
           >
-            <SelectTrigger className="w-[150px] h-auto p-1">
+            <SelectTrigger className="h-auto w-[150px] p-1">
               <SelectValue placeholder={t("text-y-align")} />
             </SelectTrigger>
             <SelectContent>
@@ -379,18 +406,18 @@ export default function BarcodePage() {
             </SelectContent>
           </Select>
           <p>{t("font-size")}</p>
-          <div className="dark:bg-slate-800 bg-white shadow-md w-[50px] rounded-md">
+          <div className="w-[50px] rounded-md bg-white shadow-md dark:bg-slate-800">
             <Input
               onChange={handleFontSizeChange}
               min={1}
               max={120}
               defaultValue={fontSize}
-              className="h-[28px] p-2 border-0"
+              className="h-[28px] border-0 p-2"
               type="number"
             />
           </div>
           <p>{t("alt-text")}</p>
-          <div className="shadow-md w-[150px] rounded-md">
+          <div className="w-[150px] rounded-md shadow-md">
             <Input
               onChange={handleAltChange}
               type="text"

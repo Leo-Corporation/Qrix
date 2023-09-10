@@ -8,8 +8,20 @@ export const barcodeTypes = [
     label: "Code11",
   },
   {
+    value: "code16k",
+    label: "Code16k",
+  },
+  {
+    value: "code2of5",
+    label: "Code25",
+  },
+  {
     value: "code39",
     label: "Code39",
+  },
+  {
+    value: "code39ext",
+    label: "Code39 Extended",
   },
   {
     value: "code49",
@@ -18,6 +30,10 @@ export const barcodeTypes = [
   {
     value: "code93",
     label: "Code93",
+  },
+  {
+    value: "code93ext",
+    label: "Code93 Extended",
   },
   {
     value: "ean13",
@@ -40,11 +56,23 @@ export const barcodeTypes = [
     label: "UPC-A",
   },
   {
+    value: "upce",
+    label: "UPC-E",
+  },
+  {
     value: "msi",
     label: "MSI",
   },
   {
     value: "isbn",
     label: "ISBN",
+  },
+  {
+    value: "ismn",
+    label: "ISMN",
+  },
+  {
+    value: "issn",
+    label: "ISSN",
   },
 ];

@@ -46,7 +46,7 @@ export default function InstallSection() {
 
           <Button
             variant="outline"
-            className="w-full font-bold justify-center"
+            className="w-full justify-center font-bold"
             onClick={handleClick}
           >
             {t("install")}

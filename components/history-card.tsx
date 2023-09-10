@@ -31,7 +31,7 @@ export default function HistoryItem(props: {
       // The return value is the canvas element
       let canvas = bwipjs.toCanvas(
         `code-${props.item.text}-${props.index}`,
-        props.item
+        props.item,
       );
       setURL(canvas.toDataURL());
     } catch (e) {
@@ -45,7 +45,7 @@ export default function HistoryItem(props: {
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
-    onError: (err: Error) => void
+    onError: (err: Error) => void,
   ) {
     canvas.toBlob((blob) => {
       // check for null blob
@@ -57,7 +57,7 @@ export default function HistoryItem(props: {
           },
           (err) => {
             onError(err);
-          }
+          },
         );
       } else {
         // handle null blob case
@@ -67,7 +67,7 @@ export default function HistoryItem(props: {
   }
   function copyBtn() {
     let canvas: HTMLCanvasElement = document.getElementById(
-      `code-${props.item.text}-${props.index}`
+      `code-${props.item.text}-${props.index}`,
     ) as HTMLCanvasElement;
     copyCanvasContentsToClipboard(
       canvas,
@@ -76,12 +76,12 @@ export default function HistoryItem(props: {
       },
       (err) => {
         console.error(err);
-      }
+      },
     );
   }
   function saveBtn() {
     let canvas = document.getElementById(
-      `code-${props.item.text}-${props.index}`
+      `code-${props.item.text}-${props.index}`,
     ) as HTMLCanvasElement;
     canvas.toBlob(function (blob) {
       if (blob) {
@@ -92,11 +92,11 @@ export default function HistoryItem(props: {
   function deleteBtn() {
     props.deleteEvent(
       props.index,
-      props.item.bcid == "qrcode" ? "qrcode" : "barcode"
+      props.item.bcid == "qrcode" ? "qrcode" : "barcode",
     );
   }
   return (
-    <div className="p-3 m-2 bg-white dark:bg-slate-800 shadow-md rounded-md flex flex-col justify-center items-center w-[230px]">
+    <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-800">
       <canvas
         className="hidden"
         id={`code-${props.item.text}-${props.index}`}
@@ -119,7 +119,7 @@ export default function HistoryItem(props: {
           </Tooltip>
         </TooltipProvider>
       </span>
-      <div className="flex space-x-2 m-4">
+      <div className="m-4 flex space-x-2">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -170,7 +170,7 @@ export default function HistoryItem(props: {
         </TooltipProvider>
       </div>
       {props.item.bcid == "qrcode" ? (
-        <p className="text-center text-wrap mt-2">
+        <p className="text-wrap mt-2 text-center">
           {props.item.text.length > 30
             ? props.item.text.substring(0, 27) + "..."
             : props.item.text}
