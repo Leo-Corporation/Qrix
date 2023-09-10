@@ -5,6 +5,7 @@ import { PageContent } from "@/components/page";
 import {
   Calendar3Day20Regular,
   Copy16Regular,
+  DismissCircle16Filled,
   Save16Regular,
   Settings20Regular,
 } from "@fluentui/react-icons";
@@ -69,6 +70,8 @@ export default function BarcodePage() {
   const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [errOccured, setErrOccured] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -115,6 +118,7 @@ export default function BarcodePage() {
   function genBarcode() {
     try {
       // The return value is the canvas element
+      setErrOccured(false);
       let canvas = bwipjs.toCanvas("barcode", {
         bcid: type, // Barcode type
         text: content, // Text to encode
@@ -147,9 +151,11 @@ export default function BarcodePage() {
         "barcode"
       );
       setVis(true);
-    } catch (e) {
+    } catch (e: any) {
       // `e` may be a string or Error object
       console.error(e);
+      setErrOccured(true);
+      setErrMsg(e.toString().split(":")[2]);
     }
   }
 
@@ -212,7 +218,7 @@ export default function BarcodePage() {
           <p className="ml-2 font-bold">{t("barcode")}</p>
         </section>
         <section className="flex w-full flex-col items-center">
-          <div className="m-5 flex flex-col sm:flex-row w-full sm:space-x-2 space-y-2 sm:space-y-0">
+          <div className="m-5 mb-2 flex flex-col sm:flex-row w-full sm:space-x-2 space-y-2 sm:space-y-0">
             <div className="shadow-md w-full rounded-md">
               <Input
                 onChange={handleInputChange}
@@ -292,6 +298,14 @@ export default function BarcodePage() {
               {t("create")}
             </Button>
           </div>
+          {errOccured ? (
+            <div className="w-full space-x-2 flex items-center">
+              <DismissCircle16Filled color="red" />
+              <p>{errMsg}</p>
+            </div>
+          ) : (
+            <></>
+          )}
           {vis ? <></> : <p>{t("barcode-placeholder")}</p>}
           <canvas
             className={vis ? "max-w-full" : "hidden"}
