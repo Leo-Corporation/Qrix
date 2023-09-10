@@ -91,7 +91,7 @@ export default function SettingsPage() {
   const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
 
-  const ver = "1.1.1.2308";
+  const ver = "1.2.0.2309";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
