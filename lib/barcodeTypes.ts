@@ -63,4 +63,8 @@ export const barcodeTypes = [
     value: "isbn",
     label: "ISBN",
   },
+  {
+    value: "ismn",
+    label: "ISMN",
+  },
 ];
