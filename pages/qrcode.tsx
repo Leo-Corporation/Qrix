@@ -29,6 +29,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Settings } from "@/types/settings";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -39,6 +41,7 @@ export default function BarcodePage() {
   const [fg, setFg] = useState(settings.qrFg);
   const [bg, setBg] = useState(settings.qrBg);
   const [vis, setVis] = useState(false);
+  const [showText, setShowText] = useState(false);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -57,6 +60,7 @@ export default function BarcodePage() {
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
+        alttext: showText ? content : "",
       });
       AddHistory(
         {
@@ -70,6 +74,7 @@ export default function BarcodePage() {
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
+          alttext: showText ? content : "",
         },
         "qrcode",
       );
@@ -221,6 +226,12 @@ export default function BarcodePage() {
             id="background-color"
             onChange={(e) => setBg(e.target.value)}
           />
+          <Label htmlFor="show-text">{t("show-text")}</Label>
+          <Switch
+            id="show-text"
+            defaultChecked={false}
+            onCheckedChange={(v) => setShowText(v)}
+          ></Switch>
         </section>
       </PageContent>
     </Layout>
