@@ -43,11 +43,15 @@ export default function BarcodePage() {
   const [fg, setFg] = useState(settings.qrFg);
   const [bg, setBg] = useState(settings.qrBg);
   const [vis, setVis] = useState(false);
-  const [textxalign, setTextXAlign] = useState<TextXAlign>("center");
-  const [textyalign, setTextYAlign] = useState<TextYAlign>("below");
-  const [fontSize, setFontSize] = useState(8);
+  const [textxalign, setTextXAlign] = useState<TextXAlign>(
+    settings.qrTextxalign,
+  );
+  const [textyalign, setTextYAlign] = useState<TextYAlign>(
+    settings.qrTextyalign,
+  );
+  const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState("");
-  const [showText, setShowText] = useState(false);
+  const [showText, setShowText] = useState(settings.qrShowText);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
