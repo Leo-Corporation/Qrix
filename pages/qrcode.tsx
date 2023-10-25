@@ -29,6 +29,10 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Settings } from "@/types/settings";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { TextXAlign } from "@/types/text-x-align";
+import { TextYAlign } from "@/types/text-y-align";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -39,10 +43,28 @@ export default function BarcodePage() {
   const [fg, setFg] = useState(settings.qrFg);
   const [bg, setBg] = useState(settings.qrBg);
   const [vis, setVis] = useState(false);
+  const [textxalign, setTextXAlign] = useState<TextXAlign>(
+    settings.qrTextxalign,
+  );
+  const [textyalign, setTextYAlign] = useState<TextYAlign>(
+    settings.qrTextyalign,
+  );
+  const [fontSize, setFontSize] = useState(settings.qrTextsize);
+  const [alt, setAlt] = useState("");
+  const [showText, setShowText] = useState(settings.qrShowText);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
     setContent(event.target.value);
+  };
+  const handleAltChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setAlt(event.target.value);
+  };
+  const handleFontSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = Number(event.target.value);
+    setFontSize(newValue);
   };
   function genBarcode() {
     try {
@@ -53,10 +75,13 @@ export default function BarcodePage() {
         scale: 3, // 3x scaling factor
         //height: 20, // Bar height, in millimeters
         includetext: true, // Show human-readable text
-        textxalign: "center", // Always good to set this
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
+        alttext: showText ? (alt ? alt : content) : "",
+        textsize: fontSize,
+        textyalign: textyalign,
+        textxalign: textxalign,
       });
       AddHistory(
         {
@@ -70,6 +95,7 @@ export default function BarcodePage() {
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
+          alttext: showText ? content : "",
         },
         "qrcode",
       );
@@ -123,6 +149,32 @@ export default function BarcodePage() {
         saveAs(blob, `${content}.${settings.format}`);
       }
     });
+  }
+  function toTextYAlign(s: string): TextYAlign {
+    switch (s) {
+      case "above":
+        return "above";
+      case "below":
+        return "below";
+      default:
+        return "center";
+    }
+  }
+  function toTextAlign(s: string): TextXAlign {
+    switch (s) {
+      case "offleft":
+        return "offleft";
+      case "left":
+        return "left";
+      case "right":
+        return "right";
+      case "offright":
+        return "offright";
+      case "justify":
+        return "justify";
+      default:
+        return "center";
+    }
   }
   return (
     <Layout>
@@ -221,6 +273,67 @@ export default function BarcodePage() {
             id="background-color"
             onChange={(e) => setBg(e.target.value)}
           />
+          <Label htmlFor="show-text">{t("show-text")}</Label>
+          <Switch
+            id="show-text"
+            defaultChecked={showText}
+            onCheckedChange={(v) => setShowText(v)}
+          ></Switch>
+          <p>{t("text-x-align")}</p>
+          <Select
+            defaultValue={textxalign}
+            onValueChange={(e) => {
+              setTextXAlign(toTextAlign(e));
+            }}
+          >
+            <SelectTrigger className="h-auto w-[150px] p-1">
+              <SelectValue placeholder={t("text-x-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="offleft">{t("offleft")}</SelectItem>
+              <SelectItem value="left">{t("left")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="right">{t("right")}</SelectItem>
+              <SelectItem value="offright">{t("offright")}</SelectItem>
+              <SelectItem value="justify">{t("justify")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("text-y-align")}</p>
+          <Select
+            defaultValue={textyalign}
+            onValueChange={(e) => {
+              setTextYAlign(toTextYAlign(e));
+            }}
+          >
+            <SelectTrigger className="h-auto w-[150px] p-1">
+              <SelectValue placeholder={t("text-y-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="above">{t("above")}</SelectItem>
+              <SelectItem value="center">{t("center")}</SelectItem>
+              <SelectItem value="below">{t("below")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("font-size")}</p>
+          <div className="w-[50px] rounded-md bg-white shadow-md dark:bg-slate-800">
+            <Input
+              onChange={handleFontSizeChange}
+              min={1}
+              max={120}
+              defaultValue={fontSize}
+              className="h-[28px] border-0 p-2"
+              type="number"
+            />
+          </div>
+          <p>{t("alt-text")}</p>
+          <div className="w-[150px] rounded-md shadow-md">
+            <Input
+              onChange={handleAltChange}
+              type="text"
+              placeholder={t("alt-text")}
+              className="h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
+            />
+          </div>
         </section>
       </PageContent>
     </Layout>

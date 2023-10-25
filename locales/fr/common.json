@@ -71,5 +71,6 @@
   "below": "Dessous",
   "above": "Au-dessus",
   "font-size": "Taille de la police",
-  "alt-text": "Texte alternatif"
+  "alt-text": "Texte alternatif",
+  "show-text": "Afficher le texte"
 }

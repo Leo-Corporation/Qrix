@@ -71,6 +71,8 @@ import { barcodeTypes } from "@/lib/barcodeTypes";
 import { TextXAlign } from "@/types/text-x-align";
 import { TextYAlign } from "@/types/text-y-align";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -79,6 +81,10 @@ export default function SettingsPage() {
   if (settings.textsize === undefined) settings.textsize = 8;
   if (settings.textxalign === undefined) settings.textxalign = "center";
   if (settings.textyalign === undefined) settings.textyalign = "below";
+  if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
+  if (settings.qrTextxalign === undefined) settings.qrTextxalign = "center";
+  if (settings.qrTextyalign === undefined) settings.qrTextyalign = "below";
+  if (settings.qrShowText === undefined) settings.qrShowText = false;
 
   const [barFg, setBarFg] = useState(settings.barcodeFg);
   const [barBg, setBarBg] = useState(settings.barcodeBg);
@@ -89,9 +95,13 @@ export default function SettingsPage() {
   const [xalign, setXAlign] = useState<TextXAlign>(settings.textxalign);
   const [yalign, setYAlign] = useState<TextYAlign>(settings.textyalign);
   const [fontSize, setFontSize] = useState(settings.textsize);
+  const [qrXAlign, setQrXAlign] = useState<TextXAlign>(settings.qrTextxalign);
+  const [qrYAlign, setQrYAlign] = useState<TextYAlign>(settings.qrTextyalign);
+  const [qrFontSize, setQrFontSize] = useState(settings.qrTextsize);
+  const [qrShowText, setQrShowText] = useState(settings.qrShowText);
   const [open, setOpen] = useState(false);
 
-  const ver = "1.2.0.2309";
+  const ver = "1.3.0.2310";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -134,6 +144,14 @@ export default function SettingsPage() {
     const newValue = Number(event.target.value);
     setFontSize(newValue);
     settings.textsize = newValue;
+    SetSettings(settings);
+  };
+  const handleQrFontSizeChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const newValue = Number(event.target.value);
+    setQrFontSize(newValue);
+    settings.qrTextsize = newValue;
     SetSettings(settings);
   };
   function toTextAlign(s: string): TextXAlign {
@@ -515,37 +533,92 @@ export default function SettingsPage() {
                 </div>
               </AccordionTrigger>
               <AccordionContent>
-                <section className="space-y-2">
-                  <div className="flex items-center space-x-2">
-                    <p>{t("foreground-color")}</p>
-                    <input
-                      defaultValue={qrFg}
-                      className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
-                      type="color"
-                      name="qrfg"
-                      id="qr-foreground-color"
-                      onChange={(e) => {
-                        settings.qrFg = e.target.value;
-                        SetSettings(settings);
-                        setQrBg(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <p>{t("background-color")}</p>
-                    <input
-                      defaultValue={qrBg}
-                      className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
-                      type="color"
-                      name="qrbg"
-                      id="qr-background-color"
-                      onChange={(e) => {
-                        settings.qrBg = e.target.value;
-                        SetSettings(settings);
-                        setQrFg(e.target.value);
-                      }}
-                    />
-                  </div>
+                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                  <p>{t("foreground-color")}</p>
+                  <input
+                    defaultValue={qrFg}
+                    className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
+                    type="color"
+                    name="qrfg"
+                    id="qr-foreground-color"
+                    onChange={(e) => {
+                      settings.qrFg = e.target.value;
+                      SetSettings(settings);
+                      setQrBg(e.target.value);
+                    }}
+                  />
+                  <p>{t("background-color")}</p>
+                  <input
+                    defaultValue={qrBg}
+                    className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
+                    type="color"
+                    name="qrbg"
+                    id="qr-background-color"
+                    onChange={(e) => {
+                      settings.qrBg = e.target.value;
+                      SetSettings(settings);
+                      setQrFg(e.target.value);
+                    }}
+                  />
+                  <Label htmlFor="show-text">{t("show-text")}</Label>
+                  <Switch
+                    id="show-text"
+                    defaultChecked={qrShowText}
+                    onCheckedChange={(v) => {
+                      settings.qrShowText = v;
+                      SetSettings(settings);
+                      setQrShowText(v);
+                    }}
+                  ></Switch>
+
+                  <p>{t("text-x-align")}</p>
+                  <Select
+                    defaultValue={qrXAlign}
+                    onValueChange={(e) => {
+                      settings.qrTextxalign = toTextAlign(e);
+                      SetSettings(settings);
+                      setQrXAlign(toTextAlign(e));
+                    }}
+                  >
+                    <SelectTrigger className="h-auto w-[150px] p-1">
+                      <SelectValue placeholder={t("text-x-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="offleft">{t("offleft")}</SelectItem>
+                      <SelectItem value="left">{t("left")}</SelectItem>
+                      <SelectItem value="center">{t("center")}</SelectItem>
+                      <SelectItem value="right">{t("right")}</SelectItem>
+                      <SelectItem value="offright">{t("offright")}</SelectItem>
+                      <SelectItem value="justify">{t("justify")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p>{t("text-y-align")}</p>
+                  <Select
+                    defaultValue={qrYAlign}
+                    onValueChange={(e) => {
+                      settings.qrTextyalign = toTextYAlign(e);
+                      SetSettings(settings);
+                      setQrYAlign(toTextYAlign(e));
+                    }}
+                  >
+                    <SelectTrigger className="h-auto w-[150px] p-1">
+                      <SelectValue placeholder={t("text-y-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="above">{t("above")}</SelectItem>
+                      <SelectItem value="center">{t("center")}</SelectItem>
+                      <SelectItem value="below">{t("below")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p>{t("font-size")}</p>
+                  <Input
+                    defaultValue={qrFontSize}
+                    onChange={handleQrFontSizeChange}
+                    min={1}
+                    max={120}
+                    className="h-[28px] w-[50px] border border-slate-200 p-2 dark:border-slate-700"
+                    type="number"
+                  />
                 </section>
               </AccordionContent>
             </AccordionItem>

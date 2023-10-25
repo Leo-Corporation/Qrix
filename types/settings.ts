@@ -11,4 +11,8 @@ export interface Settings {
   textxalign?: TextXAlign;
   textyalign?: TextYAlign;
   textsize?: number;
+  qrTextxalign?: TextXAlign;
+  qrTextyalign?: TextYAlign;
+  qrTextsize?: number;
+  qrShowText?: boolean;
 }
