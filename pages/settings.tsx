@@ -71,6 +71,8 @@ import { barcodeTypes } from "@/lib/barcodeTypes";
 import { TextXAlign } from "@/types/text-x-align";
 import { TextYAlign } from "@/types/text-y-align";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -558,6 +560,17 @@ export default function SettingsPage() {
                       setQrFg(e.target.value);
                     }}
                   />
+                  <Label htmlFor="show-text">{t("show-text")}</Label>
+                  <Switch
+                    id="show-text"
+                    defaultChecked={qrShowText}
+                    onCheckedChange={(v) => {
+                      settings.qrShowText = v;
+                      SetSettings(settings);
+                      setQrShowText(v);
+                    }}
+                  ></Switch>
+
                   <p>{t("text-x-align")}</p>
                   <Select
                     defaultValue={qrXAlign}

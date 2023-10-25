@@ -276,7 +276,7 @@ export default function BarcodePage() {
           <Label htmlFor="show-text">{t("show-text")}</Label>
           <Switch
             id="show-text"
-            defaultChecked={false}
+            defaultChecked={showText}
             onCheckedChange={(v) => setShowText(v)}
           ></Switch>
           <p>{t("text-x-align")}</p>
