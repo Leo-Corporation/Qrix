@@ -15,4 +15,5 @@ export interface Settings {
   qrTextyalign?: TextYAlign;
   qrTextsize?: number;
   qrShowText?: boolean;
+  qrType?: string;
 }
