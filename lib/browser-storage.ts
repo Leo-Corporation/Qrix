@@ -5,7 +5,7 @@ export function GetHistory(): History {
   if (typeof window !== "undefined") {
     return JSON.parse(
       localStorage.getItem("history") ||
-        JSON.stringify({ barCodes: [], qrCodes: [] })
+        JSON.stringify({ barCodes: [], qrCodes: [] }),
     );
   }
   return { barCodes: [], qrCodes: [] };
@@ -59,7 +59,12 @@ export function GetSettings(): Settings {
           textxalign: "center",
           textyalign: "below",
           textsize: 8,
-        })
+          qrTextxalign: "center",
+          qrTextyalign: "below",
+          qrTextsize: 8,
+          qrShowText: false,
+          qrType: "qrcode",
+        }),
     );
   }
   return {
@@ -72,6 +77,11 @@ export function GetSettings(): Settings {
     textxalign: "center",
     textyalign: "below",
     textsize: 8,
+    qrTextxalign: "center",
+    qrTextyalign: "below",
+    qrTextsize: 8,
+    qrShowText: false,
+    qrType: "qrcode",
   };
 }
 export function SetSettings(settings: Settings) {

@@ -54,7 +54,10 @@ import { qrCodeTypes } from "@/lib/qrCodeTypes";
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
-
+  if (settings.qrType === undefined) settings.qrType = "qrcode";
+  if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
+  if (settings.qrTextxalign === undefined) settings.qrTextxalign = "center";
+  if (settings.qrTextyalign === undefined) settings.qrTextyalign = "below";
   const [content, setContent] = useState("");
 
   const [fg, setFg] = useState(settings.qrFg);
