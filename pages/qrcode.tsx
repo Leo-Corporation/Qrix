@@ -4,6 +4,8 @@ import Head from "next/head";
 import { PageContent } from "@/components/page";
 import {
   Calendar3Day20Regular,
+  Checkmark16Regular,
+  ChevronDown16Regular,
   Copy16Regular,
   QrCode20Regular,
   Save16Regular,
@@ -33,11 +35,29 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { TextXAlign } from "@/types/text-x-align";
 import { TextYAlign } from "@/types/text-y-align";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { qrCodeTypes } from "@/lib/qrCodeTypes";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
   const settings: Settings = GetSettings();
-
+  if (settings.qrType === undefined) settings.qrType = "qrcode";
+  if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
+  if (settings.qrTextxalign === undefined) settings.qrTextxalign = "center";
+  if (settings.qrTextyalign === undefined) settings.qrTextyalign = "below";
   const [content, setContent] = useState("");
 
   const [fg, setFg] = useState(settings.qrFg);
@@ -51,6 +71,8 @@ export default function BarcodePage() {
   );
   const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState("");
+  const [open, setOpen] = useState(false);
+  const [type, setType] = useState(settings.qrType || "qrcode");
   const [showText, setShowText] = useState(settings.qrShowText);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
@@ -70,7 +92,7 @@ export default function BarcodePage() {
     try {
       // The return value is the canvas element
       let canvas = bwipjs.toCanvas("qrcode", {
-        bcid: "qrcode", // Barcode type
+        bcid: type, // Barcode type
         text: content, // Text to encode
         scale: 3, // 3x scaling factor
         //height: 20, // Bar height, in millimeters
@@ -85,7 +107,7 @@ export default function BarcodePage() {
       });
       AddHistory(
         {
-          bcid: "qrcode", // Barcode type
+          bcid: type, // Barcode type
           text: content, // Text to encode
           scale: 3, // 3x scaling factor
           //height: 20, // Bar height, in millimeters
@@ -200,6 +222,57 @@ export default function BarcodePage() {
                 placeholder={t("enter-content-qr")}
                 className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
               />
+            </div>
+            <div className="rounded-md shadow-md">
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={open}
+                    className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
+                  >
+                    {type
+                      ? qrCodeTypes.find((code) => code.value === type)?.label
+                      : "Select code..."}
+                    <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                  <Command>
+                    <CommandInput placeholder={t("search-barcode")} />
+                    <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                    <CommandGroup>
+                      <ScrollArea className="h-auto">
+                        {qrCodeTypes.map((code) => (
+                          <CommandItem
+                            key={code.value}
+                            value={code.value}
+                            onSelect={(currentValue) => {
+                              currentValue = currentValue.replace("-", "");
+
+                              setType(
+                                currentValue === type ? "" : currentValue,
+                              );
+                              setOpen(false);
+                            }}
+                          >
+                            <Checkmark16Regular
+                              className={cn(
+                                "mr-2 h-4 w-4",
+                                type === code.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                            {code.label}
+                          </CommandItem>
+                        ))}
+                      </ScrollArea>
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
             </div>
             <Button
               onClick={genBarcode}

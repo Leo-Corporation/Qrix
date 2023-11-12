@@ -89,10 +89,22 @@ export default function HistoryItem(props: {
       }
     });
   }
+
+  function isQrCode(bcid: string): boolean {
+    switch (bcid) {
+      case "qrcode":
+        return true;
+      case "swissqrcode":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   function deleteBtn() {
     props.deleteEvent(
       props.index,
-      props.item.bcid == "qrcode" ? "qrcode" : "barcode",
+      isQrCode(props.item.bcid) ? "qrcode" : "barcode",
     );
   }
   return (
@@ -169,7 +181,7 @@ export default function HistoryItem(props: {
           </Tooltip>
         </TooltipProvider>
       </div>
-      {props.item.bcid == "qrcode" ? (
+      {isQrCode(props.item.bcid) ? (
         <p className="text-wrap mt-2 text-center">
           {props.item.text.length > 30
             ? props.item.text.substring(0, 27) + "..."

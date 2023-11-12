@@ -73,6 +73,7 @@ import { TextYAlign } from "@/types/text-y-align";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { qrCodeTypes } from "@/lib/qrCodeTypes";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -85,12 +86,14 @@ export default function SettingsPage() {
   if (settings.qrTextxalign === undefined) settings.qrTextxalign = "center";
   if (settings.qrTextyalign === undefined) settings.qrTextyalign = "below";
   if (settings.qrShowText === undefined) settings.qrShowText = false;
+  if (settings.qrType === undefined) settings.qrType = "qrcode";
 
   const [barFg, setBarFg] = useState(settings.barcodeFg);
   const [barBg, setBarBg] = useState(settings.barcodeBg);
   const [qrFg, setQrFg] = useState(settings.qrFg);
   const [qrBg, setQrBg] = useState(settings.qrBg);
   const [type, setType] = useState(settings.barcodeType);
+  const [qrType, setQrType] = useState(settings.qrType);
   const [format, setFormat] = useState(settings.format);
   const [xalign, setXAlign] = useState<TextXAlign>(settings.textxalign);
   const [yalign, setYAlign] = useState<TextYAlign>(settings.textyalign);
@@ -100,8 +103,9 @@ export default function SettingsPage() {
   const [qrFontSize, setQrFontSize] = useState(settings.qrTextsize);
   const [qrShowText, setQrShowText] = useState(settings.qrShowText);
   const [open, setOpen] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
-  const ver = "1.3.1.2310";
+  const ver = "1.4.0.2311";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -534,6 +538,66 @@ export default function SettingsPage() {
               </AccordionTrigger>
               <AccordionContent>
                 <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                  <p>{t("barcode-default")}</p>
+                  <div className="rounded-md">
+                    <Popover open={qrOpen} onOpenChange={setQrOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={qrOpen}
+                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-800 sm:w-[180px]"
+                        >
+                          {qrType
+                            ? qrCodeTypes.find((code) => code.value === qrType)
+                                ?.label
+                            : "Select code..."}
+                          <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                        <Command>
+                          <CommandInput placeholder={t("search-barcode")} />
+                          <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                          <CommandGroup>
+                            <ScrollArea className="h-auto">
+                              {qrCodeTypes.map((code) => (
+                                <CommandItem
+                                  key={code.value}
+                                  value={code.value}
+                                  onSelect={(currentValue) => {
+                                    currentValue = currentValue.replace(
+                                      "-",
+                                      "",
+                                    );
+
+                                    setQrType(
+                                      currentValue === qrType
+                                        ? ""
+                                        : currentValue,
+                                    );
+                                    setQrOpen(false);
+                                    settings.qrType = currentValue;
+                                    SetSettings(settings);
+                                  }}
+                                >
+                                  <Checkmark16Regular
+                                    className={cn(
+                                      "mr-2 h-4 w-4",
+                                      qrType === code.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                  {code.label}
+                                </CommandItem>
+                              ))}
+                            </ScrollArea>
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                   <p>{t("foreground-color")}</p>
                   <input
                     defaultValue={qrFg}
