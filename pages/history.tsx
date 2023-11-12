@@ -36,8 +36,8 @@ export default function HistoryPage() {
   function deleteItem(i: number, type: ItemType) {
     RemoveHistoryItem(i, type);
     h = GetHistory();
-    setBarCodes(h.barCodes);
-    setQrCodes(h.qrCodes);
+    setBarCodes(GetHistory().barCodes);
+    setQrCodes(GetHistory().qrCodes);
   }
   return (
     <Layout>
