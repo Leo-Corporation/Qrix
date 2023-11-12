@@ -69,7 +69,7 @@ export default function BarcodePage() {
   const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState("");
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState(settings.qrType);
+  const [type, setType] = useState(settings.qrType || "qrcode");
   const [showText, setShowText] = useState(settings.qrShowText);
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
