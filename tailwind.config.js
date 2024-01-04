@@ -55,6 +55,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "accent-color": "#8B2DF0"
       },
       keyframes: {
         "accordion-down": {

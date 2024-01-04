@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#8B2DF0] text-white font-bold",
+        default: "bg-accent-color text-white font-bold",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -25,7 +25,7 @@ const buttonVariants = cva(
         navselect:
           "justify-start bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
         navselect2:
-          "justify-start bg-[#DDC1FB] text-[#8B2DF0] hover:text-white hover:bg-[#8B2DF0] dark:bg-[#3B0872] dark:text-slate-100",
+          "justify-start bg-[#DDC1FB] text-accent-color hover:text-white hover:bg-accent-color dark:bg-[#3B0872] dark:text-slate-100",
       },
       size: {
         default: "h-10 px-4 py-2",
