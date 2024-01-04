@@ -5,7 +5,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "active:scale-95 inline-flex items-center rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 border-0",
+  "active:scale-95 inline-flex items-center rounded-md text-sm transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-900 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 border-0",
   {
     variants: {
       variant: {
@@ -18,14 +18,14 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         nav: "justify-start bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",
-        nav2: "justify-start bg-transparent hover:bg-[#DDC1FB] dark:hover:bg-[#003666] data-[state=open]:bg-transparent",
+        nav2: "justify-start bg-transparent hover:bg-[#DDC1FB] dark:hover:bg-[#590CAC] data-[state=open]:bg-transparent",
         link: "justify-center bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-100 hover:bg-transparent dark:hover:bg-transparent",
         destructiveghost:
           "justify-center bg-transparent hover:bg-red-100 dark:hover:bg-red-800 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent text-red-500",
         navselect:
-          "justify-start bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
+          "justify-start bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-100",
         navselect2:
-          "justify-start bg-[#DDC1FB] text-accent-color hover:text-white hover:bg-accent-color dark:bg-[#3B0872] dark:text-slate-100",
+          "justify-start bg-accent-color text-white hover:text-white hover:bg-accent-color dark:bg-accent-color dark:hover:bg-accent-color dark:text-slate-100",
       },
       size: {
         default: "h-10 px-4 py-2",
