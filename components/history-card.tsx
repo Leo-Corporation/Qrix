@@ -24,6 +24,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -124,45 +132,88 @@ export default function HistoryItem(props: {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Dialog>
-                <DialogTrigger>
-                  {" "}
-                  <Image
-                    width={150}
-                    height={150}
-                    className="max-w-[150px]"
-                    src={url}
-                    alt={props.item.text}
-                  />
-                </DialogTrigger>
-                <DialogContent className="bg-white dark:bg-slate-900">
-                  <DialogHeader>
-                    <DialogTitle>
-                      {t("preview")} - {props.item.text}
-                    </DialogTitle>
-                  </DialogHeader>
-                  <div className="flex justify-center">
+              <div className="hidden sm:block">
+                <Dialog>
+                  <DialogTrigger>
                     <Image
-                      width={300}
-                      height={300}
+                      width={150}
+                      height={150}
+                      className="max-w-[150px]"
                       src={url}
                       alt={props.item.text}
                     />
-                  </div>
-                  <div className="flex justify-center space-x-2">
-                    <Button onClick={copyBtn} className="h-auto p-1 px-2">
-                      {t("copy")}
-                    </Button>
-                    <Button
-                      onClick={saveBtn}
-                      className="h-auto p-1 px-2"
-                      variant="outline"
-                    >
-                      {t("save")}
-                    </Button>
-                  </div>
-                </DialogContent>
-              </Dialog>
+                  </DialogTrigger>
+                  <DialogContent className="bg-white dark:bg-slate-900">
+                    <DialogHeader>
+                      <DialogTitle>
+                        {t("preview")} - {props.item.text}
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="flex justify-center">
+                      <Image
+                        width={300}
+                        height={300}
+                        src={url}
+                        alt={props.item.text}
+                      />
+                    </div>
+                    <div className="flex justify-center space-x-2">
+                      <Button onClick={copyBtn} className="h-auto p-1 px-2">
+                        {t("copy")}
+                      </Button>
+                      <Button
+                        onClick={saveBtn}
+                        className="h-auto p-1 px-2"
+                        variant="outline"
+                      >
+                        {t("save")}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+              <div className="block sm:hidden">
+                <Drawer>
+                  <DrawerTrigger>
+                    <Image
+                      width={150}
+                      height={150}
+                      className="max-w-[150px]"
+                      src={url}
+                      alt={props.item.text}
+                    />
+                  </DrawerTrigger>
+                  <DrawerContent className="bg-white dark:bg-slate-900">
+                    <DrawerHeader>
+                      <DrawerTitle>
+                        {t("preview")} - {props.item.text}
+                      </DrawerTitle>
+                    </DrawerHeader>
+                    <div className="flex justify-center">
+                      <Image
+                        width={300}
+                        height={300}
+                        src={url}
+                        alt={props.item.text}
+                      />
+                    </div>
+                    <DrawerFooter>
+                      <div className="flex justify-center space-x-2">
+                        <Button onClick={copyBtn} className="h-auto p-1 px-2">
+                          {t("copy")}
+                        </Button>
+                        <Button
+                          onClick={saveBtn}
+                          className="h-auto p-1 px-2"
+                          variant="outline"
+                        >
+                          {t("save")}
+                        </Button>
+                      </div>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </div>
             </TooltipTrigger>
             <TooltipContent>
               <p>{props.item.text}</p>
