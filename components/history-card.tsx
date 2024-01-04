@@ -17,6 +17,13 @@ import {
 } from "./ui/tooltip";
 import useTranslation from "next-translate/useTranslation";
 import { GetSettings } from "@/lib/browser-storage";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -108,7 +115,7 @@ export default function HistoryItem(props: {
     );
   }
   return (
-    <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-800">
+    <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-900">
       <canvas
         className="hidden"
         id={`code-${props.item.text}-${props.index}`}
@@ -117,13 +124,45 @@ export default function HistoryItem(props: {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
-              <Image
-                width={150}
-                height={150}
-                className="max-w-[150px]"
-                src={url}
-                alt={props.item.text}
-              />
+              <Dialog>
+                <DialogTrigger>
+                  {" "}
+                  <Image
+                    width={150}
+                    height={150}
+                    className="max-w-[150px]"
+                    src={url}
+                    alt={props.item.text}
+                  />
+                </DialogTrigger>
+                <DialogContent className="bg-white dark:bg-slate-900">
+                  <DialogHeader>
+                    <DialogTitle>
+                      {t("preview")} - {props.item.text}
+                    </DialogTitle>
+                  </DialogHeader>
+                  <div className="flex justify-center">
+                    <Image
+                      width={300}
+                      height={300}
+                      src={url}
+                      alt={props.item.text}
+                    />
+                  </div>
+                  <div className="flex justify-center space-x-2">
+                    <Button onClick={copyBtn} className="h-auto p-1 px-2">
+                      {t("copy")}
+                    </Button>
+                    <Button
+                      onClick={saveBtn}
+                      className="h-auto p-1 px-2"
+                      variant="outline"
+                    >
+                      {t("save")}
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </TooltipTrigger>
             <TooltipContent>
               <p>{props.item.text}</p>
@@ -182,7 +221,7 @@ export default function HistoryItem(props: {
         </TooltipProvider>
       </div>
       {isQrCode(props.item.bcid) ? (
-        <p className="text-wrap mt-2 text-center">
+        <p className="mt-2 text-wrap text-center">
           {props.item.text.length > 30
             ? props.item.text.substring(0, 27) + "..."
             : props.item.text}
