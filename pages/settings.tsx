@@ -105,7 +105,7 @@ export default function SettingsPage() {
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
-  const ver = "1.4.0.2311";
+  const ver = "1.5.0.2401";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -206,7 +206,7 @@ export default function SettingsPage() {
           >
             <div className="m-3 flex items-center space-x-2">
               <h2 className="text-4xl font-bold">{t("title")}</h2>
-              <span className="m-2 rounded-full bg-gradient-to-br from-[#8B2DF0] to-[#2153E0] px-2 font-bold text-white">
+              <span className="m-2 rounded-full bg-gradient-to-br from-accent-color to-[#2153E0] px-2 font-bold text-white">
                 {t("web")}
               </span>
             </div>
@@ -217,7 +217,7 @@ export default function SettingsPage() {
                   {t("see-licenses")}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="border-0 bg-white dark:bg-slate-900 sm:max-w-[425px]">
+              <DialogContent className="border-0 bg-white sm:max-w-[425px] dark:bg-slate-900">
                 <DialogHeader>
                   <DialogTitle>{t("licenses")}</DialogTitle>
                 </DialogHeader>
@@ -231,7 +231,7 @@ export default function SettingsPage() {
                   Fluent System Icons - MIT License - © 2020 Microsoft
                   Corporation
                   <br></br>
-                  Qrix - MIT License - © 2023 Léo Corporation
+                  Qrix - MIT License - © 2023-2024 Léo Corporation
                 </p>
                 <DialogFooter>
                   <DialogClose>
@@ -305,7 +305,7 @@ export default function SettingsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold sm:grid-cols-2 dark:bg-slate-800 ">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF4F4"}
@@ -329,7 +329,7 @@ export default function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold sm:grid-cols-2 dark:bg-slate-800 ">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF680"}
@@ -546,7 +546,7 @@ export default function SettingsPage() {
                           variant="outline"
                           role="combobox"
                           aria-expanded={qrOpen}
-                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-800 sm:w-[180px]"
+                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 sm:w-[180px] dark:border-slate-700 dark:bg-slate-800"
                         >
                           {qrType
                             ? qrCodeTypes.find((code) => code.value === qrType)
@@ -555,7 +555,7 @@ export default function SettingsPage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                      <PopoverContent className="w-full border-slate-200 p-0 sm:w-[180px] dark:border-slate-700">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>

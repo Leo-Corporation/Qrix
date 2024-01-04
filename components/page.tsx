@@ -126,7 +126,7 @@ export function PageContent({ children, page }: PageProps) {
                 className={buttonVariants({
                   size: "nav",
                   variant: page == "barcode" ? "navselect2" : "nav2",
-                  className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                  className: "mx-2 my-1 w-full text-accent-color",
                 })}
                 href={"/barcode"}
               >
@@ -137,7 +137,7 @@ export function PageContent({ children, page }: PageProps) {
                 className={buttonVariants({
                   size: "nav",
                   variant: page == "qrcode" ? "navselect2" : "nav2",
-                  className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                  className: "mx-2 my-1 w-full text-accent-color",
                 })}
                 href={"/qrcode"}
               >
@@ -204,7 +204,7 @@ export function PageContent({ children, page }: PageProps) {
               className={buttonVariants({
                 size: "nav",
                 variant: page == "barcode" ? "navselect2" : "nav2",
-                className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                className: "mx-2 my-1 w-full text-accent-color",
               })}
               href={"/barcode"}
             >
@@ -215,7 +215,7 @@ export function PageContent({ children, page }: PageProps) {
               className={buttonVariants({
                 size: "nav",
                 variant: page == "qrcode" ? "navselect2" : "nav2",
-                className: "mx-2 my-1 w-full text-[#8B2DF0]",
+                className: "mx-2 my-1 w-full text-accent-color",
               })}
               href={"/qrcode"}
             >
