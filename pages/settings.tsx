@@ -729,6 +729,7 @@ export default function SettingsPage() {
                   <Button
                     variant="outline"
                     size="nav"
+                    className="font-bold"
                     onClick={() =>
                       (
                         document.getElementById(
