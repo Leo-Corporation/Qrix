@@ -76,3 +76,9 @@ export const barcodeTypes = [
     label: "ISSN",
   },
 ];
+export function getLabelFromValue(value: string): string {
+  for (let i = 0; i < barcodeTypes.length; i++) {
+    if (barcodeTypes[i].value === value) return barcodeTypes[i].label;
+  }
+  return "";
+}
