@@ -1,7 +1,11 @@
 import Head from "next/head";
 import { Layout } from "@/components/layout";
 import { PageContent } from "@/components/page";
-import { History20Regular } from "@fluentui/react-icons";
+import {
+  Calendar3Day20Regular,
+  History20Regular,
+  QrCode20Regular,
+} from "@fluentui/react-icons";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import useTranslation from "next-translate/useTranslation";
 import { GetHistory, RemoveHistoryItem } from "@/lib/browser-storage";
@@ -54,9 +58,19 @@ export default function HistoryPage() {
           <p className="ml-2 font-bold">{t("history")}</p>
         </div>
         <Tabs defaultValue="barcode">
-          <TabsList className="bg-slate-200 dark:bg-slate-900">
-            <TabsTrigger value="barcode">{t("barcode")}</TabsTrigger>
-            <TabsTrigger value="qrcode">{t("qrcode")}</TabsTrigger>
+          <TabsList>
+            <TabsTrigger value="barcode">
+              <span className="grid grid-cols-[1fr,auto] gap-2">
+                <Calendar3Day20Regular />
+                <span>{t("barcode")}</span>
+              </span>
+            </TabsTrigger>
+            <TabsTrigger value="qrcode">
+              <span className="grid grid-cols-[1fr,auto] gap-2">
+                <QrCode20Regular />
+                <span>{t("qrcode")}</span>
+              </span>
+            </TabsTrigger>
             {(barCodes.length > 0 || qrCodes.length > 0) && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
