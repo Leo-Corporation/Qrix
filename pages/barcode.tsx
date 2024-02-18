@@ -264,6 +264,12 @@ export default function BarcodePage() {
                                 case "code93 extended":
                                   currentValue = "code93ext";
                                   break;
+                                case "telepen":
+                                  currentValue = "telepen";
+                                  break;
+                                case "telepen numeric":
+                                  currentValue = "telepennumeric";
+                                  break;
                                 default:
                                   break;
                               }

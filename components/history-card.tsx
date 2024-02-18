@@ -137,7 +137,7 @@ export default function HistoryItem(props: {
         id={`code-${props.item.text}-${props.index}`}
       ></canvas>
       <span
-        className={`flex items-center ${isQrCode(props.item.bcid) ? "h-[150px]" : "h-[50px]"}`}
+        className={`flex items-center ${isQrCode(props.item.bcid) ? "h-[150px]" : "h-[65px]"}`}
       >
         <TooltipProvider>
           <Tooltip>
