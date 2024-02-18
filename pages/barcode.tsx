@@ -218,7 +218,7 @@ export default function BarcodePage() {
           <p className="ml-2 font-bold">{t("barcode")}</p>
         </section>
         <section className="flex w-full flex-col items-center">
-          <div className="m-5 mb-2 flex w-full flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+          <div className="m-5 flex w-full flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
             <div className="w-full rounded-md shadow-md">
               <Input
                 onChange={handleInputChange}
@@ -263,6 +263,12 @@ export default function BarcodePage() {
                                   break;
                                 case "code93 extended":
                                   currentValue = "code93ext";
+                                  break;
+                                case "telepen":
+                                  currentValue = "telepen";
+                                  break;
+                                case "telepen numeric":
+                                  currentValue = "telepennumeric";
                                   break;
                                 default:
                                   break;

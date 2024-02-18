@@ -32,6 +32,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "./ui/drawer";
+import { getLabelFromValue } from "@/lib/barcodeTypes";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -124,11 +125,20 @@ export default function HistoryItem(props: {
   }
   return (
     <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-900">
+      {isQrCode(props.item.bcid) ? (
+        <></>
+      ) : (
+        <span className="mb-2 rounded-full border border-slate-700 px-1 text-sm text-slate-700 dark:border-slate-600 dark:text-slate-600">
+          {getLabelFromValue(props.item.bcid)}
+        </span>
+      )}
       <canvas
         className="hidden"
         id={`code-${props.item.text}-${props.index}`}
       ></canvas>
-      <span>
+      <span
+        className={`flex items-center ${isQrCode(props.item.bcid) ? "h-[150px]" : "h-[65px]"}`}
+      >
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

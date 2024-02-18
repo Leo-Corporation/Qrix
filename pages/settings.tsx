@@ -105,7 +105,7 @@ export default function SettingsPage() {
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
-  const ver = "1.5.0.2401";
+  const ver = "1.6.0.2402";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -217,7 +217,7 @@ export default function SettingsPage() {
                   {t("see-licenses")}
                 </Button>
               </DialogTrigger>
-              <DialogContent className="border-0 bg-white sm:max-w-[425px] dark:bg-slate-900">
+              <DialogContent className="border-0 bg-white dark:bg-slate-900 sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle>{t("licenses")}</DialogTitle>
                 </DialogHeader>
@@ -305,7 +305,7 @@ export default function SettingsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold sm:grid-cols-2 dark:bg-slate-800 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF4F4"}
@@ -329,7 +329,7 @@ export default function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold sm:grid-cols-2 dark:bg-slate-800 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF680"}
@@ -416,6 +416,12 @@ export default function SettingsPage() {
                                         break;
                                       case "code93 extended":
                                         currentValue = "code93ext";
+                                        break;
+                                      case "telepen":
+                                        currentValue = "telepen";
+                                        break;
+                                      case "telepen numeric":
+                                        currentValue = "telepennumeric";
                                         break;
                                       default:
                                         break;
@@ -546,7 +552,7 @@ export default function SettingsPage() {
                           variant="outline"
                           role="combobox"
                           aria-expanded={qrOpen}
-                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 sm:w-[180px] dark:border-slate-700 dark:bg-slate-800"
+                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-800 sm:w-[180px]"
                         >
                           {qrType
                             ? qrCodeTypes.find((code) => code.value === qrType)
@@ -555,7 +561,7 @@ export default function SettingsPage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full border-slate-200 p-0 sm:w-[180px] dark:border-slate-700">
+                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
@@ -723,6 +729,7 @@ export default function SettingsPage() {
                   <Button
                     variant="outline"
                     size="nav"
+                    className="font-bold"
                     onClick={() =>
                       (
                         document.getElementById(
