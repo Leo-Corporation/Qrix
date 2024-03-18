@@ -25,7 +25,7 @@
     "@types/react": "18.2.55",
     "@types/react-dom": "18.2.19",
     "autoprefixer": "10.4.17",
-    "bwip-js": "^4.2.0",
+    "bwip-js": "^4.3.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^0.2.1",
