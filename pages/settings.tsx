@@ -106,7 +106,7 @@ export default function SettingsPage() {
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
-  const ver = "1.6.0.2402";
+  const ver = "1.7.0.2404";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
