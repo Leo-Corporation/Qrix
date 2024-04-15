@@ -79,5 +79,8 @@
   "email-placeholder": "Enter your email address here.",
   "subject": "Subject",
   "message": "Message",
-  "message-placeholder": "Enter your message here."
+  "message-placeholder": "Enter your message here.",
+  "phone": "Phone number",
+  "phone-placeholder": "Enter your phone number here.",
+  "sms": "SMS"
 }

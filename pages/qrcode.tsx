@@ -83,6 +83,9 @@ export default function BarcodePage() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
+  const [number, setNumber] = useState("");
+  const [sms, setSms] = useState("");
+
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -105,7 +108,9 @@ export default function BarcodePage() {
         case "email":
           textContent = `mailto:${mail}?subject=${subject.replaceAll(" ", "%20")}&body=${message.replaceAll(" ", "%20").replaceAll("\n", "%0A")}`;
           break;
-
+        case "sms":
+          textContent = `sms:${number}?body=${sms.replaceAll(" ", "%20").replaceAll("\n", "%0A")}`;
+          break;
         default:
           textContent = content;
           break;
@@ -242,6 +247,9 @@ export default function BarcodePage() {
                 <TabsTrigger onClick={() => setTab("email")} value="email">
                   {t("email")}
                 </TabsTrigger>
+                <TabsTrigger onClick={() => setTab("sms")} value="sms">
+                  {t("sms")}
+                </TabsTrigger>
                 <div className="rounded-md shadow-md">
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
@@ -313,6 +321,7 @@ export default function BarcodePage() {
                   <Input
                     onChange={handleInputChange}
                     type="text"
+                    value={content}
                     id="prompt-txt"
                     placeholder={t("enter-content-qr")}
                     className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
@@ -325,19 +334,37 @@ export default function BarcodePage() {
                   <Input
                     onChange={(v) => setMail(v.target.value)}
                     type="email"
-                    content={mail}
+                    value={mail}
                     placeholder={t("email-placeholder")}
                   />
                   <p>{t("subject")}</p>
                   <Input
                     onChange={(v) => setSubject(v.target.value)}
-                    content={subject}
+                    value={subject}
                     placeholder={t("subject")}
                   />
                   <p>{t("message")}</p>
                   <Textarea
                     onChange={(v) => setMessage(v.target.value)}
-                    content={message}
+                    value={message}
+                    placeholder={t("message-placeholder")}
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="sms">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("phone")}</p>
+                  <Input
+                    onChange={(v) => setNumber(v.target.value)}
+                    type="tel"
+                    value={number}
+                    placeholder={t("phone-placeholder")}
+                  />
+
+                  <p>{t("message")}</p>
+                  <Textarea
+                    onChange={(v) => setSms(v.target.value)}
+                    value={sms}
                     placeholder={t("message-placeholder")}
                   />
                 </div>
