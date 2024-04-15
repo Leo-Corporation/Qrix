@@ -48,8 +48,13 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import { qrCodeTypes } from "@/lib/qrCodeTypes";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ContactInfo } from "@/lib/contact";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -74,6 +79,38 @@ export default function BarcodePage() {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(settings.qrType || "qrcode");
   const [showText, setShowText] = useState(settings.qrShowText);
+  const [tab, setTab] = useState("text");
+
+  const [mail, setMail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [message, setMessage] = useState("");
+
+  const [number, setNumber] = useState("");
+  const [sms, setSms] = useState("");
+
+  const [ssid, setSsid] = useState("");
+  const [password, setPassword] = useState("");
+  const [protocol, setProtocol] = useState("wpa");
+
+  const [contact, setContact] = useState<ContactInfo>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    mobile: "",
+    fax: "",
+    company: "",
+    job: "",
+    address: {
+      state: "",
+      street: "",
+      zip: "",
+      city: "",
+      country: "",
+    },
+    website: "",
+  });
+
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -91,16 +128,35 @@ export default function BarcodePage() {
   function genBarcode() {
     try {
       // The return value is the canvas element
+      let textContent = "";
+      switch (tab) {
+        case "email":
+          textContent = `mailto:${mail}?subject=${subject.replaceAll(" ", "%20")}&body=${message.replaceAll(" ", "%20").replaceAll("\n", "%0A")}`;
+          break;
+        case "sms":
+          textContent = `sms:${number}?body=${sms.replaceAll(" ", "%20").replaceAll("\n", "%0A")}`;
+          break;
+        case "wifi":
+          textContent = `WIFI:T:${protocol.toUpperCase()};S:${ssid};P:${password};;`;
+          break;
+        case "contact":
+          textContent = `BEGIN:VCARD\nVERSION:3.0\nN:${contact.lastName};${contact.firstName};\nFN:${contact.firstName} ${contact.lastName}\nORG:${contact.company}\nTEL;TYPE="cell,home":${contact.mobile}\nTEL;TYPE="fax,work":${contact.fax}\nTEL;TYPE="voice,home":${contact.phone}\nEMAIL:${contact.email}\nADR;TYPE=dom,home,postal,parcel:;;${contact.address.street};${contact.address.city};${contact.address.state};${contact.address.zip};${contact.address.country};\nTITLE:${contact.job}\nURL:${contact.website}\nEND:VCARD`;
+          break;
+        default:
+          textContent = content;
+          break;
+      }
+
       let canvas = bwipjs.toCanvas("qrcode", {
         bcid: type, // Barcode type
-        text: content, // Text to encode
+        text: textContent, // Text to encode
         scale: 3, // 3x scaling factor
         //height: 20, // Bar height, in millimeters
         includetext: true, // Show human-readable text
         backgroundcolor: bg.substring(1),
         barcolor: fg.substring(1),
         textcolor: fg.substring(1),
-        alttext: showText ? (alt ? alt : content) : "",
+        alttext: showText ? (alt ? alt : textContent) : "",
         textsize: fontSize,
         textyalign: textyalign,
         textxalign: textxalign,
@@ -108,7 +164,7 @@ export default function BarcodePage() {
       AddHistory(
         {
           bcid: type, // Barcode type
-          text: content, // Text to encode
+          text: textContent, // Text to encode
           scale: 3, // 3x scaling factor
           //height: 20, // Bar height, in millimeters
           includetext: true, // Show human-readable text
@@ -117,7 +173,7 @@ export default function BarcodePage() {
           backgroundcolor: bg.substring(1),
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
-          alttext: showText ? content : "",
+          alttext: showText ? textContent : "",
         },
         "qrcode",
       );
@@ -214,74 +270,350 @@ export default function BarcodePage() {
         </section>
         <section className="flex w-full flex-col items-center">
           <div className="m-5 flex w-full space-x-2">
-            <div className="w-full rounded-md shadow-md">
-              <Input
-                onChange={handleInputChange}
-                type="text"
-                id="prompt-txt"
-                placeholder={t("enter-content-qr")}
-                className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
-              />
-            </div>
-            <div className="rounded-md shadow-md">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
+            <Tabs defaultValue="text" className="w-full">
+              <TabsList className="my-2 flex h-auto flex-col space-y-2 sm:my-0 sm:flex-row sm:space-y-0">
+                <span>
+                  <TabsTrigger onClick={() => setTab("text")} value="text">
+                    {t("text")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("email")} value="email">
+                    {t("email")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("sms")} value="sms">
+                    {t("sms")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("wifi")} value="wifi">
+                    {t("wifi")}
+                  </TabsTrigger>
+                  <TabsTrigger
+                    onClick={() => setTab("contact")}
+                    value="contact"
                   >
-                    {type
-                      ? qrCodeTypes.find((code) => code.value === type)?.label
-                      : "Select code..."}
-                    <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    {t("contact")}
+                  </TabsTrigger>
+                </span>
+                <span className="flex space-x-2">
+                  <div className="rounded-md shadow-md">
+                    <Popover open={open} onOpenChange={setOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
+                        >
+                          {type
+                            ? qrCodeTypes.find((code) => code.value === type)
+                                ?.label
+                            : "Select code..."}
+                          <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                        <Command>
+                          <CommandInput placeholder={t("search-barcode")} />
+                          <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                          <CommandGroup>
+                            <ScrollArea className="h-auto">
+                              <CommandList>
+                                {qrCodeTypes.map((code) => (
+                                  <CommandItem
+                                    key={code.value}
+                                    value={code.value}
+                                    onSelect={(currentValue) => {
+                                      currentValue = currentValue.replace(
+                                        "-",
+                                        "",
+                                      );
+                                      setType(
+                                        currentValue === type
+                                          ? ""
+                                          : currentValue,
+                                      );
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <Checkmark16Regular
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        type === code.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {code.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandList>
+                            </ScrollArea>
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <Button
+                    onClick={genBarcode}
+                    variant="default"
+                    className="h-auto px-2 py-1"
+                  >
+                    {t("create")}
                   </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
-                  <Command>
-                    <CommandInput placeholder={t("search-barcode")} />
-                    <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
-                    <CommandGroup>
-                      <ScrollArea className="h-auto">
-                        {qrCodeTypes.map((code) => (
-                          <CommandItem
-                            key={code.value}
-                            value={code.value}
-                            onSelect={(currentValue) => {
-                              currentValue = currentValue.replace("-", "");
+                </span>
+              </TabsList>
+              <TabsContent value="text">
+                <div className="w-full rounded-md shadow-md">
+                  <Input
+                    onChange={handleInputChange}
+                    type="text"
+                    value={content}
+                    id="prompt-txt"
+                    placeholder={t("enter-content-qr")}
+                    className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="email">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("email")}</p>
+                  <Input
+                    onChange={(v) => setMail(v.target.value)}
+                    type="email"
+                    value={mail}
+                    placeholder={t("email-placeholder")}
+                  />
+                  <p>{t("subject")}</p>
+                  <Input
+                    onChange={(v) => setSubject(v.target.value)}
+                    value={subject}
+                    placeholder={t("subject")}
+                  />
+                  <p>{t("message")}</p>
+                  <Textarea
+                    onChange={(v) => setMessage(v.target.value)}
+                    value={message}
+                    placeholder={t("message-placeholder")}
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="sms">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("phone")}</p>
+                  <Input
+                    onChange={(v) => setNumber(v.target.value)}
+                    type="tel"
+                    value={number}
+                    placeholder={t("phone-placeholder")}
+                  />
 
-                              setType(
-                                currentValue === type ? "" : currentValue,
-                              );
-                              setOpen(false);
-                            }}
-                          >
-                            <Checkmark16Regular
-                              className={cn(
-                                "mr-2 h-4 w-4",
-                                type === code.value
-                                  ? "opacity-100"
-                                  : "opacity-0",
-                              )}
-                            />
-                            {code.label}
-                          </CommandItem>
-                        ))}
-                      </ScrollArea>
-                    </CommandGroup>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
-            <Button
-              onClick={genBarcode}
-              variant="default"
-              className="h-auto px-2 py-1"
-            >
-              {t("create")}
-            </Button>
+                  <p>{t("message")}</p>
+                  <Textarea
+                    onChange={(v) => setSms(v.target.value)}
+                    value={sms}
+                    placeholder={t("message-placeholder")}
+                  />
+                </div>
+              </TabsContent>
+              <TabsContent value="wifi">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("network-name")}</p>
+                  <Input
+                    onChange={(v) => setSsid(v.target.value)}
+                    value={ssid}
+                    placeholder={t("ssid")}
+                  />
+
+                  <p>{t("password")}</p>
+                  <Input
+                    onChange={(v) => setPassword(v.target.value)}
+                    type="password"
+                    value={password}
+                    placeholder={t("password")}
+                  />
+                  <p>{t("encryption")}</p>
+                  <RadioGroup
+                    className="flex"
+                    onValueChange={setProtocol}
+                    defaultValue="wpa"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="none" id="none" />
+                      <Label htmlFor="none">{t("none")}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="wpa" id="wpa" />
+                      <Label htmlFor="wpa">{t("wpa")}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="wep" id="wep" />
+                      <Label htmlFor="wep">{t("wep")}</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </TabsContent>
+              <TabsContent value="contact">
+                <div className="grid grid-cols-2 gap-1 sm:grid-cols-3">
+                  <p className="hidden sm:block">{t("name")}</p>
+                  <Input
+                    name="firstname"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.firstName = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact.firstName}
+                    placeholder={t("firstname")}
+                  />
+                  <Input
+                    name="lastname"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.lastName = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact.lastName}
+                    placeholder={t("lastname")}
+                  />
+                  <p className="hidden sm:block">{t("email")}</p>
+                  <Input
+                    name="email"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.email = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact.email}
+                    placeholder={t("email")}
+                  />
+                  <p className="hidden sm:block">{t("phone")}</p>
+                  <Input
+                    name="mobile"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.mobile = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    className="col-span-2"
+                    value={contact?.mobile}
+                    placeholder={t("mobile")}
+                  />
+                  <span className="hidden sm:block"></span>
+                  <Input
+                    name="home"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.phone = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    value={contact?.phone}
+                    placeholder={t("phone-n")}
+                  />
+                  <Input
+                    name="fax"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.fax = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    value={contact?.fax}
+                    placeholder={t("fax")}
+                  />
+                  <p className="hidden sm:block">{t("company")}</p>
+                  <Input
+                    name="company"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.company = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.company}
+                    placeholder={t("company")}
+                  />
+                  <Input
+                    name="job"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.job = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.job}
+                    placeholder={t("job")}
+                  />
+                  <p className="hidden sm:block">{t("street")}</p>
+                  <Input
+                    autoComplete="address-line1"
+                    name="street"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.street = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact?.address.street}
+                    placeholder={t("street")}
+                  />
+                  <p className="hidden sm:block">{t("city")}</p>
+                  <Input
+                    name="city"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.city = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.city}
+                    placeholder={t("city")}
+                  />
+                  <Input
+                    name="zip"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.zip = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.zip}
+                    placeholder={t("zip")}
+                  />
+                  <p className="hidden sm:block">{t("state")}</p>
+                  <Input
+                    name="state"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.state = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.state}
+                    placeholder={t("state")}
+                  />
+                  <Input
+                    name="country"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.country = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.country}
+                    placeholder={t("country")}
+                  />
+                  <p className="hidden sm:block">{t("website")}</p>
+                  <Input
+                    name="website"
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.website = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact?.website}
+                    placeholder={t("website")}
+                  />
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
+
           {vis ? <></> : <p>{t("qr-placeholder")}</p>}
           <canvas
             className={vis ? "max-w-full" : "hidden"}
