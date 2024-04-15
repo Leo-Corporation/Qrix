@@ -73,5 +73,11 @@
   "font-size": "Taille de la police",
   "alt-text": "Texte alternatif",
   "show-text": "Afficher le texte",
-  "preview": "Aperçu"
+  "preview": "Aperçu",
+  "text": "Texte",
+  "email": "Email",
+  "email-placeholder": "Entrez votre addrese mail ici.",
+  "subject": "Objet",
+  "message": "Message",
+  "message-placeholder": "Entrez votre message ici."
 }

@@ -73,5 +73,11 @@
   "font-size": "Font size",
   "alt-text": "Alt text",
   "show-text": "Show text",
-  "preview": "Preview"
+  "preview": "Preview",
+  "text": "Text",
+  "email": "Email",
+  "email-placeholder": "Enter your email address here.",
+  "subject": "Subject",
+  "message": "Message",
+  "message-placeholder": "Enter your message here."
 }
