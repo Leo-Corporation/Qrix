@@ -56,6 +56,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command";
 import {
   Popover,
@@ -398,54 +399,59 @@ export default function SettingsPage() {
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
                           <CommandGroup>
-                            <ScrollArea className="h-[190px]">
-                              {barcodeTypes.map((code) => (
-                                <CommandItem
-                                  key={code.value}
-                                  onSelect={(currentValue) => {
-                                    currentValue = currentValue.replace(
-                                      "-",
-                                      "",
-                                    );
-                                    switch (currentValue) {
-                                      case "code25":
-                                        currentValue = "code2of5";
-                                        break;
-                                      case "code39 extended":
-                                        currentValue = "code39ext";
-                                        break;
-                                      case "code93 extended":
-                                        currentValue = "code93ext";
-                                        break;
-                                      case "telepen":
-                                        currentValue = "telepen";
-                                        break;
-                                      case "telepen numeric":
-                                        currentValue = "telepennumeric";
-                                        break;
-                                      default:
-                                        break;
-                                    }
-                                    setType(
-                                      currentValue === type ? "" : currentValue,
-                                    );
-                                    setOpen(false);
-                                    settings.barcodeType = currentValue;
-                                    SetSettings(settings);
-                                  }}
-                                >
-                                  <Checkmark16Regular
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      type === code.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {code.label}
-                                </CommandItem>
-                              ))}
-                            </ScrollArea>
+                            <CommandList>
+                              <ScrollArea className="h-[190px]">
+                                {barcodeTypes.map((code) => (
+                                  <CommandItem
+                                    key={code.value}
+                                    value={code.value}
+                                    onSelect={(currentValue) => {
+                                      currentValue = currentValue.replace(
+                                        "-",
+                                        "",
+                                      );
+                                      switch (currentValue) {
+                                        case "code25":
+                                          currentValue = "code2of5";
+                                          break;
+                                        case "code39 extended":
+                                          currentValue = "code39ext";
+                                          break;
+                                        case "code93 extended":
+                                          currentValue = "code93ext";
+                                          break;
+                                        case "telepen":
+                                          currentValue = "telepen";
+                                          break;
+                                        case "telepen numeric":
+                                          currentValue = "telepennumeric";
+                                          break;
+                                        default:
+                                          break;
+                                      }
+                                      setType(
+                                        currentValue === type
+                                          ? ""
+                                          : currentValue,
+                                      );
+                                      setOpen(false);
+                                      settings.barcodeType = currentValue;
+                                      SetSettings(settings);
+                                    }}
+                                  >
+                                    <Checkmark16Regular
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        type === code.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {code.label}
+                                  </CommandItem>
+                                ))}
+                              </ScrollArea>
+                            </CommandList>
                           </CommandGroup>
                         </Command>
                       </PopoverContent>
@@ -566,39 +572,41 @@ export default function SettingsPage() {
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
                           <CommandGroup>
-                            <ScrollArea className="h-auto">
-                              {qrCodeTypes.map((code) => (
-                                <CommandItem
-                                  key={code.value}
-                                  value={code.value}
-                                  onSelect={(currentValue) => {
-                                    currentValue = currentValue.replace(
-                                      "-",
-                                      "",
-                                    );
+                            <CommandList>
+                              <ScrollArea className="h-auto">
+                                {qrCodeTypes.map((code) => (
+                                  <CommandItem
+                                    key={code.value}
+                                    value={code.value}
+                                    onSelect={(currentValue) => {
+                                      currentValue = currentValue.replace(
+                                        "-",
+                                        "",
+                                      );
 
-                                    setQrType(
-                                      currentValue === qrType
-                                        ? ""
-                                        : currentValue,
-                                    );
-                                    setQrOpen(false);
-                                    settings.qrType = currentValue;
-                                    SetSettings(settings);
-                                  }}
-                                >
-                                  <Checkmark16Regular
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      qrType === code.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {code.label}
-                                </CommandItem>
-                              ))}
-                            </ScrollArea>
+                                      setQrType(
+                                        currentValue === qrType
+                                          ? ""
+                                          : currentValue,
+                                      );
+                                      setQrOpen(false);
+                                      settings.qrType = currentValue;
+                                      SetSettings(settings);
+                                    }}
+                                  >
+                                    <Checkmark16Regular
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        qrType === code.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {code.label}
+                                  </CommandItem>
+                                ))}
+                              </ScrollArea>
+                            </CommandList>
                           </CommandGroup>
                         </Command>
                       </PopoverContent>
