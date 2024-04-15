@@ -90,5 +90,19 @@
   "encryption": "Encryption",
   "none": "None",
   "wpa": "WPA/WPA",
-  "wep": "WEP"
+  "wep": "WEP",
+  "mobile": "Mobile phone",
+  "phone-n": "Phone",
+  "fax": "Fax",
+  "company": "Company",
+  "job": "Job",
+  "street": "Street",
+  "city": "City",
+  "zip": "ZIP",
+  "state": "State",
+  "country": "Country",
+  "website": "Website",
+  "firstname": "First name",
+  "lastname": "Last name",
+  "name": "Nom"
 }

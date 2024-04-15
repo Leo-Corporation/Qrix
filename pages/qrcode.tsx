@@ -54,6 +54,7 @@ import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ContactInfo } from "@/lib/contact";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -91,6 +92,25 @@ export default function BarcodePage() {
   const [password, setPassword] = useState("");
   const [protocol, setProtocol] = useState("wpa");
 
+  const [contact, setContact] = useState<ContactInfo>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    mobile: "",
+    fax: "",
+    company: "",
+    job: "",
+    address: {
+      state: "",
+      street: "",
+      zip: "",
+      city: "",
+      country: "",
+    },
+    website: "",
+  });
+
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -118,6 +138,9 @@ export default function BarcodePage() {
           break;
         case "wifi":
           textContent = `WIFI:T:${protocol.toUpperCase()};S:${ssid};P:${password};;`;
+          break;
+        case "contact":
+          textContent = `BEGIN:VCARD\nVERSION:3.0\nN:${contact.lastName};${contact.firstName};\nFN:${contact.firstName} ${contact.lastName}\nORG:${contact.company}\nTEL;TYPE="cell,home":${contact.mobile}\nTEL;TYPE="fax,work":${contact.fax}\nTEL;TYPE="voice,home":${contact.phone}\nEMAIL:${contact.email}\nADR;TYPE=dom,home,postal,parcel:;;${contact.address.street};${contact.address.city};${contact.address.state};${contact.address.zip};${contact.address.country};\nTITLE:${contact.job}\nURL:${contact.website}\nEND:VCARD`;
           break;
         default:
           textContent = content;
@@ -261,6 +284,9 @@ export default function BarcodePage() {
                 <TabsTrigger onClick={() => setTab("wifi")} value="wifi">
                   {t("wifi")}
                 </TabsTrigger>
+                <TabsTrigger onClick={() => setTab("contact")} value="contact">
+                  {t("contact")}
+                </TabsTrigger>
                 <div className="rounded-md shadow-md">
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
@@ -386,7 +412,7 @@ export default function BarcodePage() {
                   <Input
                     onChange={(v) => setSsid(v.target.value)}
                     value={ssid}
-                    placeholder={t("network-name")}
+                    placeholder={t("ssid")}
                   />
 
                   <p>{t("password")}</p>
@@ -415,6 +441,152 @@ export default function BarcodePage() {
                       <Label htmlFor="wep">{t("wep")}</Label>
                     </div>
                   </RadioGroup>
+                </div>
+              </TabsContent>
+              <TabsContent value="contact">
+                <div className="grid grid-cols-3 gap-1">
+                  <p>{t("name")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.firstName = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact.firstName}
+                    placeholder={t("firstname")}
+                  />
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.lastName = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact.lastName}
+                    placeholder={t("lastname")}
+                  />
+                  <p>{t("email")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.email = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact.email}
+                    placeholder={t("email")}
+                  />
+                  <p>{t("phone")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.mobile = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    className="col-span-2"
+                    value={contact?.mobile}
+                    placeholder={t("mobile")}
+                  />
+                  <span></span>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.phone = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    value={contact?.phone}
+                    placeholder={t("phone-n")}
+                  />
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.fax = v.target.value;
+                      setContact(c);
+                    }}
+                    type="tel"
+                    value={contact?.fax}
+                    placeholder={t("fax")}
+                  />
+                  <p>{t("company")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.company = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.company}
+                    placeholder={t("company")}
+                  />
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.job = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.job}
+                    placeholder={t("job")}
+                  />
+                  <p>{t("street")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.street = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact?.address.street}
+                    placeholder={t("street")}
+                  />
+                  <p>{t("city")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.city = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.city}
+                    placeholder={t("city")}
+                  />
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.zip = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.zip}
+                    placeholder={t("zip")}
+                  />
+                  <p>{t("state")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.state = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.state}
+                    placeholder={t("state")}
+                  />
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.address.country = v.target.value;
+                      setContact(c);
+                    }}
+                    value={contact?.address.country}
+                    placeholder={t("country")}
+                  />
+                  <p>{t("website")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let c = Object.create(contact);
+                      c.website = v.target.value;
+                      setContact(c);
+                    }}
+                    className="col-span-2"
+                    value={contact?.website}
+                    placeholder={t("website")}
+                  />
                 </div>
               </TabsContent>
             </Tabs>
