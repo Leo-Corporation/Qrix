@@ -82,5 +82,13 @@
   "message-placeholder": "Enter your message here.",
   "phone": "Phone number",
   "phone-placeholder": "Enter your phone number here.",
-  "sms": "SMS"
+  "sms": "SMS",
+  "wifi": "WiFi",
+  "ssid": "SSID",
+  "network-name": "Network Name",
+  "password": "Password",
+  "encryption": "Encryption",
+  "none": "None",
+  "wpa": "WPA/WPA",
+  "wep": "WEP"
 }

@@ -53,6 +53,7 @@ import {
 import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -86,6 +87,10 @@ export default function BarcodePage() {
   const [number, setNumber] = useState("");
   const [sms, setSms] = useState("");
 
+  const [ssid, setSsid] = useState("");
+  const [password, setPassword] = useState("");
+  const [protocol, setProtocol] = useState("wpa");
+
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -110,6 +115,9 @@ export default function BarcodePage() {
           break;
         case "sms":
           textContent = `sms:${number}?body=${sms.replaceAll(" ", "%20").replaceAll("\n", "%0A")}`;
+          break;
+        case "wifi":
+          textContent = `WIFI:T:${protocol.toUpperCase()};S:${ssid};P:${password};;`;
           break;
         default:
           textContent = content;
@@ -250,6 +258,9 @@ export default function BarcodePage() {
                 <TabsTrigger onClick={() => setTab("sms")} value="sms">
                   {t("sms")}
                 </TabsTrigger>
+                <TabsTrigger onClick={() => setTab("wifi")} value="wifi">
+                  {t("wifi")}
+                </TabsTrigger>
                 <div className="rounded-md shadow-md">
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
@@ -367,6 +378,43 @@ export default function BarcodePage() {
                     value={sms}
                     placeholder={t("message-placeholder")}
                   />
+                </div>
+              </TabsContent>
+              <TabsContent value="wifi">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("network-name")}</p>
+                  <Input
+                    onChange={(v) => setSsid(v.target.value)}
+                    value={ssid}
+                    placeholder={t("network-name")}
+                  />
+
+                  <p>{t("password")}</p>
+                  <Input
+                    onChange={(v) => setPassword(v.target.value)}
+                    type="password"
+                    value={password}
+                    placeholder={t("password")}
+                  />
+                  <p>{t("encryption")}</p>
+                  <RadioGroup
+                    className="flex"
+                    onValueChange={setProtocol}
+                    defaultValue="wpa"
+                  >
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="none" id="none" />
+                      <Label htmlFor="none">{t("none")}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="wpa" id="wpa" />
+                      <Label htmlFor="wpa">{t("wpa")}</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <RadioGroupItem value="wep" id="wep" />
+                      <Label htmlFor="wep">{t("wep")}</Label>
+                    </div>
+                  </RadioGroup>
                 </div>
               </TabsContent>
             </Tabs>
