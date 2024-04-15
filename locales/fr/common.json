@@ -104,5 +104,6 @@
   "website": "Site web",
   "firstname": "Prénom",
   "lastname": "Nom de famille",
-  "name": "Nom"
+  "name": "Nom",
+  "contact": "Contact"
 }

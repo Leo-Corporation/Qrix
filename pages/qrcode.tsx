@@ -271,87 +271,94 @@ export default function BarcodePage() {
         <section className="flex w-full flex-col items-center">
           <div className="m-5 flex w-full space-x-2">
             <Tabs defaultValue="text" className="w-full">
-              <TabsList>
-                <TabsTrigger onClick={() => setTab("text")} value="text">
-                  {t("text")}
-                </TabsTrigger>
-                <TabsTrigger onClick={() => setTab("email")} value="email">
-                  {t("email")}
-                </TabsTrigger>
-                <TabsTrigger onClick={() => setTab("sms")} value="sms">
-                  {t("sms")}
-                </TabsTrigger>
-                <TabsTrigger onClick={() => setTab("wifi")} value="wifi">
-                  {t("wifi")}
-                </TabsTrigger>
-                <TabsTrigger onClick={() => setTab("contact")} value="contact">
-                  {t("contact")}
-                </TabsTrigger>
-                <div className="rounded-md shadow-md">
-                  <Popover open={open} onOpenChange={setOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={open}
-                        className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
-                      >
-                        {type
-                          ? qrCodeTypes.find((code) => code.value === type)
-                              ?.label
-                          : "Select code..."}
-                        <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
-                      <Command>
-                        <CommandInput placeholder={t("search-barcode")} />
-                        <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
-
-                        <CommandGroup>
-                          <ScrollArea className="h-auto">
-                            <CommandList>
-                              {qrCodeTypes.map((code) => (
-                                <CommandItem
-                                  key={code.value}
-                                  value={code.value}
-                                  onSelect={(currentValue) => {
-                                    currentValue = currentValue.replace(
-                                      "-",
-                                      "",
-                                    );
-
-                                    setType(
-                                      currentValue === type ? "" : currentValue,
-                                    );
-                                    setOpen(false);
-                                  }}
-                                >
-                                  <Checkmark16Regular
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      type === code.value
-                                        ? "opacity-100"
-                                        : "opacity-0",
-                                    )}
-                                  />
-                                  {code.label}
-                                </CommandItem>
-                              ))}
-                            </CommandList>
-                          </ScrollArea>
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <Button
-                  onClick={genBarcode}
-                  variant="default"
-                  className="h-auto px-2 py-1"
-                >
-                  {t("create")}
-                </Button>
+              <TabsList className="my-2 flex h-auto flex-col space-y-2 sm:my-0 sm:flex-row sm:space-y-0">
+                <span>
+                  <TabsTrigger onClick={() => setTab("text")} value="text">
+                    {t("text")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("email")} value="email">
+                    {t("email")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("sms")} value="sms">
+                    {t("sms")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("wifi")} value="wifi">
+                    {t("wifi")}
+                  </TabsTrigger>
+                  <TabsTrigger
+                    onClick={() => setTab("contact")}
+                    value="contact"
+                  >
+                    {t("contact")}
+                  </TabsTrigger>
+                </span>
+                <span className="flex space-x-2">
+                  <div className="rounded-md shadow-md">
+                    <Popover open={open} onOpenChange={setOpen}>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          aria-expanded={open}
+                          className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
+                        >
+                          {type
+                            ? qrCodeTypes.find((code) => code.value === type)
+                                ?.label
+                            : "Select code..."}
+                          <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                        <Command>
+                          <CommandInput placeholder={t("search-barcode")} />
+                          <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
+                          <CommandGroup>
+                            <ScrollArea className="h-auto">
+                              <CommandList>
+                                {qrCodeTypes.map((code) => (
+                                  <CommandItem
+                                    key={code.value}
+                                    value={code.value}
+                                    onSelect={(currentValue) => {
+                                      currentValue = currentValue.replace(
+                                        "-",
+                                        "",
+                                      );
+                                      setType(
+                                        currentValue === type
+                                          ? ""
+                                          : currentValue,
+                                      );
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <Checkmark16Regular
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        type === code.value
+                                          ? "opacity-100"
+                                          : "opacity-0",
+                                      )}
+                                    />
+                                    {code.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandList>
+                            </ScrollArea>
+                          </CommandGroup>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <Button
+                    onClick={genBarcode}
+                    variant="default"
+                    className="h-auto px-2 py-1"
+                  >
+                    {t("create")}
+                  </Button>
+                </span>
               </TabsList>
               <TabsContent value="text">
                 <div className="w-full rounded-md shadow-md">
@@ -444,9 +451,10 @@ export default function BarcodePage() {
                 </div>
               </TabsContent>
               <TabsContent value="contact">
-                <div className="grid grid-cols-3 gap-1">
-                  <p>{t("name")}</p>
+                <div className="grid grid-cols-2 gap-1 sm:grid-cols-3">
+                  <p className="hidden sm:block">{t("name")}</p>
                   <Input
+                    name="firstname"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.firstName = v.target.value;
@@ -456,6 +464,7 @@ export default function BarcodePage() {
                     placeholder={t("firstname")}
                   />
                   <Input
+                    name="lastname"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.lastName = v.target.value;
@@ -464,8 +473,9 @@ export default function BarcodePage() {
                     value={contact.lastName}
                     placeholder={t("lastname")}
                   />
-                  <p>{t("email")}</p>
+                  <p className="hidden sm:block">{t("email")}</p>
                   <Input
+                    name="email"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.email = v.target.value;
@@ -475,8 +485,9 @@ export default function BarcodePage() {
                     value={contact.email}
                     placeholder={t("email")}
                   />
-                  <p>{t("phone")}</p>
+                  <p className="hidden sm:block">{t("phone")}</p>
                   <Input
+                    name="mobile"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.mobile = v.target.value;
@@ -487,8 +498,9 @@ export default function BarcodePage() {
                     value={contact?.mobile}
                     placeholder={t("mobile")}
                   />
-                  <span></span>
+                  <span className="hidden sm:block"></span>
                   <Input
+                    name="home"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.phone = v.target.value;
@@ -499,6 +511,7 @@ export default function BarcodePage() {
                     placeholder={t("phone-n")}
                   />
                   <Input
+                    name="fax"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.fax = v.target.value;
@@ -508,8 +521,9 @@ export default function BarcodePage() {
                     value={contact?.fax}
                     placeholder={t("fax")}
                   />
-                  <p>{t("company")}</p>
+                  <p className="hidden sm:block">{t("company")}</p>
                   <Input
+                    name="company"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.company = v.target.value;
@@ -519,6 +533,7 @@ export default function BarcodePage() {
                     placeholder={t("company")}
                   />
                   <Input
+                    name="job"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.job = v.target.value;
@@ -527,8 +542,10 @@ export default function BarcodePage() {
                     value={contact?.job}
                     placeholder={t("job")}
                   />
-                  <p>{t("street")}</p>
+                  <p className="hidden sm:block">{t("street")}</p>
                   <Input
+                    autoComplete="address-line1"
+                    name="street"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.address.street = v.target.value;
@@ -538,8 +555,9 @@ export default function BarcodePage() {
                     value={contact?.address.street}
                     placeholder={t("street")}
                   />
-                  <p>{t("city")}</p>
+                  <p className="hidden sm:block">{t("city")}</p>
                   <Input
+                    name="city"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.address.city = v.target.value;
@@ -549,6 +567,7 @@ export default function BarcodePage() {
                     placeholder={t("city")}
                   />
                   <Input
+                    name="zip"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.address.zip = v.target.value;
@@ -557,8 +576,9 @@ export default function BarcodePage() {
                     value={contact?.address.zip}
                     placeholder={t("zip")}
                   />
-                  <p>{t("state")}</p>
+                  <p className="hidden sm:block">{t("state")}</p>
                   <Input
+                    name="state"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.address.state = v.target.value;
@@ -568,6 +588,7 @@ export default function BarcodePage() {
                     placeholder={t("state")}
                   />
                   <Input
+                    name="country"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.address.country = v.target.value;
@@ -576,8 +597,9 @@ export default function BarcodePage() {
                     value={contact?.address.country}
                     placeholder={t("country")}
                   />
-                  <p>{t("website")}</p>
+                  <p className="hidden sm:block">{t("website")}</p>
                   <Input
+                    name="website"
                     onChange={(v) => {
                       let c = Object.create(contact);
                       c.website = v.target.value;
