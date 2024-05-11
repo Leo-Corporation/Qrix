@@ -45,7 +45,7 @@
     "tailwindcss": "3.4.3",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.4.5",
-    "vaul": "^0.9.0"
+    "vaul": "^0.9.1"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
