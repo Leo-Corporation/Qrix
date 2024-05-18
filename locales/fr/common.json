@@ -108,5 +108,12 @@
   "contact": "Contact",
   "normal": "Normal",
   "inverted": "Inversé",
-  "rotation": "Rotation"
+  "rotation": "Rotation",
+  "event": "Evènement",
+  "description": "Description",
+  "start-date": "Date de début",
+  "end-date": "Date de fin",
+  "event-title": "Titre de l'événement",
+  "location": "Emplacement",
+  "select-date": "Choisir une date"
 }
