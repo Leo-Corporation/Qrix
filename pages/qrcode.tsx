@@ -55,6 +55,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ContactInfo } from "@/lib/contact";
+import { RotateOption } from "@/types/rotate-type";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -74,6 +75,7 @@ export default function BarcodePage() {
   const [textyalign, setTextYAlign] = useState<TextYAlign>(
     settings.qrTextyalign,
   );
+  const [rotation, setRotation] = useState<RotateOption>("N");
   const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState("");
   const [open, setOpen] = useState(false);
@@ -160,6 +162,7 @@ export default function BarcodePage() {
         textsize: fontSize,
         textyalign: textyalign,
         textxalign: textxalign,
+        rotate: rotation,
       });
       AddHistory(
         {
@@ -174,6 +177,8 @@ export default function BarcodePage() {
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
           alttext: showText ? textContent : "",
+
+          rotate: rotation,
         },
         "qrcode",
       );
@@ -252,6 +257,19 @@ export default function BarcodePage() {
         return "justify";
       default:
         return "center";
+    }
+  }
+
+  function toRotation(s: string): RotateOption {
+    switch (s) {
+      case "I":
+        return "I";
+      case "L":
+        return "L";
+      case "R":
+        return "R";
+      default:
+        return "N";
     }
   }
   return (
@@ -717,6 +735,23 @@ export default function BarcodePage() {
               <SelectItem value="above">{t("above")}</SelectItem>
               <SelectItem value="center">{t("center")}</SelectItem>
               <SelectItem value="below">{t("below")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("rotation")}</p>
+          <Select
+            defaultValue={rotation}
+            onValueChange={(e) => {
+              setRotation(toRotation(e));
+            }}
+          >
+            <SelectTrigger className="h-auto w-[150px] p-1">
+              <SelectValue placeholder={t("text-x-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="N">{t("normal")}</SelectItem>
+              <SelectItem value="R">{t("right")}</SelectItem>
+              <SelectItem value="L">{t("left")}</SelectItem>
+              <SelectItem value="I">{t("inverted")}</SelectItem>
             </SelectContent>
           </Select>
           <p>{t("font-size")}</p>
