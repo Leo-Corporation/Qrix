@@ -105,5 +105,8 @@
   "firstname": "First name",
   "lastname": "Last name",
   "name": "Name",
-  "contact": "Contact"
+  "contact": "Contact",
+  "normal": "Normal",
+  "inverted": "Inverted",
+  "rotation": "Rotation"
 }

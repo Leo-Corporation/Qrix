@@ -1,3 +1,4 @@
+import { RotateOption } from "./rotate-type";
 import { TextXAlign } from "./text-x-align";
 import { TextYAlign } from "./text-y-align";
 
@@ -19,6 +20,7 @@ export interface GeneratedItem {
   textcolor: string;
   textsize?: number;
   alttext?: string;
+  rotate?: RotateOption;
 }
 
 export type ItemType = "barcode" | "qrcode";
