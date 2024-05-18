@@ -35,7 +35,7 @@ export function DatePicker(props: { setDate: Function }) {
         <Calendar
           mode="single"
           selected={date}
-          onSelect={(d: Date) => {
+          onSelect={(d) => {
             setDate(d);
             props.setDate(`${formatDate(d)}`);
           }}
