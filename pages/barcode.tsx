@@ -69,7 +69,9 @@ export default function BarcodePage() {
   const [bg, setBg] = useState(settings.barcodeBg);
   const [textxalign, setTextXAlign] = useState<TextXAlign>(settings.textxalign);
   const [textyalign, setTextYAlign] = useState<TextYAlign>(settings.textyalign);
-  const [rotation, setRotation] = useState<RotateOption>("N");
+  const [rotation, setRotation] = useState<RotateOption>(
+    settings.barcodeRotation ?? "N",
+  );
   const [fontSize, setFontSize] = useState(settings.textsize);
   const [open, setOpen] = useState(false);
   const [vis, setVis] = useState(false);

@@ -75,6 +75,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { qrCodeTypes } from "@/lib/qrCodeTypes";
+import { RotateOption } from "@/types/rotate-type";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme } = useTheme();
@@ -88,6 +89,8 @@ export default function SettingsPage() {
   if (settings.qrTextyalign === undefined) settings.qrTextyalign = "below";
   if (settings.qrShowText === undefined) settings.qrShowText = false;
   if (settings.qrType === undefined) settings.qrType = "qrcode";
+  if (settings.qrRotation === undefined) settings.qrRotation = "N";
+  if (settings.barcodeRotation === undefined) settings.barcodeRotation = "N";
 
   const [barFg, setBarFg] = useState(settings.barcodeFg);
   const [barBg, setBarBg] = useState(settings.barcodeBg);
@@ -105,6 +108,8 @@ export default function SettingsPage() {
   const [qrShowText, setQrShowText] = useState(settings.qrShowText);
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
+  const [barRotation, setBarRotation] = useState<RotateOption>("N");
+  const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
   const ver = "1.7.0.2404";
   function isSettings(object: any): object is Settings {
@@ -184,6 +189,19 @@ export default function SettingsPage() {
         return "below";
       default:
         return "center";
+    }
+  }
+
+  function toRotation(s: string): RotateOption {
+    switch (s) {
+      case "I":
+        return "I";
+      case "L":
+        return "L";
+      case "R":
+        return "R";
+      default:
+        return "N";
     }
   }
   return (
@@ -522,6 +540,25 @@ export default function SettingsPage() {
                       <SelectItem value="below">{t("below")}</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p>{t("rotation")}</p>
+                  <Select
+                    defaultValue={barRotation}
+                    onValueChange={(e) => {
+                      settings.barcodeRotation = toRotation(e);
+                      SetSettings(settings);
+                      setBarRotation(toRotation(e));
+                    }}
+                  >
+                    <SelectTrigger className="h-auto w-[150px] p-1">
+                      <SelectValue placeholder={t("text-x-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="N">{t("normal")}</SelectItem>
+                      <SelectItem value="R">{t("right")}</SelectItem>
+                      <SelectItem value="L">{t("left")}</SelectItem>
+                      <SelectItem value="I">{t("inverted")}</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p>{t("font-size")}</p>
                   <Input
                     defaultValue={fontSize}
@@ -686,6 +723,25 @@ export default function SettingsPage() {
                       <SelectItem value="above">{t("above")}</SelectItem>
                       <SelectItem value="center">{t("center")}</SelectItem>
                       <SelectItem value="below">{t("below")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p>{t("rotation")}</p>
+                  <Select
+                    defaultValue={qrRotation}
+                    onValueChange={(e) => {
+                      settings.qrRotation = toRotation(e);
+                      SetSettings(settings);
+                      setQrRotation(toRotation(e));
+                    }}
+                  >
+                    <SelectTrigger className="h-auto w-[150px] p-1">
+                      <SelectValue placeholder={t("text-x-align")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="N">{t("normal")}</SelectItem>
+                      <SelectItem value="R">{t("right")}</SelectItem>
+                      <SelectItem value="L">{t("left")}</SelectItem>
+                      <SelectItem value="I">{t("inverted")}</SelectItem>
                     </SelectContent>
                   </Select>
                   <p>{t("font-size")}</p>
