@@ -105,5 +105,15 @@
   "firstname": "First name",
   "lastname": "Last name",
   "name": "Name",
-  "contact": "Contact"
+  "contact": "Contact",
+  "normal": "Normal",
+  "inverted": "Inverted",
+  "rotation": "Rotation",
+  "event": "Event",
+  "description": "Description",
+  "start-date": "Start date",
+  "end-date": "End date",
+  "event-title": "Event title",
+  "location": "Location",
+  "select-date": "Pick a date"
 }

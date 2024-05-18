@@ -36,6 +36,10 @@ export const barcodeTypes = [
     label: "Code93 Extended",
   },
   {
+    value: "datamatrix",
+    label: "DataMatrix",
+  },
+  {
     value: "ean13",
     label: "EAN-13",
   },

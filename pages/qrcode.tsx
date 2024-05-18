@@ -3,7 +3,6 @@ import { Layout } from "@/components/layout";
 import Head from "next/head";
 import { PageContent } from "@/components/page";
 import {
-  Calendar3Day20Regular,
   Checkmark16Regular,
   ChevronDown16Regular,
   Copy16Regular,
@@ -55,6 +54,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ContactInfo } from "@/lib/contact";
+import { RotateOption } from "@/types/rotate-type";
+import { CalendarEvent } from "@/lib/calendar-event";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function BarcodePage() {
   const { t, lang } = useTranslation("common");
@@ -73,6 +75,9 @@ export default function BarcodePage() {
   );
   const [textyalign, setTextYAlign] = useState<TextYAlign>(
     settings.qrTextyalign,
+  );
+  const [rotation, setRotation] = useState<RotateOption>(
+    settings.qrRotation ?? "N",
   );
   const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState("");
@@ -111,6 +116,13 @@ export default function BarcodePage() {
     website: "",
   });
 
+  const [event, setEvent] = useState<CalendarEvent>({
+    title: "",
+    description: "",
+    location: "",
+    start: "",
+    end: "",
+  });
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -142,6 +154,9 @@ export default function BarcodePage() {
         case "contact":
           textContent = `BEGIN:VCARD\nVERSION:3.0\nN:${contact.lastName};${contact.firstName};\nFN:${contact.firstName} ${contact.lastName}\nORG:${contact.company}\nTEL;TYPE="cell,home":${contact.mobile}\nTEL;TYPE="fax,work":${contact.fax}\nTEL;TYPE="voice,home":${contact.phone}\nEMAIL:${contact.email}\nADR;TYPE=dom,home,postal,parcel:;;${contact.address.street};${contact.address.city};${contact.address.state};${contact.address.zip};${contact.address.country};\nTITLE:${contact.job}\nURL:${contact.website}\nEND:VCARD`;
           break;
+        case "event":
+          textContent = `BEGIN:VEVENT\nSUMMARY:${event.title}\nDESCRIPTION:${event.description}\nLOCATION:${event.location}\nDTSTART:${event.start}\nDTEND:${event.end}\nEND:VEVENT`;
+          break;
         default:
           textContent = content;
           break;
@@ -160,6 +175,7 @@ export default function BarcodePage() {
         textsize: fontSize,
         textyalign: textyalign,
         textxalign: textxalign,
+        rotate: rotation,
       });
       AddHistory(
         {
@@ -174,6 +190,8 @@ export default function BarcodePage() {
           barcolor: fg.substring(1),
           textcolor: fg.substring(1),
           alttext: showText ? textContent : "",
+
+          rotate: rotation,
         },
         "qrcode",
       );
@@ -254,6 +272,19 @@ export default function BarcodePage() {
         return "center";
     }
   }
+
+  function toRotation(s: string): RotateOption {
+    switch (s) {
+      case "I":
+        return "I";
+      case "L":
+        return "L";
+      case "R":
+        return "R";
+      default:
+        return "N";
+    }
+  }
   return (
     <Layout>
       <Head>
@@ -290,6 +321,9 @@ export default function BarcodePage() {
                     value="contact"
                   >
                     {t("contact")}
+                  </TabsTrigger>
+                  <TabsTrigger onClick={() => setTab("event")} value="event">
+                    {t("event")}
                   </TabsTrigger>
                 </span>
                 <span className="flex space-x-2">
@@ -611,6 +645,57 @@ export default function BarcodePage() {
                   />
                 </div>
               </TabsContent>
+              <TabsContent value="event">
+                <div className="grid grid-cols-2 gap-y-1">
+                  <p>{t("event-title")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let e = Object.create(event);
+                      e.title = v.target.value;
+                      setEvent(e);
+                    }}
+                    value={event.title}
+                    placeholder={t("event")}
+                  />
+
+                  <p>{t("description")}</p>
+                  <Textarea
+                    onChange={(v) => {
+                      let e = Object.create(event);
+                      e.description = v.target.value;
+                      setEvent(e);
+                    }}
+                    value={event.description}
+                    placeholder={t("description")}
+                  />
+                  <p>{t("location")}</p>
+                  <Input
+                    onChange={(v) => {
+                      let e = Object.create(event);
+                      e.location = v.target.value;
+                      setEvent(e);
+                    }}
+                    value={event.location}
+                    placeholder={t("location")}
+                  />
+                  <p>{t("start-date")}</p>
+                  <DatePicker
+                    setDate={(date: string) => {
+                      let e = Object.create(event);
+                      e.start = date;
+                      setEvent(e);
+                    }}
+                  />
+                  <p>{t("end-date")}</p>
+                  <DatePicker
+                    setDate={(date: string) => {
+                      let e = Object.create(event);
+                      e.end = date;
+                      setEvent(e);
+                    }}
+                  />
+                </div>
+              </TabsContent>
             </Tabs>
           </div>
 
@@ -717,6 +802,23 @@ export default function BarcodePage() {
               <SelectItem value="above">{t("above")}</SelectItem>
               <SelectItem value="center">{t("center")}</SelectItem>
               <SelectItem value="below">{t("below")}</SelectItem>
+            </SelectContent>
+          </Select>
+          <p>{t("rotation")}</p>
+          <Select
+            defaultValue={rotation}
+            onValueChange={(e) => {
+              setRotation(toRotation(e));
+            }}
+          >
+            <SelectTrigger className="h-auto w-[150px] p-1">
+              <SelectValue placeholder={t("text-x-align")} />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="N">{t("normal")}</SelectItem>
+              <SelectItem value="R">{t("right")}</SelectItem>
+              <SelectItem value="L">{t("left")}</SelectItem>
+              <SelectItem value="I">{t("inverted")}</SelectItem>
             </SelectContent>
           </Select>
           <p>{t("font-size")}</p>

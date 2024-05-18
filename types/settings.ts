@@ -1,3 +1,4 @@
+import { RotateOption } from "./rotate-type";
 import { TextXAlign } from "./text-x-align";
 import { TextYAlign } from "./text-y-align";
 
@@ -16,4 +17,6 @@ export interface Settings {
   qrTextsize?: number;
   qrShowText?: boolean;
   qrType?: string;
+  qrRotation?: RotateOption;
+  barcodeRotation?: RotateOption;
 }

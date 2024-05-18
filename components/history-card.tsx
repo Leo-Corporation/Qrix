@@ -147,8 +147,8 @@ export default function HistoryItem(props: {
                   <DialogTrigger>
                     <Image
                       width={150}
-                      height={150}
-                      className="max-w-[150px]"
+                      height={isQrCode(props.item.bcid) ? 150 : 65}
+                      className={`max-w-[150px] object-contain ${isQrCode(props.item.bcid) ? "" : "h-[65px]"}`}
                       src={url}
                       alt={props.item.text}
                     />
@@ -188,7 +188,7 @@ export default function HistoryItem(props: {
                     <Image
                       width={150}
                       height={150}
-                      className="max-w-[150px]"
+                      className={`max-w-[150px] object-contain ${isQrCode(props.item.bcid) ? "" : "h-[65px]"}`}
                       src={url}
                       alt={props.item.text}
                     />
