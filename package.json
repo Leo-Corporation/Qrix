@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.5.14"
   }
 }
