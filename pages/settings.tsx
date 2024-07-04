@@ -111,7 +111,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "1.8.0.2405";
+  const ver = "1.9.0.2407";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -324,7 +324,7 @@ export default function SettingsPage() {
               </AccordionContent>
             </AccordionItem>
 
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF4F4"}
@@ -348,7 +348,7 @@ export default function SettingsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2 ">
+            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
               <div className="grid grid-cols-[auto,1fr] items-center">
                 <p className="icon my-2 mr-2 text-3xl font-normal">
                   {"\uF680"}

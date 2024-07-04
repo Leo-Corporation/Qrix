@@ -192,6 +192,7 @@ export default function BarcodePage() {
           alttext: showText ? textContent : "",
 
           rotate: rotation,
+          metadata: getMetadata(),
         },
         "qrcode",
       );
@@ -201,6 +202,48 @@ export default function BarcodePage() {
       console.error(e);
     }
   }
+
+  function getMetadata(): ContactInfo | Event | object | null {
+    switch (tab) {
+      case "email":
+        return { mail: mail, subject: subject, message: message };
+      case "sms":
+        return { number: number, sms: sms };
+      case "wifi":
+        return { ssid: ssid, password: password, protocol: protocol };
+      case "contact":
+        return {
+          firstName: contact.firstName || "",
+          lastName: contact.lastName || "",
+          email: contact.email || "",
+          phone: contact.phone || "",
+          mobile: contact.mobile || "",
+          fax: contact.fax || "",
+          company: contact.company || "",
+          job: contact.job || "",
+          address: {
+            state: contact.address?.state || "",
+            street: contact.address?.street || "",
+            zip: contact.address?.zip || "",
+            city: contact.address?.city || "",
+            country: contact.address?.country || "",
+          },
+          website: contact.website || "",
+        };
+
+      case "event":
+        return {
+          title: event.title,
+          description: event.description,
+          location: event.location,
+          start: event.start,
+          end: event.end,
+        };
+      default:
+        return null;
+    }
+  }
+
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
@@ -285,6 +328,7 @@ export default function BarcodePage() {
         return "N";
     }
   }
+
   return (
     <Layout>
       <Head>
@@ -386,6 +430,21 @@ export default function BarcodePage() {
                     </Popover>
                   </div>
                   <Button
+                    disabled={
+                      (tab === "text" && !content) ||
+                      (tab === "email" && !message) ||
+                      (tab === "sms" && !sms) ||
+                      (tab === "wifi" && !ssid) ||
+                      (tab === "contact" && !contact.firstName) ||
+                      (tab === "event" &&
+                        (!event.title || !event.start || !event.end)) ||
+                      (tab !== "text" &&
+                        tab !== "email" &&
+                        tab !== "sms" &&
+                        tab !== "wifi" &&
+                        tab !== "contact" &&
+                        tab !== "event")
+                    }
                     onClick={genBarcode}
                     variant="default"
                     className="h-auto px-2 py-1"

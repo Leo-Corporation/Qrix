@@ -25,12 +25,14 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Router } from "next/dist/client/router";
 import { ItemType } from "@/types/history";
+import { Input } from "@/components/ui/input";
 
 export default function HistoryPage() {
   const { t } = useTranslation("common");
   let h = GetHistory();
   const [barCodes, setBarCodes] = useState(h.barCodes);
   const [qrCodes, setQrCodes] = useState(h.qrCodes);
+  const [query, setQuery] = useState("");
 
   function RemoveHistory() {
     localStorage.removeItem("history");
@@ -71,6 +73,7 @@ export default function HistoryPage() {
                 <span>{t("qrcode")}</span>
               </span>
             </TabsTrigger>
+
             {(barCodes.length > 0 || qrCodes.length > 0) && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
@@ -100,16 +103,29 @@ export default function HistoryPage() {
               </AlertDialog>
             )}
           </TabsList>
+          <div className="m-2 max-w-60 rounded-md shadow-md">
+            <Input
+              onChange={(v) => setQuery(v.target.value)}
+              type="text"
+              id="prompt-txt"
+              placeholder={t("search")}
+              className="h-auto border-0 bg-white px-2 py-1 dark:bg-slate-800"
+            />
+          </div>
           <TabsContent value="barcode">
             <div className={barCodes.length > 0 ? "flex flex-wrap" : ""}>
               {barCodes.length > 0 ? (
                 barCodes.map((item, i) => (
-                  <HistoryCard
-                    index={i}
-                    key={item.text + i}
-                    item={item}
-                    deleteEvent={deleteItem}
-                  />
+                  <>
+                    {item.text.includes(query) && (
+                      <HistoryCard
+                        index={i}
+                        key={item.text + i}
+                        item={item}
+                        deleteEvent={deleteItem}
+                      />
+                    )}
+                  </>
                 ))
               ) : (
                 <div className="flex flex-col items-center py-16">
@@ -127,12 +143,16 @@ export default function HistoryPage() {
             <div className={qrCodes.length > 0 ? "flex flex-wrap" : ""}>
               {qrCodes.length > 0 ? (
                 qrCodes.map((item, i) => (
-                  <HistoryCard
-                    index={i}
-                    key={item.text + i}
-                    item={item}
-                    deleteEvent={deleteItem}
-                  />
+                  <>
+                    {item.text.includes(query) && (
+                      <HistoryCard
+                        index={i}
+                        key={item.text + i}
+                        item={item}
+                        deleteEvent={deleteItem}
+                      />
+                    )}
+                  </>
                 ))
               ) : (
                 <div className="flex flex-col items-center py-16">

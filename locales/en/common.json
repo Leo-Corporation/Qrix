@@ -115,5 +115,15 @@
   "end-date": "End date",
   "event-title": "Event title",
   "location": "Location",
-  "select-date": "Pick a date"
+  "select-date": "Pick a date",
+  "interactive": "Interactive QR Code",
+  "mail": "Email",
+  "protocol": "Encryption",
+  "number": "Phone number",
+  "start": "Start",
+  "end": "End",
+  "firstName": "First name",
+  "lastName": "Last name",
+  "address": "Address",
+  "search": "Search..."
 }

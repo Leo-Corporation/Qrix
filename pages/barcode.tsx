@@ -321,6 +321,7 @@ export default function BarcodePage() {
             </div>
             <Button
               onClick={genBarcode}
+              disabled={!content}
               variant="default"
               className="h-auto px-2 py-1"
             >

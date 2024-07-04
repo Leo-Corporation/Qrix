@@ -115,5 +115,15 @@
   "end-date": "Date de fin",
   "event-title": "Titre de l'événement",
   "location": "Emplacement",
-  "select-date": "Choisir une date"
+  "select-date": "Choisir une date",
+  "interactive": "QR Code Intéractif",
+  "mail": "Email",
+  "protocol": "Cryptage",
+  "number": "Numéro de téléphone",
+  "start": "Début",
+  "end": "Fin",
+  "firstName": "Prénom",
+  "lastName": "Nom de famille",
+  "address": "Adresse",
+  "search": "Rechercher..."
 }

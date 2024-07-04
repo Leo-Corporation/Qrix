@@ -1,6 +1,8 @@
+import { CalendarEvent } from "@/lib/calendar-event";
 import { RotateOption } from "./rotate-type";
 import { TextXAlign } from "./text-x-align";
 import { TextYAlign } from "./text-y-align";
+import { ContactInfo } from "@/lib/contact";
 
 export interface History {
   barCodes: GeneratedItem[];
@@ -21,6 +23,7 @@ export interface GeneratedItem {
   textsize?: number;
   alttext?: string;
   rotate?: RotateOption;
+  metadata?: CalendarEvent | ContactInfo | object | null;
 }
 
 export type ItemType = "barcode" | "qrcode";
