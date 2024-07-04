@@ -33,6 +33,7 @@ import {
   DrawerTrigger,
 } from "./ui/drawer";
 import { getLabelFromValue } from "@/lib/barcodeTypes";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -123,6 +124,9 @@ export default function HistoryItem(props: {
       isQrCode(props.item.bcid) ? "qrcode" : "barcode",
     );
   }
+
+  const keys = props.item.metadata ? Object.keys(props.item.metadata) : [];
+  const vals = props.item.metadata ? Object.values(props.item.metadata) : [];
   return (
     <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-900">
       {isQrCode(props.item.bcid) ? (
@@ -156,17 +160,58 @@ export default function HistoryItem(props: {
                   <DialogContent className="bg-white dark:bg-slate-900">
                     <DialogHeader>
                       <DialogTitle>
-                        {t("preview")} - {props.item.text}
+                        {t("preview")} -{" "}
+                        {props.item.metadata
+                          ? t("interactive")
+                          : props.item.text}
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="flex justify-center">
-                      <Image
-                        width={300}
-                        height={300}
-                        src={url}
-                        alt={props.item.text}
-                      />
-                    </div>
+                    {props.item.metadata !== null ? (
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="flex items-center justify-center">
+                          <Image
+                            width={300}
+                            height={300}
+                            src={url}
+                            alt={props.item.text}
+                          />
+                        </div>
+                        <ScrollArea className="max-h-[250px]">
+                          {keys.map((key, i) => (
+                            <span key={i} className="my-2">
+                              <h3 className="font-bold" key={i}>
+                                {t(key === "title" ? "event-title" : key)}
+                              </h3>
+                              {typeof vals[i] === "object" ? (
+                                <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
+                                  {Object.keys(vals[i]).map((k, j) => (
+                                    <span>
+                                      <h3 className="font-bold" key={j}>
+                                        {t(k)}
+                                      </h3>
+                                      <p>
+                                        {Object.values(vals[i])[j] as string}
+                                      </p>
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                <p>{vals[i]}</p>
+                              )}
+                            </span>
+                          ))}
+                        </ScrollArea>
+                      </div>
+                    ) : (
+                      <div className="flex justify-center">
+                        <Image
+                          width={300}
+                          height={300}
+                          src={url}
+                          alt={props.item.text}
+                        />
+                      </div>
+                    )}
                     <div className="flex justify-center space-x-2">
                       <Button onClick={copyBtn} className="h-auto p-1 px-2">
                         {t("copy")}
@@ -283,9 +328,11 @@ export default function HistoryItem(props: {
       </div>
       {isQrCode(props.item.bcid) ? (
         <p className="mt-2 text-wrap text-center">
-          {props.item.text.length > 30
-            ? props.item.text.substring(0, 27) + "..."
-            : props.item.text}
+          {props.item.metadata
+            ? t("interactive")
+            : props.item.text.length > 30
+              ? props.item.text.substring(0, 27) + "..."
+              : props.item.text}
         </p>
       ) : (
         <></>
