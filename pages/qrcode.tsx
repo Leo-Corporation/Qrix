@@ -285,6 +285,7 @@ export default function BarcodePage() {
         return "N";
     }
   }
+
   return (
     <Layout>
       <Head>
@@ -386,6 +387,21 @@ export default function BarcodePage() {
                     </Popover>
                   </div>
                   <Button
+                    disabled={
+                      (tab === "text" && !content) ||
+                      (tab === "email" && !message) ||
+                      (tab === "sms" && !sms) ||
+                      (tab === "wifi" && !ssid) ||
+                      (tab === "contact" && !contact.firstName) ||
+                      (tab === "event" &&
+                        (!event.title || !event.start || !event.end)) ||
+                      (tab !== "text" &&
+                        tab !== "email" &&
+                        tab !== "sms" &&
+                        tab !== "wifi" &&
+                        tab !== "contact" &&
+                        tab !== "event")
+                    }
                     onClick={genBarcode}
                     variant="default"
                     className="h-auto px-2 py-1"
