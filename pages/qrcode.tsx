@@ -212,9 +212,33 @@ export default function BarcodePage() {
       case "wifi":
         return { ssid: ssid, password: password, protocol: protocol };
       case "contact":
-        return contact;
+        return {
+          firstName: contact.firstName || "",
+          lastName: contact.lastName || "",
+          email: contact.email || "",
+          phone: contact.phone || "",
+          mobile: contact.mobile || "",
+          fax: contact.fax || "",
+          company: contact.company || "",
+          job: contact.job || "",
+          address: {
+            state: contact.address?.state || "",
+            street: contact.address?.street || "",
+            zip: contact.address?.zip || "",
+            city: contact.address?.city || "",
+            country: contact.address?.country || "",
+          },
+          website: contact.website || "",
+        };
+
       case "event":
-        return event;
+        return {
+          title: event.title,
+          description: event.description,
+          location: event.location,
+          start: event.start,
+          end: event.end,
+        };
       default:
         return null;
     }
