@@ -186,10 +186,8 @@ export default function HistoryItem(props: {
                               {typeof vals[i] === "object" ? (
                                 <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
                                   {Object.keys(vals[i]).map((k, j) => (
-                                    <span>
-                                      <h3 className="font-bold" key={j}>
-                                        {t(k)}
-                                      </h3>
+                                    <span key={j}>
+                                      <h3 className="font-bold">{t(k)}</h3>
                                       <p>
                                         {Object.values(vals[i])[j] as string}
                                       </p>
@@ -265,10 +263,8 @@ export default function HistoryItem(props: {
                           {typeof vals[i] === "object" ? (
                             <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
                               {Object.keys(vals[i]).map((k, j) => (
-                                <span>
-                                  <h3 className="font-bold" key={j}>
-                                    {t(k)}
-                                  </h3>
+                                <span key={j}>
+                                  <h3 className="font-bold">{t(k)}</h3>
                                   <p>{Object.values(vals[i])[j] as string}</p>
                                 </span>
                               ))}
