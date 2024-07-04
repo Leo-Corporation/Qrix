@@ -166,7 +166,8 @@ export default function HistoryItem(props: {
                           : props.item.text}
                       </DialogTitle>
                     </DialogHeader>
-                    {props.item.metadata !== null ? (
+                    {props.item.metadata !== null &&
+                    props.item.metadata !== undefined ? (
                       <div className="grid grid-cols-2 gap-2">
                         <div className="flex items-center justify-center">
                           <Image
@@ -241,7 +242,10 @@ export default function HistoryItem(props: {
                   <DrawerContent className="bg-white dark:bg-slate-900">
                     <DrawerHeader>
                       <DrawerTitle>
-                        {t("preview")} - {props.item.text}
+                        {t("preview")} -{" "}
+                        {props.item.metadata
+                          ? t("interactive")
+                          : props.item.text}
                       </DrawerTitle>
                     </DrawerHeader>
                     <div className="flex justify-center">
@@ -252,6 +256,29 @@ export default function HistoryItem(props: {
                         alt={props.item.text}
                       />
                     </div>
+                    <ScrollArea className="max-h-[250px] overflow-y-scroll p-4">
+                      {keys.map((key, i) => (
+                        <span key={i} className="my-2">
+                          <h3 className="font-bold" key={i}>
+                            {t(key === "title" ? "event-title" : key)}
+                          </h3>
+                          {typeof vals[i] === "object" ? (
+                            <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
+                              {Object.keys(vals[i]).map((k, j) => (
+                                <span>
+                                  <h3 className="font-bold" key={j}>
+                                    {t(k)}
+                                  </h3>
+                                  <p>{Object.values(vals[i])[j] as string}</p>
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <p>{vals[i]}</p>
+                          )}
+                        </span>
+                      ))}
+                    </ScrollArea>
                     <DrawerFooter>
                       <div className="flex justify-center space-x-2">
                         <Button onClick={copyBtn} className="h-auto p-1 px-2">
