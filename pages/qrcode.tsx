@@ -192,6 +192,7 @@ export default function BarcodePage() {
           alttext: showText ? textContent : "",
 
           rotate: rotation,
+          metadata: getMetadata(),
         },
         "qrcode",
       );
@@ -201,6 +202,24 @@ export default function BarcodePage() {
       console.error(e);
     }
   }
+
+  function getMetadata(): ContactInfo | Event | object | null {
+    switch (tab) {
+      case "email":
+        return { mail: mail, subject: subject, message: message };
+      case "sms":
+        return { number: number, sms: sms };
+      case "wifi":
+        return { ssid: ssid, password: password, protocol: protocol };
+      case "contact":
+        return contact;
+      case "event":
+        return event;
+      default:
+        return null;
+    }
+  }
+
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
