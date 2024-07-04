@@ -70,11 +70,9 @@ body {
 }
 
 body {
-  background: url(../public/white.png);
-  background-size: cover;
+  background: white;
 }
 
 .dark body {
-  background: url(../public/dark.png);
-  background-size: cover;
+  background: #000014;
 }
