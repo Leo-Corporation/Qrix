@@ -124,5 +124,6 @@
   "end": "Fin",
   "firstName": "Prénom",
   "lastName": "Nom de famille",
-  "address": "Adresse"
+  "address": "Adresse",
+  "search": "Rechercher..."
 }

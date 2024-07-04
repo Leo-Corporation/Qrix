@@ -124,5 +124,6 @@
   "end": "End",
   "firstName": "First name",
   "lastName": "Last name",
-  "address": "Address"
+  "address": "Address",
+  "search": "Search..."
 }
