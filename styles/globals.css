@@ -36,6 +36,12 @@ body {
 }
 
 @font-face {
+  font-family: "Hauora";
+  src: url(../public/fonts/Hauora-SemiBold.ttf);
+  font-weight: 600;
+}
+
+@font-face {
   font-family: "FluentSystemIcons-Regular";
   src: url(../public/fonts/FluentSystemIcons-Regular.ttf);
 }
