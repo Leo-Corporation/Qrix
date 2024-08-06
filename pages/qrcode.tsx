@@ -803,103 +803,111 @@ export default function BarcodePage() {
 
           <p className="ml-2 font-bold">{t("options")}</p>
         </section>
-        <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
-          <p>{t("foreground-color")}</p>
-          <input
-            defaultValue={fg}
-            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
-            type="color"
-            name="fg"
-            id="foreground-color"
-            onChange={(e) => setFg(e.target.value)}
-          />
-          <p>{t("background-color")}</p>
-          <input
-            defaultValue={bg}
-            className="colorpicker h-8 w-8 rounded-full border-0 outline-0"
-            type="color"
-            name="bg"
-            id="background-color"
-            onChange={(e) => setBg(e.target.value)}
-          />
-          <Label htmlFor="show-text">{t("show-text")}</Label>
-          <Switch
-            id="show-text"
-            defaultChecked={showText}
-            onCheckedChange={(v) => setShowText(v)}
-          ></Switch>
-          <p>{t("text-x-align")}</p>
-          <Select
-            defaultValue={textxalign}
-            onValueChange={(e) => {
-              setTextXAlign(toTextAlign(e));
-            }}
-          >
-            <SelectTrigger className="h-auto w-[150px] p-1">
-              <SelectValue placeholder={t("text-x-align")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="offleft">{t("offleft")}</SelectItem>
-              <SelectItem value="left">{t("left")}</SelectItem>
-              <SelectItem value="center">{t("center")}</SelectItem>
-              <SelectItem value="right">{t("right")}</SelectItem>
-              <SelectItem value="offright">{t("offright")}</SelectItem>
-              <SelectItem value="justify">{t("justify")}</SelectItem>
-            </SelectContent>
-          </Select>
-          <p>{t("text-y-align")}</p>
-          <Select
-            defaultValue={textyalign}
-            onValueChange={(e) => {
-              setTextYAlign(toTextYAlign(e));
-            }}
-          >
-            <SelectTrigger className="h-auto w-[150px] p-1">
-              <SelectValue placeholder={t("text-y-align")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="above">{t("above")}</SelectItem>
-              <SelectItem value="center">{t("center")}</SelectItem>
-              <SelectItem value="below">{t("below")}</SelectItem>
-            </SelectContent>
-          </Select>
-          <p>{t("rotation")}</p>
-          <Select
-            defaultValue={rotation}
-            onValueChange={(e) => {
-              setRotation(toRotation(e));
-            }}
-          >
-            <SelectTrigger className="h-auto w-[150px] p-1">
-              <SelectValue placeholder={t("text-x-align")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="N">{t("normal")}</SelectItem>
-              <SelectItem value="R">{t("right")}</SelectItem>
-              <SelectItem value="L">{t("left")}</SelectItem>
-              <SelectItem value="I">{t("inverted")}</SelectItem>
-            </SelectContent>
-          </Select>
-          <p>{t("font-size")}</p>
-          <div className="w-[50px] rounded-md bg-white shadow-md dark:bg-slate-800">
-            <Input
-              onChange={handleFontSizeChange}
-              min={1}
-              max={120}
-              defaultValue={fontSize}
-              className="h-[28px] border-0 p-2"
-              type="number"
+        <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <section className="grid grid-rows-6 items-center gap-2">
+            <p className="font-semibold">{t("foreground-color")}</p>
+            <input
+              defaultValue={fg}
+              className="colorpicker h-8 w-[150px] rounded-md border-2 border-accent-color outline-0"
+              type="color"
+              name="fg"
+              id="foreground-color"
+              onChange={(e) => setFg(e.target.value)}
             />
-          </div>
-          <p>{t("alt-text")}</p>
-          <div className="w-[150px] rounded-md shadow-md">
-            <Input
-              onChange={handleAltChange}
-              type="text"
-              placeholder={t("alt-text")}
-              className="h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
+            <p className="font-semibold">{t("background-color")}</p>
+            <input
+              defaultValue={bg}
+              className="colorpicker h-8 w-[150px] rounded-md border-2 border-accent-color outline-0"
+              type="color"
+              name="bg"
+              id="background-color"
+              onChange={(e) => setBg(e.target.value)}
             />
-          </div>
+            <Label className="font-semibold" htmlFor="show-text">
+              {t("show-text")}
+            </Label>
+            <Switch
+              id="show-text"
+              defaultChecked={showText}
+              onCheckedChange={(v) => setShowText(v)}
+            ></Switch>
+          </section>
+          <section className="grid grid-rows-6 items-center gap-2">
+            <p className="font-semibold">{t("text-x-align")}</p>
+            <Select
+              defaultValue={textxalign}
+              onValueChange={(e) => {
+                setTextXAlign(toTextAlign(e));
+              }}
+            >
+              <SelectTrigger className="h-auto w-[150px] p-1">
+                <SelectValue placeholder={t("text-x-align")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="offleft">{t("offleft")}</SelectItem>
+                <SelectItem value="left">{t("left")}</SelectItem>
+                <SelectItem value="center">{t("center")}</SelectItem>
+                <SelectItem value="right">{t("right")}</SelectItem>
+                <SelectItem value="offright">{t("offright")}</SelectItem>
+                <SelectItem value="justify">{t("justify")}</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="font-semibold">{t("text-y-align")}</p>
+            <Select
+              defaultValue={textyalign}
+              onValueChange={(e) => {
+                setTextYAlign(toTextYAlign(e));
+              }}
+            >
+              <SelectTrigger className="h-auto w-[150px] p-1">
+                <SelectValue placeholder={t("text-y-align")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="above">{t("above")}</SelectItem>
+                <SelectItem value="center">{t("center")}</SelectItem>
+                <SelectItem value="below">{t("below")}</SelectItem>
+              </SelectContent>
+            </Select>
+            <p className="font-semibold">{t("rotation")}</p>
+            <Select
+              defaultValue={rotation}
+              onValueChange={(e) => {
+                setRotation(toRotation(e));
+              }}
+            >
+              <SelectTrigger className="h-auto w-[150px] p-1">
+                <SelectValue placeholder={t("text-x-align")} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="N">{t("normal")}</SelectItem>
+                <SelectItem value="R">{t("right")}</SelectItem>
+                <SelectItem value="L">{t("left")}</SelectItem>
+                <SelectItem value="I">{t("inverted")}</SelectItem>
+              </SelectContent>
+            </Select>
+          </section>
+          <section className="grid grid-rows-6 items-center gap-2">
+            <p className="font-semibold">{t("font-size")}</p>
+            <div className="w-[50px] rounded-md bg-white shadow-md dark:bg-slate-800">
+              <Input
+                onChange={handleFontSizeChange}
+                min={1}
+                max={120}
+                defaultValue={fontSize}
+                className="h-[28px] border-0 p-2"
+                type="number"
+              />
+            </div>
+            <p className="font-semibold">{t("alt-text")}</p>
+            <div className="w-[150px] rounded-md shadow-md">
+              <Input
+                onChange={handleAltChange}
+                type="text"
+                placeholder={t("alt-text")}
+                className="h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800"
+              />
+            </div>
+          </section>
         </section>
       </PageContent>
     </Layout>
