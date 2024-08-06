@@ -78,7 +78,7 @@ import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { RotateOption } from "@/types/rotate-type";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   const settings: Settings = GetSettings();
   if (settings.textsize === undefined) settings.textsize = 8;
@@ -283,7 +283,7 @@ export default function SettingsPage() {
                 <div className="flex flex-wrap">
                   <div
                     onClick={() => setTheme("light")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "light" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/LightTheme.png"
@@ -296,7 +296,7 @@ export default function SettingsPage() {
                   </div>
                   <div
                     onClick={() => setTheme("dark")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "dark" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/DarkTheme.png"
@@ -309,7 +309,7 @@ export default function SettingsPage() {
                   </div>
                   <div
                     onClick={() => setTheme("system")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "system" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/SystemTheme.png"
