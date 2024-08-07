@@ -120,77 +120,75 @@ export default function HistoryPage() {
             />
           </div>
           <TabsContent value="barcode">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("barcode")}</TableHead>
-                  <TableHead>{t("barcode-type")}</TableHead>
-                  <TableHead>{t("content")}</TableHead>
-                  <TableHead>{t("actions")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {barCodes.length > 0 ? (
-                  barCodes.map((item, i) => (
-                    <>
-                      {item.text.includes(query) && (
-                        <HistoryCard
-                          index={i}
-                          key={item.text + i}
-                          item={item}
-                          deleteEvent={deleteItem}
-                        />
-                      )}
-                    </>
-                  ))
-                ) : (
-                  <div className="flex flex-col items-center py-16">
-                    <p className="icon my-2 mr-2 text-6xl font-normal">
-                      {"\uF47F"}
-                    </p>
-                    <h2 className="text-center text-xl font-bold">
-                      {t("history-empty")}
-                    </h2>
-                  </div>
-                )}
-              </TableBody>
-            </Table>
+            {barCodes.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("barcode")}</TableHead>
+                    <TableHead>{t("barcode-type")}</TableHead>
+                    <TableHead>{t("content")}</TableHead>
+                    <TableHead>{t("actions")}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {barCodes.map((item, i) => {
+                    if (!item.text.includes(query)) return;
+                    return (
+                      <HistoryCard
+                        index={i}
+                        key={item.text + i}
+                        item={item}
+                        deleteEvent={deleteItem}
+                      />
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="flex flex-col items-center py-16">
+                <p className="icon my-2 mr-2 text-6xl font-normal">
+                  {"\uF47F"}
+                </p>
+                <h2 className="text-center text-lg font-semibold">
+                  {t("history-empty")}
+                </h2>
+              </div>
+            )}
           </TabsContent>
           <TabsContent value="qrcode">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>{t("qrcode")}</TableHead>
-                  <TableHead>{t("content")}</TableHead>
-                  <TableHead>{t("actions")}</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {qrCodes.length > 0 ? (
-                  qrCodes.map((item, i) => (
-                    <>
-                      {item.text.includes(query) && (
-                        <HistoryCard
-                          index={i}
-                          key={item.text + i}
-                          item={item}
-                          deleteEvent={deleteItem}
-                        />
-                      )}
-                    </>
-                  ))
-                ) : (
-                  <div className="flex flex-col items-center py-16">
-                    <p className="icon my-2 mr-2 text-6xl font-normal">
-                      {"\uF47F"}
-                    </p>
-                    <h2 className="text-center text-xl font-bold">
-                      {t("history-empty")}
-                    </h2>
-                  </div>
-                )}
-              </TableBody>
-            </Table>
+            {qrCodes.length > 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>{t("qrcode")}</TableHead>
+                    <TableHead>{t("content")}</TableHead>
+                    <TableHead>{t("actions")}</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {qrCodes.map((item, i) => {
+                    if (!item.text.includes(query)) return;
+                    return (
+                      <HistoryCard
+                        index={i}
+                        key={item.text + i}
+                        item={item}
+                        deleteEvent={deleteItem}
+                      />
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            ) : (
+              <div className="flex flex-col items-center py-16">
+                <p className="icon my-2 mr-2 text-6xl font-normal">
+                  {"\uF47F"}
+                </p>
+                <h2 className="text-center text-lg font-semibold">
+                  {t("history-empty")}
+                </h2>
+              </div>
+            )}
           </TabsContent>
         </Tabs>
       </PageContent>
