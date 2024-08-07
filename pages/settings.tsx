@@ -241,7 +241,7 @@ export default function SettingsPage() {
                   <DialogTitle>{t("licenses")}</DialogTitle>
                 </DialogHeader>
                 <p>
-                  NextJS - MIT License - © 2023 Vercel, Inc.
+                  NextJS - MIT License - © 2024 Vercel, Inc.
                   <br></br>
                   RadixUI - MIT License - © 2022 WorkOS
                   <br></br>
@@ -250,7 +250,8 @@ export default function SettingsPage() {
                   Fluent System Icons - MIT License - © 2020 Microsoft
                   Corporation
                   <br></br>
-                  Qrix - MIT License - © 2023-2024 Léo Corporation
+                  Qrix - MIT License - © 2023-{new Date().getFullYear()} Léo
+                  Corporation
                 </p>
                 <DialogFooter>
                   <DialogClose>
