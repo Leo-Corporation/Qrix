@@ -125,5 +125,9 @@
   "firstName": "Prénom",
   "lastName": "Nom de famille",
   "address": "Adresse",
-  "search": "Rechercher..."
+  "search": "Rechercher...",
+  "barcode-type": "Type",
+  "generated": "Généré le",
+  "actions": "Actions",
+  "content": "Contenu"
 }
