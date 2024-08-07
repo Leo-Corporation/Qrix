@@ -10,7 +10,6 @@ import {
   QrCode24Regular,
 } from "@fluentui/react-icons";
 import useTranslation from "next-translate/useTranslation";
-import { CardProps } from "@/components/card";
 import { Layout } from "@/components/layout";
 import { PageContent } from "@/components/page";
 import { Button } from "@/components/ui/button";
@@ -31,22 +30,6 @@ export default function Home() {
   const { t, lang } = useTranslation("common");
 
   const history = GetHistory();
-
-  const cards: CardProps[] = [
-    {
-      title: t("barcode"),
-      description: t("generate-barcode"),
-      icon: "\uF20F",
-      link: "./barcode",
-    },
-    {
-      title: t("qrcode"),
-      description: t("generate-qrcode"),
-      icon: "\uF63F",
-      link: "./qrcode",
-    },
-  ];
-
   return (
     <Layout>
       <Head>
