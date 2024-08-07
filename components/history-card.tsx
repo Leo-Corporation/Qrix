@@ -35,6 +35,7 @@ import {
 import { getLabelFromValue } from "@/lib/barcodeTypes";
 import { ScrollArea } from "./ui/scroll-area";
 import { TableCell, TableRow } from "./ui/table";
+import { Close } from "@radix-ui/react-dialog";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
@@ -281,6 +282,15 @@ export default function HistoryItem(props: {
                         >
                           {t("save")}
                         </Button>
+                        <Close>
+                          <Button
+                            onClick={deleteBtn}
+                            variant="outline"
+                            className="h-auto px-2 py-1"
+                          >
+                            <Delete16Regular />
+                          </Button>
+                        </Close>
                       </div>
                     </DrawerFooter>
                   </DrawerContent>
@@ -308,55 +318,57 @@ export default function HistoryItem(props: {
               : props.item.text}
         </p>
       </TableCell>
-      <TableCell className="m-4 flex space-x-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={copyBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Copy16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("copy")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={saveBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Save16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("save")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={deleteBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Delete16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("delete")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <TableCell>
+        <div className="flex space-x-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  onClick={copyBtn}
+                  variant="outline"
+                  className="h-auto px-2 py-1"
+                >
+                  <Copy16Regular />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("copy")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  onClick={saveBtn}
+                  variant="outline"
+                  className="h-auto px-2 py-1"
+                >
+                  <Save16Regular />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("save")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  onClick={deleteBtn}
+                  variant="outline"
+                  className="h-auto px-2 py-1"
+                >
+                  <Delete16Regular />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("delete")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </TableCell>
     </TableRow>
   );

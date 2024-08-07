@@ -157,31 +157,40 @@ export default function HistoryPage() {
             </Table>
           </TabsContent>
           <TabsContent value="qrcode">
-            <div className={qrCodes.length > 0 ? "flex flex-wrap" : ""}>
-              {qrCodes.length > 0 ? (
-                qrCodes.map((item, i) => (
-                  <>
-                    {item.text.includes(query) && (
-                      <HistoryCard
-                        index={i}
-                        key={item.text + i}
-                        item={item}
-                        deleteEvent={deleteItem}
-                      />
-                    )}
-                  </>
-                ))
-              ) : (
-                <div className="flex flex-col items-center py-16">
-                  <p className="icon my-2 mr-2 text-6xl font-normal">
-                    {"\uF47F"}
-                  </p>
-                  <h2 className="text-center text-xl font-bold">
-                    {t("history-empty")}
-                  </h2>
-                </div>
-              )}
-            </div>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("qrcode")}</TableHead>
+                  <TableHead>{t("content")}</TableHead>
+                  <TableHead>{t("actions")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {qrCodes.length > 0 ? (
+                  qrCodes.map((item, i) => (
+                    <>
+                      {item.text.includes(query) && (
+                        <HistoryCard
+                          index={i}
+                          key={item.text + i}
+                          item={item}
+                          deleteEvent={deleteItem}
+                        />
+                      )}
+                    </>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center py-16">
+                    <p className="icon my-2 mr-2 text-6xl font-normal">
+                      {"\uF47F"}
+                    </p>
+                    <h2 className="text-center text-xl font-bold">
+                      {t("history-empty")}
+                    </h2>
+                  </div>
+                )}
+              </TableBody>
+            </Table>
           </TabsContent>
         </Tabs>
       </PageContent>
