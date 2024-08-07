@@ -129,5 +129,14 @@
   "barcode-type": "Bar Code type",
   "generated": "Generated",
   "actions": "Actions",
-  "content": "Content"
+  "content": "Content",
+  "gen-barcode": "Generate Bar Code",
+  "gen-qrcode": "Generate QR Code",
+  "total": "Total",
+  "total-barcodes": "Bar Codes Generated",
+  "total-qrcodes": "QR Codes Generated",
+  "recent-activity": "Recent Activity",
+  "overview": "Overview",
+  "recent": "Recent",
+  "see-more": "See more"
 }
