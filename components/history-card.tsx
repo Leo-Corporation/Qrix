@@ -41,6 +41,7 @@ export default function HistoryItem(props: {
   item: GeneratedItem;
   index: number;
   deleteEvent: Function;
+  home?: boolean;
 }) {
   const { t } = useTranslation("common");
   const settings = GetSettings();
@@ -143,7 +144,7 @@ export default function HistoryItem(props: {
             <TooltipTrigger>
               <div className="hidden sm:block">
                 <Dialog>
-                  <DialogTrigger>
+                  <DialogTrigger disabled={props.home}>
                     <Image
                       width={150}
                       height={isQrCode(props.item.bcid) ? 150 : 65}
@@ -282,15 +283,17 @@ export default function HistoryItem(props: {
                         >
                           {t("save")}
                         </Button>
-                        <Close>
-                          <Button
-                            onClick={deleteBtn}
-                            variant="outline"
-                            className="h-auto px-2 py-1"
-                          >
-                            <Delete16Regular />
-                          </Button>
-                        </Close>
+                        {!props.home && (
+                          <Close>
+                            <Button
+                              onClick={deleteBtn}
+                              variant="outline"
+                              className="h-8 px-2 py-1"
+                            >
+                              <Delete16Regular />
+                            </Button>
+                          </Close>
+                        )}
                       </div>
                     </DrawerFooter>
                   </DrawerContent>
@@ -318,58 +321,60 @@ export default function HistoryItem(props: {
               : props.item.text}
         </p>
       </TableCell>
-      <TableCell>
-        <div className="flex space-x-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  onClick={copyBtn}
-                  variant="outline"
-                  className="h-auto px-2 py-1"
-                >
-                  <Copy16Regular />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t("copy")}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  onClick={saveBtn}
-                  variant="outline"
-                  className="h-auto px-2 py-1"
-                >
-                  <Save16Regular />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t("save")}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  onClick={deleteBtn}
-                  variant="outline"
-                  className="h-auto px-2 py-1"
-                >
-                  <Delete16Regular />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t("delete")}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-      </TableCell>
+      {!props.home && (
+        <TableCell>
+          <div className="flex space-x-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={copyBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Copy16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("copy")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={saveBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Save16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("save")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={deleteBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Delete16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("delete")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </TableCell>
+      )}
     </TableRow>
   );
 }
