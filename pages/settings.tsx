@@ -111,7 +111,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "1.9.0.2407";
+  const ver = "2.0.0.2408";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -221,7 +221,7 @@ export default function SettingsPage() {
         <div className="flex justify-center">
           <section
             id="about-section"
-            className="m-2 flex flex-col items-center justify-center rounded-lg bg-white px-10 py-4 text-center shadow-lg dark:bg-slate-800"
+            className="m-2 flex flex-col items-center justify-center rounded-lg border border-slate-200 bg-white px-10 py-4 text-center shadow-lg dark:border-slate-700 dark:bg-slate-800"
           >
             <div className="m-3 flex items-center space-x-2">
               <h2 className="text-4xl font-bold">{t("title")}</h2>
