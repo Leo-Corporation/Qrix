@@ -78,7 +78,7 @@ import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { RotateOption } from "@/types/rotate-type";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
-  const { setTheme } = useTheme();
+  const { setTheme, theme } = useTheme();
 
   const settings: Settings = GetSettings();
   if (settings.textsize === undefined) settings.textsize = 8;
@@ -111,7 +111,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "1.9.0.2407";
+  const ver = "2.0.0.2408";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -221,7 +221,7 @@ export default function SettingsPage() {
         <div className="flex justify-center">
           <section
             id="about-section"
-            className="m-2 flex flex-col items-center justify-center rounded-lg bg-white px-10 py-4 text-center shadow-lg dark:bg-slate-800"
+            className="m-2 flex flex-col items-center justify-center rounded-lg border border-slate-200 bg-white px-10 py-4 text-center shadow-lg dark:border-slate-700 dark:bg-slate-800"
           >
             <div className="m-3 flex items-center space-x-2">
               <h2 className="text-4xl font-bold">{t("title")}</h2>
@@ -241,7 +241,7 @@ export default function SettingsPage() {
                   <DialogTitle>{t("licenses")}</DialogTitle>
                 </DialogHeader>
                 <p>
-                  NextJS - MIT License - © 2023 Vercel, Inc.
+                  NextJS - MIT License - © 2024 Vercel, Inc.
                   <br></br>
                   RadixUI - MIT License - © 2022 WorkOS
                   <br></br>
@@ -250,7 +250,8 @@ export default function SettingsPage() {
                   Fluent System Icons - MIT License - © 2020 Microsoft
                   Corporation
                   <br></br>
-                  Qrix - MIT License - © 2023-2024 Léo Corporation
+                  Qrix - MIT License - © 2023-{new Date().getFullYear()} Léo
+                  Corporation
                 </p>
                 <DialogFooter>
                   <DialogClose>
@@ -283,7 +284,7 @@ export default function SettingsPage() {
                 <div className="flex flex-wrap">
                   <div
                     onClick={() => setTheme("light")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "light" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/LightTheme.png"
@@ -296,7 +297,7 @@ export default function SettingsPage() {
                   </div>
                   <div
                     onClick={() => setTheme("dark")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "dark" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/DarkTheme.png"
@@ -309,7 +310,7 @@ export default function SettingsPage() {
                   </div>
                   <div
                     onClick={() => setTheme("system")}
-                    className="m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg bg-slate-100 pr-2 dark:bg-slate-700"
+                    className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${theme === "system" ? "border-accent-color" : "border-transparent"}`}
                   >
                     <Image
                       src="/SystemTheme.png"

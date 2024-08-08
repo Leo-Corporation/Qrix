@@ -34,11 +34,14 @@ import {
 } from "./ui/drawer";
 import { getLabelFromValue } from "@/lib/barcodeTypes";
 import { ScrollArea } from "./ui/scroll-area";
+import { TableCell, TableRow } from "./ui/table";
+import { Close } from "@radix-ui/react-dialog";
 
 export default function HistoryItem(props: {
   item: GeneratedItem;
   index: number;
   deleteEvent: Function;
+  home?: boolean;
 }) {
   const { t } = useTranslation("common");
   const settings = GetSettings();
@@ -128,27 +131,20 @@ export default function HistoryItem(props: {
   const keys = props.item.metadata ? Object.keys(props.item.metadata) : [];
   const vals = props.item.metadata ? Object.values(props.item.metadata) : [];
   return (
-    <div className="m-2 flex w-[230px] flex-col items-center justify-center rounded-md bg-white p-3 shadow-md dark:bg-slate-900">
-      {isQrCode(props.item.bcid) ? (
-        <></>
-      ) : (
-        <span className="mb-2 rounded-full border border-slate-700 px-1 text-sm text-slate-700 dark:border-slate-600 dark:text-slate-600">
-          {getLabelFromValue(props.item.bcid)}
-        </span>
-      )}
+    <TableRow>
       <canvas
         className="hidden"
         id={`code-${props.item.text}-${props.index}`}
       ></canvas>
-      <span
-        className={`flex items-center ${isQrCode(props.item.bcid) ? "h-[150px]" : "h-[65px]"}`}
+      <TableCell
+        className={`${isQrCode(props.item.bcid) ? "h-[150px]" : "h-[65px]"}`}
       >
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               <div className="hidden sm:block">
                 <Dialog>
-                  <DialogTrigger>
+                  <DialogTrigger disabled={props.home}>
                     <Image
                       width={150}
                       height={isQrCode(props.item.bcid) ? 150 : 65}
@@ -287,6 +283,17 @@ export default function HistoryItem(props: {
                         >
                           {t("save")}
                         </Button>
+                        {!props.home && (
+                          <Close>
+                            <Button
+                              onClick={deleteBtn}
+                              variant="outline"
+                              className="h-8 px-2 py-1"
+                            >
+                              <Delete16Regular />
+                            </Button>
+                          </Close>
+                        )}
                       </div>
                     </DrawerFooter>
                   </DrawerContent>
@@ -298,68 +305,76 @@ export default function HistoryItem(props: {
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
-      </span>
-      <div className="m-4 flex space-x-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={copyBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Copy16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("copy")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={saveBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Save16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("save")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger>
-              <Button
-                onClick={deleteBtn}
-                variant="outline"
-                className="h-auto px-2 py-1"
-              >
-                <Delete16Regular />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("delete")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </div>
+      </TableCell>
       {isQrCode(props.item.bcid) ? (
-        <p className="mt-2 text-wrap text-center">
+        <></>
+      ) : (
+        <TableCell>{getLabelFromValue(props.item.bcid)}</TableCell>
+      )}
+
+      <TableCell>
+        <p className="mt-2 text-wrap">
           {props.item.metadata
             ? t("interactive")
             : props.item.text.length > 30
               ? props.item.text.substring(0, 27) + "..."
               : props.item.text}
         </p>
-      ) : (
-        <></>
+      </TableCell>
+      {!props.home && (
+        <TableCell>
+          <div className="flex space-x-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={copyBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Copy16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("copy")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={saveBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Save16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("save")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button
+                    onClick={deleteBtn}
+                    variant="outline"
+                    className="h-auto px-2 py-1"
+                  >
+                    <Delete16Regular />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("delete")}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        </TableCell>
       )}
-    </div>
+    </TableRow>
   );
 }

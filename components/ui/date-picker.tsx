@@ -39,7 +39,6 @@ export function DatePicker(props: { setDate: Function }) {
             setDate(d);
             props.setDate(`${formatDate(d)}`);
           }}
-          initialFocus
         />
       </PopoverContent>
     </Popover>
