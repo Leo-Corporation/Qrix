@@ -275,7 +275,7 @@ export default function SettingsPage() {
         <Tabs defaultValue="general" className="space-y-4">
           <TabsList className="flex flex-wrap sm:block">
             <TabsTrigger value="general">{t("general")}</TabsTrigger>
-            <TabsTrigger value="password">{t("generation")}</TabsTrigger>
+            <TabsTrigger value="generation">{t("generation")}</TabsTrigger>
             <TabsTrigger value="about">{t("about")}</TabsTrigger>
           </TabsList>
           <TabsContent value="general" className="border-0 p-0">
@@ -369,25 +369,14 @@ export default function SettingsPage() {
               </CardContent>
             </Card>
           </TabsContent>
-        </Tabs>
-        <section id="settings-section">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="barcode">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF20F"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("barcode")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("barcode-settings")}
-                    </p>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+          <TabsContent value="generation" className="space-y-2 border-0 p-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("barcode")}</CardTitle>
+                <CardDescription>{t("barcode-settings")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="border-0.5 rounded-md border-slate-200 dark:border-slate-700">
                     <Popover open={open} onOpenChange={setOpen}>
@@ -561,25 +550,17 @@ export default function SettingsPage() {
                     className="h-[28px] w-[50px] border border-slate-200 p-2 dark:border-slate-700"
                     type="number"
                   />
-                </section>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="qrcode">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF635"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("qrcode")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("qrcode-settings")}
-                    </p>
-                  </div>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("qrcode")}</CardTitle>
+                <CardDescription>{t("qrcode-settings")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {" "}
+                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="rounded-md">
                     <Popover open={qrOpen} onOpenChange={setQrOpen}>
