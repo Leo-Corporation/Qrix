@@ -138,5 +138,15 @@
   "recent-activity": "Recent Activity",
   "overview": "Overview",
   "recent": "Recent",
-  "see-more": "See more"
+  "see-more": "See more",
+  "general": "General",
+  "generation": "Generation",
+  "about": "About",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "about-desc": "Information about the application and its development.",
+  "repository": "Repository",
+  "view-repository": "View Repository",
+  "general-desc": "Customize the app's appearance and language."
 }

@@ -138,5 +138,13 @@
   "recent-activity": "Activité récente",
   "overview": "Vue d'ensemble",
   "recent": "Récent",
-  "see-more": "Voir plus"
+  "see-more": "Voir plus",
+  "about": "À propos",
+  "light": "Clair",
+  "dark": "Sombre",
+  "system": "Système",
+  "about-desc": "Informations sur l'application et son développement.",
+  "repository": "Dépôt GitHub",
+  "view-repository": "Voir le dépôt",
+  "general-desc": "Personnalisez l'apparence et la langue de l'application."
 }
