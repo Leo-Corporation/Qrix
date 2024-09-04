@@ -314,7 +314,7 @@ export default function SettingsPage() {
                       SetSettings(settings);
                     }}
                   >
-                    <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
+                    <SelectTrigger className="h-auto w-[200px] px-2 py-1 sm:justify-self-end">
                       <SelectValue placeholder={"PNG"} />
                     </SelectTrigger>
                     <SelectContent>
