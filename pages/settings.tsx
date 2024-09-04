@@ -76,6 +76,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { RotateOption } from "@/types/rotate-type";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme, theme } = useTheme();
@@ -264,23 +272,22 @@ export default function SettingsPage() {
             </Dialog>
           </section>
         </div>
-        <section id="settings-section">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="theme">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF33C"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("theme")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("change-theme")}
-                    </p>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
+        <Tabs defaultValue="general" className="space-y-4">
+          <TabsList className="flex flex-wrap sm:block">
+            <TabsTrigger value="general">{t("general")}</TabsTrigger>
+            <TabsTrigger value="password">{t("generation")}</TabsTrigger>
+            <TabsTrigger value="about">{t("about")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="general" className="border-0 p-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("general")}</CardTitle>
+                <CardDescription>{t("general-desc")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Label className="font-semibold" htmlFor="theme">
+                  {t("theme")}
+                </Label>
                 <div className="flex flex-wrap">
                   <div
                     onClick={() => setTheme("light")}
@@ -293,7 +300,7 @@ export default function SettingsPage() {
                       alt="Light theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">Light</p>
+                    <p className="m-2 font-bold">{t("light")}</p>
                   </div>
                   <div
                     onClick={() => setTheme("dark")}
@@ -306,7 +313,7 @@ export default function SettingsPage() {
                       alt="Dark theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">Dark</p>
+                    <p className="m-2 font-bold">{t("dark")}</p>
                   </div>
                   <div
                     onClick={() => setTheme("system")}
@@ -319,67 +326,52 @@ export default function SettingsPage() {
                       alt="System theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">System</p>
+                    <p className="m-2 font-bold">{t("system")}</p>
                   </div>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
-              <div className="grid grid-cols-[auto,1fr] items-center">
-                <p className="icon my-2 mr-2 text-3xl font-normal">
-                  {"\uF4F4"}
-                </p>
-                <div>
-                  <h4 className="text-left text-lg">{t("language")}</h4>
-                  <p className="text-left text-sm font-normal">
-                    {t("change-language")}
-                  </p>
+                <div className="space-y-2">
+                  <Label htmlFor="language" className="font-semibold">
+                    {t("language")}
+                  </Label>
+                  <Select defaultValue={lang} onValueChange={SelectChanged}>
+                    <SelectTrigger className="h-auto w-[200px] px-2 py-1 sm:justify-self-end">
+                      <SelectValue placeholder={t("language")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem defaultChecked={true} value="en">
+                        English (United States)
+                      </SelectItem>
+                      <SelectItem value="fr">Français (France)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Label htmlFor="language" className="font-semibold">
+                    {t("save-option")}
+                  </Label>
+                  <Select
+                    defaultValue={format}
+                    onValueChange={(e: "png" | "jpg" | "jpeg" | "bmp") => {
+                      setFormat(e);
+                      settings.format = e;
+                      SetSettings(settings);
+                    }}
+                  >
+                    <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
+                      <SelectValue placeholder={"PNG"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="bmp">BMP</SelectItem>
+                      <SelectItem value="jpg">JPG</SelectItem>
+                      <SelectItem value="jpeg">JPEG</SelectItem>
+                      <SelectItem value="png">PNG</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-              </div>
-              <Select defaultValue={lang} onValueChange={SelectChanged}>
-                <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
-                  <SelectValue placeholder={t("language")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem defaultChecked={true} value="en">
-                    English (United States)
-                  </SelectItem>
-                  <SelectItem value="fr">Français (France)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
-              <div className="grid grid-cols-[auto,1fr] items-center">
-                <p className="icon my-2 mr-2 text-3xl font-normal">
-                  {"\uF680"}
-                </p>
-                <div>
-                  <h4 className="text-left text-lg">{t("save-option")}</h4>
-                  <p className="text-left text-sm font-normal">
-                    {t("default-format")}
-                  </p>
-                </div>
-              </div>
-              <Select
-                defaultValue={format}
-                onValueChange={(e: "png" | "jpg" | "jpeg" | "bmp") => {
-                  setFormat(e);
-                  settings.format = e;
-                  SetSettings(settings);
-                }}
-              >
-                <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
-                  <SelectValue placeholder={"PNG"} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="bmp">BMP</SelectItem>
-                  <SelectItem value="jpg">JPG</SelectItem>
-                  <SelectItem value="jpeg">JPEG</SelectItem>
-                  <SelectItem value="png">PNG</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+        <section id="settings-section">
+          <Accordion type="single" collapsible>
             <AccordionItem value="barcode">
               <AccordionTrigger>
                 <div className="grid grid-cols-[auto,1fr] items-center">
