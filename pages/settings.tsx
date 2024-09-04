@@ -1,7 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { Save16Regular, Settings20Regular } from "@fluentui/react-icons";
+import {
+  ArrowSquareUpRight20Regular,
+  Link16Regular,
+  Save16Regular,
+  Settings20Regular,
+} from "@fluentui/react-icons";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useTheme } from "next-themes";
 import setLanguage from "next-translate/setLanguage";
@@ -76,6 +81,14 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { qrCodeTypes } from "@/lib/qrCodeTypes";
 import { RotateOption } from "@/types/rotate-type";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 export default function SettingsPage() {
   const { t, lang } = useTranslation("common"); // default namespace (optional)
   const { setTheme, theme } = useTheme();
@@ -111,7 +124,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "2.0.0.2408";
+  const ver = "2.1.0.2409";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -218,69 +231,22 @@ export default function SettingsPage() {
 
           <p className="ml-2 font-bold">{t("settings")}</p>
         </div>
-        <div className="flex justify-center">
-          <section
-            id="about-section"
-            className="m-2 flex flex-col items-center justify-center rounded-lg border border-slate-200 bg-white px-10 py-4 text-center shadow-lg dark:border-slate-700 dark:bg-slate-800"
-          >
-            <div className="m-3 flex items-center space-x-2">
-              <h2 className="text-4xl font-bold">{t("title")}</h2>
-              <span className="m-2 rounded-full bg-gradient-to-br from-accent-color to-[#2153E0] px-2 font-bold text-white">
-                {t("web")}
-              </span>
-            </div>
-            <p className="text-sm">{`${t("version")} ${ver}`}</p>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button size="nav" variant="outline" className="mt-1 font-bold">
-                  {t("see-licenses")}
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="border-0 bg-white dark:bg-slate-900 sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>{t("licenses")}</DialogTitle>
-                </DialogHeader>
-                <p>
-                  NextJS - MIT License - © 2024 Vercel, Inc.
-                  <br></br>
-                  RadixUI - MIT License - © 2022 WorkOS
-                  <br></br>
-                  shadcn/ui - MIT License - © 2023 shadcn
-                  <br></br>
-                  Fluent System Icons - MIT License - © 2020 Microsoft
-                  Corporation
-                  <br></br>
-                  Qrix - MIT License - © 2023-{new Date().getFullYear()} Léo
-                  Corporation
-                </p>
-                <DialogFooter>
-                  <DialogClose>
-                    <Button size="nav" type="submit">
-                      {t("ok")}
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </section>
-        </div>
-        <section id="settings-section">
-          <Accordion type="single" collapsible>
-            <AccordionItem value="theme">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF33C"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("theme")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("change-theme")}
-                    </p>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
+        <Tabs defaultValue="general" className="space-y-4">
+          <TabsList className="flex flex-wrap sm:block">
+            <TabsTrigger value="general">{t("general")}</TabsTrigger>
+            <TabsTrigger value="generation">{t("generation")}</TabsTrigger>
+            <TabsTrigger value="about">{t("about")}</TabsTrigger>
+          </TabsList>
+          <TabsContent value="general" className="border-0 p-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("general")}</CardTitle>
+                <CardDescription>{t("general-desc")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Label className="font-semibold" htmlFor="theme">
+                  {t("theme")}
+                </Label>
                 <div className="flex flex-wrap">
                   <div
                     onClick={() => setTheme("light")}
@@ -293,7 +259,7 @@ export default function SettingsPage() {
                       alt="Light theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">Light</p>
+                    <p className="m-2 font-bold">{t("light")}</p>
                   </div>
                   <div
                     onClick={() => setTheme("dark")}
@@ -306,7 +272,7 @@ export default function SettingsPage() {
                       alt="Dark theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">Dark</p>
+                    <p className="m-2 font-bold">{t("dark")}</p>
                   </div>
                   <div
                     onClick={() => setTheme("system")}
@@ -319,83 +285,57 @@ export default function SettingsPage() {
                       alt="System theme image"
                       className="object-cover"
                     />
-                    <p className="m-2 font-bold">System</p>
+                    <p className="m-2 font-bold">{t("system")}</p>
                   </div>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
-              <div className="grid grid-cols-[auto,1fr] items-center">
-                <p className="icon my-2 mr-2 text-3xl font-normal">
-                  {"\uF4F4"}
-                </p>
-                <div>
-                  <h4 className="text-left text-lg">{t("language")}</h4>
-                  <p className="text-left text-sm font-normal">
-                    {t("change-language")}
-                  </p>
+                <div className="space-y-2">
+                  <Label htmlFor="language" className="font-semibold">
+                    {t("language")}
+                  </Label>
+                  <Select defaultValue={lang} onValueChange={SelectChanged}>
+                    <SelectTrigger className="h-auto w-[200px] px-2 py-1 sm:justify-self-end">
+                      <SelectValue placeholder={t("language")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem defaultChecked={true} value="en">
+                        English (United States)
+                      </SelectItem>
+                      <SelectItem value="fr">Français (France)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Label htmlFor="language" className="font-semibold">
+                    {t("save-option")}
+                  </Label>
+                  <Select
+                    defaultValue={format}
+                    onValueChange={(e: "png" | "jpg" | "jpeg" | "bmp") => {
+                      setFormat(e);
+                      settings.format = e;
+                      SetSettings(settings);
+                    }}
+                  >
+                    <SelectTrigger className="h-auto w-[200px] px-2 py-1 sm:justify-self-end">
+                      <SelectValue placeholder={"PNG"} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="bmp">BMP</SelectItem>
+                      <SelectItem value="jpg">JPG</SelectItem>
+                      <SelectItem value="jpeg">JPEG</SelectItem>
+                      <SelectItem value="png">PNG</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-              </div>
-              <Select defaultValue={lang} onValueChange={SelectChanged}>
-                <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
-                  <SelectValue placeholder={t("language")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem defaultChecked={true} value="en">
-                    English (United States)
-                  </SelectItem>
-                  <SelectItem value="fr">Français (France)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="mx-2 mt-2 grid grid-cols-1 items-center rounded-lg bg-slate-100 p-4 font-bold dark:bg-slate-800 sm:grid-cols-2">
-              <div className="grid grid-cols-[auto,1fr] items-center">
-                <p className="icon my-2 mr-2 text-3xl font-normal">
-                  {"\uF680"}
-                </p>
-                <div>
-                  <h4 className="text-left text-lg">{t("save-option")}</h4>
-                  <p className="text-left text-sm font-normal">
-                    {t("default-format")}
-                  </p>
-                </div>
-              </div>
-              <Select
-                defaultValue={format}
-                onValueChange={(e: "png" | "jpg" | "jpeg" | "bmp") => {
-                  setFormat(e);
-                  settings.format = e;
-                  SetSettings(settings);
-                }}
-              >
-                <SelectTrigger className="mx-1 h-auto w-[200px] px-2 py-1 sm:justify-self-end">
-                  <SelectValue placeholder={"PNG"} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="bmp">BMP</SelectItem>
-                  <SelectItem value="jpg">JPG</SelectItem>
-                  <SelectItem value="jpeg">JPEG</SelectItem>
-                  <SelectItem value="png">PNG</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <AccordionItem value="barcode">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF20F"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("barcode")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("barcode-settings")}
-                    </p>
-                  </div>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="generation" className="space-y-2 border-0 p-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("barcode")}</CardTitle>
+                <CardDescription>{t("barcode-settings")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="border-0.5 rounded-md border-slate-200 dark:border-slate-700">
                     <Popover open={open} onOpenChange={setOpen}>
@@ -569,25 +509,17 @@ export default function SettingsPage() {
                     className="h-[28px] w-[50px] border border-slate-200 p-2 dark:border-slate-700"
                     type="number"
                   />
-                </section>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="qrcode">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF635"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("qrcode")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("qrcode-settings")}
-                    </p>
-                  </div>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <section className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("qrcode")}</CardTitle>
+                <CardDescription>{t("qrcode-settings")}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {" "}
+                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="rounded-md">
                     <Popover open={qrOpen} onOpenChange={setQrOpen}>
@@ -754,24 +686,56 @@ export default function SettingsPage() {
                     className="h-[28px] w-[50px] border border-slate-200 p-2 dark:border-slate-700"
                     type="number"
                   />
-                </section>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="data">
-              <AccordionTrigger>
-                <div className="grid grid-cols-[auto,1fr] items-center">
-                  <p className="icon my-2 mr-2 text-3xl font-normal">
-                    {"\uF4AB"}
-                  </p>
-                  <div>
-                    <h4 className="text-left text-lg">{t("data")}</h4>
-                    <p className="text-left text-sm font-normal">
-                      {t("manage-data")}
-                    </p>
-                  </div>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent>
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="about" className="space-y-2 border-0 p-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("about")}</CardTitle>
+                <CardDescription>{t("about-desc")}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">{t("version")}</h3>
+                  <p>Qrix v{ver}</p>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">{t("repository")}</h3>
+                  <a
+                    href="https://github.com/Leo-Corporation/Qrix"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center text-primary hover:underline"
+                  >
+                    {t("view-repository")}
+                    <ArrowSquareUpRight20Regular className="ml-2 h-4 w-4" />
+                  </a>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold">{t("licenses")}</h3>
+                  <p>
+                    NextJS - MIT License - © 2024 Vercel, Inc.
+                    <br></br>
+                    RadixUI - MIT License - © 2022 WorkOS
+                    <br></br>
+                    shadcn/ui - MIT License - © 2023 shadcn
+                    <br></br>
+                    Fluent System Icons - MIT License - © 2020 Microsoft
+                    Corporation
+                    <br></br>
+                    Qrix - MIT License - © 2023-2024 Léo Corporation
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="mt-6">
+              <CardHeader>
+                <CardTitle>{t("data")}</CardTitle>
+                <CardDescription>{t("manage-data")}</CardDescription>
+              </CardHeader>
+              <CardContent>
                 <div className="flex space-x-2">
                   <Link
                     className={buttonVariants({
@@ -854,10 +818,10 @@ export default function SettingsPage() {
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </section>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </PageContent>
     </Layout>
   );
