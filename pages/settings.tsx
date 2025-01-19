@@ -3,23 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowSquareUpRight20Regular,
-  Link16Regular,
-  Save16Regular,
   Settings20Regular,
 } from "@fluentui/react-icons";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { useTheme } from "next-themes";
 import setLanguage from "next-translate/setLanguage";
 import useTranslation from "next-translate/useTranslation";
 
 import { Layout } from "@/components/layout";
 import { PageContent } from "@/components/page";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,15 +23,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -49,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 import { Settings } from "@/types/settings";
 import { GetSettings, SetSettings } from "@/lib/browser-storage";
 import * as React from "react";
@@ -69,7 +51,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import {
-  Check20Regular,
   Checkmark16Regular,
   ChevronDown16Regular,
 } from "@fluentui/react-icons";
@@ -124,7 +105,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "2.1.3.2412";
+  const ver = "2.1.4.2501";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&

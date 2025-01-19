@@ -59,7 +59,7 @@ import { CalendarEvent } from "@/lib/calendar-event";
 import { DatePicker } from "@/components/ui/date-picker";
 
 export default function BarcodePage() {
-  const { t, lang } = useTranslation("common");
+  const { t } = useTranslation("common");
   const settings: Settings = GetSettings();
   if (settings.qrType === undefined) settings.qrType = "qrcode";
   if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
@@ -162,21 +162,6 @@ export default function BarcodePage() {
           break;
       }
 
-      let canvas = bwipjs.toCanvas("qrcode", {
-        bcid: type, // Barcode type
-        text: textContent, // Text to encode
-        scale: 3, // 3x scaling factor
-        //height: 20, // Bar height, in millimeters
-        includetext: true, // Show human-readable text
-        backgroundcolor: bg.substring(1),
-        barcolor: fg.substring(1),
-        textcolor: fg.substring(1),
-        alttext: showText ? (alt ? alt : textContent) : "",
-        textsize: fontSize,
-        textyalign: textyalign,
-        textxalign: textxalign,
-        rotate: rotation,
-      });
       AddHistory(
         {
           bcid: type, // Barcode type
