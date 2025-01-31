@@ -120,3 +120,19 @@
     height: var(--content-h);
   }
 }
+
+.colorpicker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.colorpicker::-webkit-color-swatch {
+  border: none;
+  border-radius: 2px;
+}
+
+body {
+  background: white;
+}
+
+.dark body {
+  background: #000014;
+}
