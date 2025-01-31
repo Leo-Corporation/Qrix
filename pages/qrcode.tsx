@@ -446,7 +446,7 @@ export default function BarcodePage() {
                     value={content}
                     id="prompt-txt"
                     placeholder={t("enter-content-qr")}
-                    className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-sm dark:bg-slate-800"
+                    className="h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-xs dark:bg-slate-800"
                   />
                 </div>
               </TabsContent>

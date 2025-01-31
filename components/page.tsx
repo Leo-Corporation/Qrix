@@ -66,7 +66,7 @@ export function PageContent({ children, page }: PageProps) {
 
   return (
     <div className="h-screen overflow-hidden">
-      <header className="flex space-x-2 border-b border-slate-200 p-2 py-5 shadow-sm dark:border-slate-700 md:hidden">
+      <header className="flex space-x-2 border-b border-slate-200 p-2 py-5 shadow-xs dark:border-slate-700 md:hidden">
         <Sheet>
           <SheetTrigger>
             <Button className="md:hidden" variant="ghost">
@@ -88,7 +88,7 @@ export function PageContent({ children, page }: PageProps) {
                 })}
                 href={"/"}
               >
-                <div className="rounded-md bg-gradient-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
+                <div className="rounded-md bg-linear-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
                   <Home20Filled className="text-white" />
                 </div>
                 <p className="ml-2 font-bold">{t("home")}</p>
@@ -102,7 +102,7 @@ export function PageContent({ children, page }: PageProps) {
                 })}
                 href={"/history"}
               >
-                <div className="rounded-md bg-gradient-to-br from-[#6F00FF] to-[#9A21E0] p-[5px]">
+                <div className="rounded-md bg-linear-to-br from-[#6F00FF] to-[#9A21E0] p-[5px]">
                   <History20Filled className="text-white" />
                 </div>
                 <p className="ml-2 font-bold">{t("history")}</p>
@@ -116,7 +116,7 @@ export function PageContent({ children, page }: PageProps) {
                 })}
                 href={"/settings"}
               >
-                <div className="rounded-md bg-gradient-to-br from-[#B1B1B1] to-[#343C51] p-[5px]">
+                <div className="rounded-md bg-linear-to-br from-[#B1B1B1] to-[#343C51] p-[5px]">
                   <Settings20Filled className="text-white" />
                 </div>
                 <p className="ml-2 font-bold">{t("settings")}</p>
@@ -155,7 +155,7 @@ export function PageContent({ children, page }: PageProps) {
       </header>
 
       <section className="grid grid-cols-4 xl:grid-cols-6">
-        <ScrollArea className="md:h-scroll border-r border-slate-200 bg-slate-100 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+        <ScrollArea className="md:h-scroll border-r border-slate-200 bg-slate-100 shadow-xs dark:border-slate-700 dark:bg-slate-900">
           <div className="hidden border-b border-slate-200 p-4 pb-2 dark:border-slate-700 md:block">
             <h1 className="text-3xl font-bold">{t("title")}</h1>
             <p className="text-sm font-semibold">{GetWelcomeMessage()}</p>
@@ -171,7 +171,7 @@ export function PageContent({ children, page }: PageProps) {
               })}
               href={"/"}
             >
-              <div className="rounded-md bg-gradient-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
+              <div className="rounded-md bg-linear-to-br from-[#422EEF] to-[#E92EEF] p-[5px]">
                 <Home20Filled className="text-white" />
               </div>
               <p className="ml-2 font-bold">{t("home")}</p>
@@ -185,7 +185,7 @@ export function PageContent({ children, page }: PageProps) {
               })}
               href={"/history"}
             >
-              <div className="rounded-md bg-gradient-to-br from-[#6F00FF] to-[#9A21E0] p-[5px]">
+              <div className="rounded-md bg-linear-to-br from-[#6F00FF] to-[#9A21E0] p-[5px]">
                 <History20Filled className="text-white" />
               </div>
               <p className="ml-2 font-bold">{t("history")}</p>
@@ -199,7 +199,7 @@ export function PageContent({ children, page }: PageProps) {
               })}
               href={"/settings"}
             >
-              <div className="rounded-md bg-gradient-to-br from-[#B1B1B1] to-[#343C51] p-[5px]">
+              <div className="rounded-md bg-linear-to-br from-[#B1B1B1] to-[#343C51] p-[5px]">
                 <Settings20Filled className="text-white" />
               </div>
               <p className="ml-2 font-bold">{t("settings")}</p>

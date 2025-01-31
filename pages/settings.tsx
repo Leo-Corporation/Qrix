@@ -316,7 +316,7 @@ export default function SettingsPage() {
                 <CardDescription>{t("barcode-settings")}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                <div className="grid grid-cols-[auto_1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="border-0.5 rounded-md border-slate-200 dark:border-slate-700">
                     <Popover open={open} onOpenChange={setOpen}>
@@ -500,7 +500,7 @@ export default function SettingsPage() {
               </CardHeader>
               <CardContent>
                 {" "}
-                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                <div className="grid grid-cols-[auto_1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="rounded-md">
                     <Popover open={qrOpen} onOpenChange={setQrOpen}>

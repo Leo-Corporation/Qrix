@@ -69,13 +69,13 @@ export default function HistoryPage() {
         <Tabs defaultValue="barcode">
           <TabsList>
             <TabsTrigger value="barcode">
-              <span className="grid grid-cols-[1fr,auto] gap-2">
+              <span className="grid grid-cols-[1fr_auto] gap-2">
                 <Calendar3Day20Regular />
                 <span>{t("barcode")}</span>
               </span>
             </TabsTrigger>
             <TabsTrigger value="qrcode">
-              <span className="grid grid-cols-[1fr,auto] gap-2">
+              <span className="grid grid-cols-[1fr_auto] gap-2">
                 <QrCode20Regular />
                 <span>{t("qrcode")}</span>
               </span>
