@@ -105,7 +105,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "2.1.4.2501";
+  const ver = "2.1.5.2502";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
@@ -316,7 +316,7 @@ export default function SettingsPage() {
                 <CardDescription>{t("barcode-settings")}</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                <div className="grid grid-cols-[auto_1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="border-0.5 rounded-md border-slate-200 dark:border-slate-700">
                     <Popover open={open} onOpenChange={setOpen}>
@@ -500,7 +500,7 @@ export default function SettingsPage() {
               </CardHeader>
               <CardContent>
                 {" "}
-                <div className="grid grid-cols-[auto,1fr] grid-rows-6 items-center gap-2">
+                <div className="grid grid-cols-[auto_1fr] grid-rows-6 items-center gap-2">
                   <p>{t("barcode-default")}</p>
                   <div className="rounded-md">
                     <Popover open={qrOpen} onOpenChange={setQrOpen}>
@@ -509,7 +509,7 @@ export default function SettingsPage() {
                           variant="outline"
                           role="combobox"
                           aria-expanded={qrOpen}
-                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 dark:border-slate-700 dark:bg-slate-800 sm:w-[180px]"
+                          className="h-auto w-full justify-between border border-slate-200 bg-white px-2 py-1 sm:w-[180px] dark:border-slate-700 dark:bg-slate-800"
                         >
                           {qrType
                             ? qrCodeTypes.find((code) => code.value === qrType)
@@ -518,7 +518,7 @@ export default function SettingsPage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                      <PopoverContent className="w-full border-slate-200 p-0 sm:w-[180px] dark:border-slate-700">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
@@ -688,7 +688,7 @@ export default function SettingsPage() {
                     href="https://github.com/Leo-Corporation/Qrix"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-primary hover:underline"
+                    className="text-primary flex items-center hover:underline"
                   >
                     {t("view-repository")}
                     <ArrowSquareUpRight20Regular className="ml-2 h-4 w-4" />
@@ -697,7 +697,7 @@ export default function SettingsPage() {
                 <div className="space-y-2">
                   <h3 className="text-lg font-semibold">{t("licenses")}</h3>
                   <p>
-                    NextJS - MIT License - © 2024 Vercel, Inc.
+                    NextJS - MIT License - © 2025 Vercel, Inc.
                     <br></br>
                     RadixUI - MIT License - © 2022 WorkOS
                     <br></br>
@@ -706,7 +706,8 @@ export default function SettingsPage() {
                     Fluent System Icons - MIT License - © 2020 Microsoft
                     Corporation
                     <br></br>
-                    Qrix - MIT License - © 2023-2024 Léo Corporation
+                    Qrix - MIT License - © 2023-{new Date().getFullYear()} Léo
+                    Corporation
                   </p>
                 </div>
               </CardContent>

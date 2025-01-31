@@ -52,7 +52,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 gap-1 border-accent-color"
+                className="border-accent-color h-8 gap-1"
               >
                 <QrCode24Regular color="#8B2DF0" className="h-4 w-4" />
                 <span>{t("gen-qrcode")}</span>
@@ -62,7 +62,7 @@ export default function Home() {
               <Button
                 variant="outline"
                 size="sm"
-                className="h-8 gap-1 border-accent-color"
+                className="border-accent-color h-8 gap-1"
               >
                 <BarcodeScanner24Regular color="#8B2DF0" className="h-4 w-4" />
                 <span>{t("gen-barcode")}</span>
@@ -81,7 +81,7 @@ export default function Home() {
               <CardTitle className="text-sm font-medium">
                 {t("total")}
               </CardTitle>
-              <QrCode24Regular className="h-4 w-4 text-muted-foreground" />
+              <QrCode24Regular className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">
@@ -94,7 +94,7 @@ export default function Home() {
               <CardTitle className="text-sm font-medium">
                 {t("total-qrcodes")}
               </CardTitle>
-              <QrCode24Regular className="h-4 w-4 text-muted-foreground" />
+              <QrCode24Regular className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">{history.qrCodes.length}</p>
@@ -105,7 +105,7 @@ export default function Home() {
               <CardTitle className="text-sm font-medium">
                 {t("total-barcodes")}
               </CardTitle>
-              <BarcodeScanner24Regular className="h-4 w-4 text-muted-foreground" />
+              <BarcodeScanner24Regular className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <p className="text-2xl font-bold">{history.barCodes.length}</p>
@@ -121,13 +121,13 @@ export default function Home() {
           <Tabs defaultValue="barcode">
             <TabsList>
               <TabsTrigger value="barcode">
-                <span className="grid grid-cols-[1fr,auto] gap-2">
+                <span className="grid grid-cols-[1fr_auto] gap-2">
                   <Calendar3Day20Regular />
                   <span>{t("barcode")}</span>
                 </span>
               </TabsTrigger>
               <TabsTrigger value="qrcode">
-                <span className="grid grid-cols-[1fr,auto] gap-2">
+                <span className="grid grid-cols-[1fr_auto] gap-2">
                   <QrCode20Regular />
                   <span>{t("qrcode")}</span>
                 </span>

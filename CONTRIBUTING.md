@@ -70,7 +70,7 @@ class User {
   constructor(
     private firstName: string,
     private lastName: string,
-    private email: string
+    private email: string,
   ) {}
 
   public getFullName(): string {
