@@ -363,7 +363,7 @@ export default function BarcodePage() {
                           variant="outline"
                           role="combobox"
                           aria-expanded={open}
-                          className="h-auto w-full justify-between border-0 bg-white px-2 py-1 dark:bg-slate-800 sm:w-[180px]"
+                          className="h-auto w-full justify-between border-0 bg-white px-2 py-1 sm:w-[180px] dark:bg-slate-800"
                         >
                           {type
                             ? qrCodeTypes.find((code) => code.value === type)
@@ -372,7 +372,7 @@ export default function BarcodePage() {
                           <ChevronDown16Regular className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-full border-slate-200 p-0 dark:border-slate-700 sm:w-[180px]">
+                      <PopoverContent className="w-full border-slate-200 p-0 sm:w-[180px] dark:border-slate-700">
                         <Command>
                           <CommandInput placeholder={t("search-barcode")} />
                           <CommandEmpty>{t("no-barcode-found")}</CommandEmpty>
@@ -793,7 +793,7 @@ export default function BarcodePage() {
             <p className="font-semibold">{t("foreground-color")}</p>
             <input
               defaultValue={fg}
-              className="colorpicker h-8 w-[150px] rounded-md border-2 border-accent-color outline-0"
+              className="colorpicker border-accent-color h-8 w-[150px] rounded-md border-2 outline-0"
               type="color"
               name="fg"
               id="foreground-color"
@@ -802,7 +802,7 @@ export default function BarcodePage() {
             <p className="font-semibold">{t("background-color")}</p>
             <input
               defaultValue={bg}
-              className="colorpicker h-8 w-[150px] rounded-md border-2 border-accent-color outline-0"
+              className="colorpicker border-accent-color h-8 w-[150px] rounded-md border-2 outline-0"
               type="color"
               name="bg"
               id="background-color"
