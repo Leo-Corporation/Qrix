@@ -162,12 +162,26 @@ export default function BarcodePage() {
           break;
       }
 
+      let canvas = bwipjs.toCanvas("qrcode", {
+        bcid: type, // Barcode type
+        text: textContent, // Text to encode
+        scale: 3, // 3x scaling factor
+        includetext: true, // Show human-readable text
+        textxalign: textxalign, // Always good to set this
+        textyalign: textyalign,
+        backgroundcolor: bg.substring(1),
+        barcolor: fg.substring(1),
+        textcolor: fg.substring(1),
+        textsize: fontSize,
+        alttext: alt,
+        rotate: rotation,
+      });
+
       AddHistory(
         {
           bcid: type, // Barcode type
           text: textContent, // Text to encode
           scale: 3, // 3x scaling factor
-          //height: 20, // Bar height, in millimeters
           includetext: true, // Show human-readable text
           textxalign: "center", // Always good to set this
 
@@ -183,7 +197,6 @@ export default function BarcodePage() {
       );
       setVis(true);
     } catch (e) {
-      // `e` may be a string or Error object
       console.error(e);
     }
   }
