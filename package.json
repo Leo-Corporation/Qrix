@@ -40,7 +40,7 @@
     "next-translate": "^2.6.2",
     "next-translate-plugin": "^2.6.2",
     "react": "19.1.0",
-    "react-day-picker": "^9.6.7",
+    "react-day-picker": "^9.7.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.2.0",
     "tailwindcss": "^4.1.7",
