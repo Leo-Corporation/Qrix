@@ -23,7 +23,7 @@
     "@radix-ui/react-tabs": "^1.1.12",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/postcss": "^4.1.7",
-    "@types/node": "22.15.21",
+    "@types/node": "24.0.1",
     "@types/react": "19.1.5",
     "@types/react-dom": "19.1.5",
     "bwip-js": "^4.6.0",
