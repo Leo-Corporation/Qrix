@@ -105,7 +105,7 @@ export default function SettingsPage() {
   const [barRotation, setBarRotation] = useState<RotateOption>("N");
   const [qrRotation, setQrRotation] = useState<RotateOption>("N");
 
-  const ver = "2.1.7.2504";
+  const ver = "2.1.8.2506";
   function isSettings(object: any): object is Settings {
     return (
       typeof object === "object" &&
