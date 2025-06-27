@@ -43,7 +43,7 @@
     "react-day-picker": "^9.7.0",
     "react-dom": "19.1.0",
     "tailwind-merge": "^3.3.0",
-    "tailwindcss": "^4.1.7",
+    "tailwindcss": "^4.1.11",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.8.3",
     "vaul": "^1.1.2"
