@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { ChevronDown16Filled } from "@fluentui/react-icons";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { Accordion as AccordionPrimitive } from "radix-ui";
 
 import { cn } from "@/lib/utils";
 
