@@ -4,6 +4,12 @@ import './globals.css';
 import { getLocale } from 'next-intl/server';
 import { ThemeProvider } from 'next-themes';
 import { NextIntlClientProvider } from 'next-intl';
+import { AppSidebar } from '@/components/nav';
+import {
+    SidebarInset,
+    SidebarProvider,
+    SidebarTrigger,
+} from '@/components/ui/sidebar';
 
 const geistSans = Geist({
     variable: '--font-geist-sans',
@@ -50,7 +56,18 @@ export default async function RootLayout({
                     defaultTheme='system'
                     enableSystem
                 >
-                    <NextIntlClientProvider>{children}</NextIntlClientProvider>
+                    <NextIntlClientProvider>
+                        <SidebarProvider>
+                            <AppSidebar />
+
+                            <SidebarInset>
+                                <header className='flex h-16 shrink-0 items-center gap-2 border-b px-4'>
+                                    <SidebarTrigger className='-ml-1' />
+                                </header>
+                                <main>{children}</main>
+                            </SidebarInset>
+                        </SidebarProvider>
+                    </NextIntlClientProvider>
                 </ThemeProvider>
             </body>
         </html>
