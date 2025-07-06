@@ -109,23 +109,26 @@ export default function SettingsPage() {
     const [barRotation, setBarRotation] = useState<RotateOption>('N');
     const [qrRotation, setQrRotation] = useState<RotateOption>('N');
 
-    function isSettings(object: any): object is Settings {
+    function isSettings(object: unknown): object is Settings {
         return (
             typeof object === 'object' &&
-            typeof object.barcodeType === 'string' &&
-            typeof object.barcodeBg === 'string' &&
-            typeof object.barcodeFg === 'string' &&
-            typeof object.qrBg === 'string' &&
-            typeof object.qrFg === 'string'
+            object !== null &&
+            typeof (object as Record<string, unknown>).barcodeType ===
+                'string' &&
+            typeof (object as Record<string, unknown>).barcodeBg === 'string' &&
+            typeof (object as Record<string, unknown>).barcodeFg === 'string' &&
+            typeof (object as Record<string, unknown>).qrBg === 'string' &&
+            typeof (object as Record<string, unknown>).qrFg === 'string'
         );
     }
-    function Import(event: any) {
+    function Import(event: React.ChangeEvent<HTMLInputElement>) {
         if (!event.target) return;
-        let file = event.target.files[0]; // get the selected file
-        let reader = new FileReader(); // create a FileReader object
+        if (!event.target.files || event.target.files.length === 0) return;
+        const file = event.target.files[0]; // get the selected file
+        const reader = new FileReader(); // create a FileReader object
         reader.onload = function (event) {
-            let text: string = event.target?.result as string; // get the file content as text
-            let json: Settings = JSON.parse(text); // parse the text as JSON
+            const text: string = event.target?.result as string; // get the file content as text
+            const json: Settings = JSON.parse(text); // parse the text as JSON
             if (!isSettings(json)) {
                 alert('Invalid file');
                 return;
