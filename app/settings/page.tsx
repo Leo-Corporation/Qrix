@@ -28,7 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { startTransition, useState } from 'react';
+import { useState, useTransition } from 'react';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
@@ -72,10 +72,12 @@ import { qrCodeTypes } from '@/lib/qrCodeTypes';
 import { version } from '@/lib/version';
 import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import clsx from 'clsx';
 export default function SettingsPage() {
     const t = useTranslations();
     const { setTheme, theme } = useTheme();
     const { settings, setSettings } = useSettings();
+    const [isPending, startTransition] = useTransition();
 
     if (settings.textsize === undefined) settings.textsize = 8;
     if (settings.textxalign === undefined) settings.textxalign = 'center';
@@ -282,7 +284,13 @@ export default function SettingsPage() {
                             defaultValue={t('lang')}
                             onValueChange={languageChanged}
                         >
-                            <SelectTrigger className='h-auto w-[200px] px-2 py-1 sm:justify-self-end'>
+                            <SelectTrigger
+                                className={clsx(
+                                    'h-auto w-[200px] px-2 py-1 sm:justify-self-end',
+                                    isPending &&
+                                        'pointer-events-none opacity-60'
+                                )}
+                            >
                                 <SelectValue placeholder={t('language')} />
                             </SelectTrigger>
                             <SelectContent>
