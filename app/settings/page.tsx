@@ -842,7 +842,9 @@ export default function SettingsPage() {
                             }
                             download={'settings.json'}
                         >
-                            {t('export-settings')}
+                            <span className='font-bold'>
+                                {t('export-settings')}
+                            </span>
                         </Link>
                         <Button
                             size='nav'
