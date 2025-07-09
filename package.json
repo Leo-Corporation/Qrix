@@ -11,7 +11,7 @@
   "dependencies": {
     "@fluentui/react-icons": "^2.0.304",
     "@tailwindcss/postcss": "^4.1.11",
-    "@types/node": "24.0.4",
+    "@types/node": "24.0.12",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
     "bwip-js": "^4.6.0",
