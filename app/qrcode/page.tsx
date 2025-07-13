@@ -352,7 +352,7 @@ export default function BarcodePage() {
             <section className='flex w-full flex-col items-center'>
                 <div className='m-5 flex w-full space-x-2'>
                     <Tabs defaultValue='text' className='w-full'>
-                        <TabsList className='my-2 flex h-auto flex-col space-y-2 sm:my-0 sm:flex-row sm:space-y-0'>
+                        <TabsList className='my-2 w-full sm:w-fit flex h-auto flex-col space-y-2 sm:my-0 sm:flex-row sm:space-y-0'>
                             <span>
                                 <TabsTrigger
                                     onClick={() => setTab('text')}
@@ -392,14 +392,14 @@ export default function BarcodePage() {
                                 </TabsTrigger>
                             </span>
                             <span className='flex space-x-2'>
-                                <div className='rounded-md shadow-md'>
+                                <div className='rounded-md shadow-xs'>
                                     <Popover open={open} onOpenChange={setOpen}>
                                         <PopoverTrigger asChild>
                                             <Button
                                                 variant='outline'
                                                 role='combobox'
                                                 aria-expanded={open}
-                                                className='h-auto w-full justify-between border-0 bg-white px-2 py-1 sm:w-[180px] dark:bg-slate-800'
+                                                className='h-auto w-full justify-between border-0 bg-white px-2 py-1 sm:w-[180px]'
                                             >
                                                 {type
                                                     ? qrCodeTypes.find(
@@ -494,22 +494,21 @@ export default function BarcodePage() {
                                             tab !== 'event')
                                     }
                                     onClick={genBarcode}
-                                    variant='default'
-                                    className='h-auto px-2 py-1'
+                                    className='h-auto px-2 py-1 font-semibold'
                                 >
                                     {t('create')}
                                 </Button>
                             </span>
                         </TabsList>
                         <TabsContent value='text'>
-                            <div className='w-full rounded-md shadow-md'>
+                            <div className='w-full rounded-md shadow-xs'>
                                 <Input
                                     onChange={handleInputChange}
                                     type='text'
                                     value={content}
                                     id='prompt-txt'
                                     placeholder={t('enter-content-qr')}
-                                    className='h-auto min-w-[150px] border-0 bg-white px-2 py-1 focus:shadow-xs dark:bg-slate-800'
+                                    className='h-auto min-w-[150px] border-0 px-2 py-1 focus:shadow-xs'
                                 />
                             </div>
                         </TabsContent>
@@ -870,7 +869,7 @@ export default function BarcodePage() {
                     <p className='font-semibold'>{t('foreground-color')}</p>
                     <input
                         defaultValue={fg}
-                        className='colorpicker border-accent-color h-8 w-[150px] rounded-md border-2 outline-0'
+                        className='colorpicker h-full w-[150px] rounded-md border-2 outline-0'
                         type='color'
                         name='fg'
                         id='foreground-color'
@@ -879,7 +878,7 @@ export default function BarcodePage() {
                     <p className='font-semibold'>{t('background-color')}</p>
                     <input
                         defaultValue={bg}
-                        className='colorpicker border-accent-color h-8 w-[150px] rounded-md border-2 outline-0'
+                        className='colorpicker h-full w-[150px] rounded-md border-2 outline-0'
                         type='color'
                         name='bg'
                         id='background-color'
@@ -960,23 +959,23 @@ export default function BarcodePage() {
                 </section>
                 <section className='grid grid-rows-6 items-center gap-2'>
                     <p className='font-semibold'>{t('font-size')}</p>
-                    <div className='w-[50px] rounded-md bg-white shadow-md dark:bg-slate-800'>
+                    <div className='w-[150px] rounded-md shadow-xs'>
                         <Input
                             onChange={handleFontSizeChange}
                             min={1}
                             max={120}
                             defaultValue={fontSize}
-                            className='h-[28px] border-0 p-2'
+                            className='border-0 p-2'
                             type='number'
                         />
                     </div>
                     <p className='font-semibold'>{t('alt-text')}</p>
-                    <div className='w-[150px] rounded-md shadow-md'>
+                    <div className='w-[150px] rounded-md shadow-xs'>
                         <Input
                             onChange={handleAltChange}
                             type='text'
                             placeholder={t('alt-text')}
-                            className='h-auto w-[150px] border-0 bg-white px-2 py-1 dark:bg-slate-800'
+                            className='w-[150px] border-0 px-2 py-1'
                         />
                     </div>
                 </section>
