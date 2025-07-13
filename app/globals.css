@@ -204,3 +204,17 @@ body {
     font-family: 'Hauora', sans-serif;
     min-height: 100vh;
 }
+
+.colorpicker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+.colorpicker::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+}
+
+.colorpicker::-moz-color-swatch {
+    border: none;
+    border-radius: 2px;
+    padding: 0;
+}
