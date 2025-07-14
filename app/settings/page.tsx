@@ -229,7 +229,7 @@ export default function SettingsPage() {
                     <div className='flex flex-wrap'>
                         <div
                             onClick={() => setTheme('light')}
-                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${
+                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 pr-2 bg-accent ${
                                 theme === 'light'
                                     ? 'border-accent-color'
                                     : 'border-transparent'
@@ -246,7 +246,7 @@ export default function SettingsPage() {
                         </div>
                         <div
                             onClick={() => setTheme('dark')}
-                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${
+                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-accent ${
                                 theme === 'dark'
                                     ? 'border-accent-color'
                                     : 'border-transparent'
@@ -263,7 +263,7 @@ export default function SettingsPage() {
                         </div>
                         <div
                             onClick={() => setTheme('system')}
-                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-slate-100 pr-2 dark:bg-slate-700 ${
+                            className={`m-2 flex cursor-pointer items-center space-x-2 overflow-hidden rounded-lg border-2 bg-accent ${
                                 theme === 'system'
                                     ? 'border-accent-color'
                                     : 'border-transparent'
