@@ -44,3 +44,5 @@ export function useHistory() {
         setHistory,
     };
 }
+
+export type ItemType = 'barCode' | 'qrCode';
