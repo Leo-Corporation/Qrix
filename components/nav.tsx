@@ -1,3 +1,4 @@
+'use client';
 import {
     Sidebar,
     SidebarContent,
@@ -19,15 +20,22 @@ import {
     Settings20Regular,
 } from '@fluentui/react-icons';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function AppSidebar() {
     const t = useTranslations();
+    // Get the current page
+    const currentPage = usePathname();
     return (
         <Sidebar>
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton size='lg' asChild>
+                        <SidebarMenuButton
+                            className={currentPage === '/' ? 'bg-accent' : ''}
+                            size='lg'
+                            asChild
+                        >
                             <Link href='/'>
                                 <div className='bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
                                     <Home20Regular className='size-4' />
@@ -52,7 +60,13 @@ export function AppSidebar() {
                         <SidebarMenu>
                             <SidebarMenuItem>
                                 <Link href='/history'>
-                                    <SidebarMenuButton>
+                                    <SidebarMenuButton
+                                        className={
+                                            currentPage === '/history'
+                                                ? 'bg-accent'
+                                                : ''
+                                        }
+                                    >
                                         <History20Regular />
                                         {t('history')}
                                     </SidebarMenuButton>
@@ -60,7 +74,13 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <Link href='/barcode'>
-                                    <SidebarMenuButton>
+                                    <SidebarMenuButton
+                                        className={
+                                            currentPage === '/barcode'
+                                                ? 'bg-accent'
+                                                : ''
+                                        }
+                                    >
                                         <BarcodeScanner20Regular />
                                         {t('barcode')}
                                     </SidebarMenuButton>
@@ -68,7 +88,13 @@ export function AppSidebar() {
                             </SidebarMenuItem>
                             <SidebarMenuItem>
                                 <Link href='/qrcode'>
-                                    <SidebarMenuButton>
+                                    <SidebarMenuButton
+                                        className={
+                                            currentPage === '/qrcode'
+                                                ? 'bg-accent'
+                                                : ''
+                                        }
+                                    >
                                         <QrCode20Regular />
                                         {t('qrcode')}
                                     </SidebarMenuButton>
@@ -82,7 +108,14 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <Link href='/settings'>
-                            <SidebarMenuButton size='lg'>
+                            <SidebarMenuButton
+                                className={
+                                    currentPage === '/settings'
+                                        ? 'bg-accent'
+                                        : ''
+                                }
+                                size='lg'
+                            >
                                 <Settings20Regular />
                                 {t('settings')}
                             </SidebarMenuButton>
