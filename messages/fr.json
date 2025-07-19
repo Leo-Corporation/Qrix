@@ -139,6 +139,7 @@
   "recent-activity": "Activité récente",
   "overview": "Vue d'ensemble",
   "recent": "Récent",
+  "recent-desc": "Vos QR codes et Codes Barres générés récemment",
   "see-more": "Voir plus",
   "general": "Général",
   "generation": "Génération",
@@ -149,5 +150,13 @@
   "about-desc": "Informations sur l'application et son développement.",
   "repository": "Dépôt GitHub",
   "view-repository": "Voir le dépôt",
-  "general-desc": "Personnalisez l'apparence et la langue de l'application."
+  "general-desc": "Personnalisez l'apparence et la langue de l'application.",
+  "qr-classic": "QR Code Classique",
+  "code-type": "Type de Code",
+  "preview-placeholder": "Le Code apparaîtra ici.",
+  "content-placeholder": "Entrez le contenu ici.",
+  "generate": "Générer",
+  "generate-placeholder": "Générer un Code Barre ou un QR Code instantanément.",
+  "quick-generator": "Générateur Rapide",
+  "download": "Télécharger"
 }

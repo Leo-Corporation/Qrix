@@ -139,6 +139,7 @@
   "recent-activity": "Recent Activity",
   "overview": "Overview",
   "recent": "Recent",
+  "recent-desc": "Your recently generated QR codes and barcodes",
   "see-more": "See more",
   "general": "General",
   "generation": "Generation",
@@ -149,5 +150,13 @@
   "about-desc": "Information about the application and its development.",
   "repository": "Repository",
   "view-repository": "View Repository",
-  "general-desc": "Customize the app's appearance and language."
+  "general-desc": "Customize the app's appearance and language.",
+  "qr-classic": "Classic QR Code",
+  "code-type": "Code Type",
+  "preview-placeholder": "The Code will appear here.",
+  "content-placeholder": "Enter text, numbers, etc.",
+  "generate": "Generate",
+  "generate-placeholder": "Generate a Bar Code or QR Code instantly.",
+  "quick-generator": "Quick Generator",
+  "download": "Download"
 }
