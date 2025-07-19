@@ -9,14 +9,14 @@ import {
 } from '@/components/ui/card';
 import { HistoryItem, useHistory } from '@/hooks/use-history';
 import { Home20Regular, QrCode20Regular } from '@fluentui/react-icons';
-import { Copy, Download, QrCode } from 'lucide-react';
+import { Copy, Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import bwipjs from 'bwip-js';
 import { Badge } from '@/components/ui/badge';
 import saveAs from 'file-saver';
 import { useSettings } from '@/hooks/use-settings';
-import { barcodeTypes, getLabelFromValue } from '@/lib/barcodeTypes';
+import { getLabelFromValue } from '@/lib/barcodeTypes';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import {
@@ -43,7 +43,7 @@ function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
       }
     }
     genBarcode();
-  }, []);
+  }, [code, i]);
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
@@ -193,7 +193,9 @@ export default function Home() {
           <Home20Regular primaryFill="#8B2DF0" className="text-white" />
           <p className="ml-2 font-bold">{t('home')}</p>
         </div>
-        <h2 className="mt-5 text-3xl font-bold">{t('welcome')}</h2>
+        <h2 className="font-border-l-muted-foreground mt-5 text-3xl">
+          {t('welcome')}
+        </h2>
       </section>
       <section className="mx-auto grid w-full max-w-7xl gap-8 p-4 lg:grid-cols-3">
         <div className="col-span-2 space-y-6">

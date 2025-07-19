@@ -64,7 +64,7 @@ export default function HistoryElement(props: {
       }
     }
     genBarcode();
-  }, []);
+  }, [props.item, props.index]);
   function copyCanvasContentsToClipboard(
     canvas: HTMLCanvasElement,
     onDone: () => void,
