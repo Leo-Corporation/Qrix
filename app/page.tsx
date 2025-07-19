@@ -1,103 +1,289 @@
-import Image from 'next/image';
+'use client';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { HistoryItem, useHistory } from '@/hooks/use-history';
+import { Home20Regular, QrCode20Regular } from '@fluentui/react-icons';
+import { Copy, Download, QrCode } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
+import bwipjs from 'bwip-js';
+import { Badge } from '@/components/ui/badge';
+import saveAs from 'file-saver';
+import { useSettings } from '@/hooks/use-settings';
+import { barcodeTypes, getLabelFromValue } from '@/lib/barcodeTypes';
+import Link from 'next/link';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import clsx from 'clsx';
+
+function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
+  const t = useTranslations();
+  const { settings } = useSettings();
+  useEffect(() => {
+    function genBarcode() {
+      try {
+        // The return value is the canvas element
+        bwipjs.toCanvas(`code-${code.text}-${code.bcid}-${i}`, code);
+      } catch (e) {
+        // `e` may be a string or Error object
+        console.error(e);
+      }
+    }
+    genBarcode();
+  }, []);
+  function copyCanvasContentsToClipboard(
+    canvas: HTMLCanvasElement,
+    onDone: () => void,
+    onError: (err: Error) => void,
+  ) {
+    canvas.toBlob((blob) => {
+      // check for null blob
+      if (blob) {
+        const data = [new ClipboardItem({ [blob.type]: blob })];
+        navigator.clipboard.write(data).then(
+          () => {
+            onDone();
+          },
+          (err) => {
+            onError(err);
+          },
+        );
+      } else {
+        // handle null blob case
+        onError(new Error('Blob is null'));
+      }
+    });
+  }
+
+  function copyBtn() {
+    const canvas: HTMLCanvasElement = document.getElementById(
+      `code-${code.text}-${code.bcid}-${i}`,
+    ) as HTMLCanvasElement;
+    copyCanvasContentsToClipboard(
+      canvas,
+      () => {
+        console.log('Copied successfully');
+      },
+      (err) => {
+        console.error(err);
+      },
+    );
+  }
+
+  function getTitle() {
+    if (code.metadata) {
+      return t('interactive');
+    }
+    if (code.bcid === 'qrcode') {
+      return t('qr-classic');
+    } else if (code.bcid === 'swissqrcode') {
+      return 'Swiss QR Code';
+    } else {
+      return getLabelFromValue(code.bcid);
+    }
+  }
+
+  function saveBtn() {
+    const canvas = document.getElementById(
+      `code-${code.text}-${code.bcid}-${i}`,
+    ) as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      if (blob) {
+        saveAs(blob, `${code.text}.${settings.format}`);
+      }
+    });
+  }
+
+  return (
+    <div className="hover:bg-accent flex items-center justify-between rounded-lg border p-4 transition-colors">
+      <div className="flex items-center space-x-4">
+        <canvas
+          id={`code-${code.text}-${code.bcid}-${i}`}
+          className="h-12 w-12"
+        ></canvas>
+        <div>
+          <div className="flex items-center space-x-2">
+            <h3 className="font-medium">{getTitle()}</h3>
+            <Badge className="text-xs">
+              {code.bcid.includes('qrcode') ? t('qrcode') : t('barcode')}
+            </Badge>
+          </div>
+          <p className="text-muted-foreground max-w-xs truncate text-sm">
+            {code.text}
+          </p>
+        </div>
+      </div>
+      <div className="flex items-center space-x-2">
+        <Button onClick={copyBtn} variant="outline" size="sm">
+          <Copy className="h-4 w-4" />
+        </Button>
+        <Button onClick={saveBtn} variant="outline" size="sm">
+          <Download className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
-  return (
-    <div className="grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20">
-      <main className="row-start-2 flex flex-col items-center gap-[32px] sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm/6 sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{' '}
-            <code className="rounded bg-black/[.05] px-1 py-0.5 font-[family-name:var(--font-geist-mono)] font-semibold dark:bg-white/[.06]">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const t = useTranslations();
+  const { history, setHistory } = useHistory();
+  const { settings } = useSettings();
+  const codes = [...history.barCodes, ...history.qrCodes].slice(0, 6);
+  const [inputText, setInputText] = useState('');
+  const [codeType, setCodeType] = useState('qrcode');
+  const [empty, setEmpty] = useState(true);
 
-        <div className="flex flex-col items-center gap-4 sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent px-4 text-sm font-medium transition-colors hover:bg-[#383838] sm:h-12 sm:w-auto sm:px-5 sm:text-base dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="flex h-10 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm font-medium transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:w-auto sm:px-5 sm:text-base md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex flex-wrap items-center justify-center gap-[24px]">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  function generateCode() {
+    if (!inputText) return;
+    const code = {
+      bcid: codeType, // Barcode type
+      text: inputText, // Text to encode
+      scale: 3, // 3x scaling factor
+      includetext: true, // Show human-readable text
+      textxalign: settings.textxalign,
+      textyalign: settings.textyalign,
+      backgroundcolor: settings.barcodeBg,
+      barcolor: settings.barcodeFg,
+      textcolor: settings.barcodeFg,
+      rotate: settings.barcodeRotation,
+    };
+    bwipjs.toCanvas('quick-code', code);
+
+    if (codeType === 'qrcode') {
+      setHistory((prev) => ({
+        ...prev,
+        qrCodes: [...prev.qrCodes, code],
+      }));
+    } else {
+      setHistory((prev) => ({
+        ...prev,
+        barCodes: [...prev.barCodes, code],
+      }));
+    }
+    setEmpty(false);
+  }
+
+  function saveBtn() {
+    const canvas = document.getElementById(`code`) as HTMLCanvasElement;
+    canvas.toBlob(function (blob) {
+      if (blob) {
+        saveAs(blob, `${inputText}.${settings.format}`);
+      }
+    });
+  }
+
+  return (
+    <div className="mx-auto grid w-full max-w-7xl gap-8 p-4 lg:grid-cols-3">
+      <div className="col-span-2 space-y-6">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>{t('recent-activity')}</CardTitle>
+                <CardDescription>{t('recent-desc')}</CardDescription>
+              </div>
+              <Link href={'/history'}>
+                <Button variant="outline" size="sm">
+                  {t('see-more')}
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {codes.map((code, i) => (
+                <RecentHistoryItem i={i} key={i} code={code} />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('quick-generator')}</CardTitle>
+            <CardDescription>{t('generate-placeholder')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="code-type">{t('code-type')}</Label>
+              <Select value={codeType} onValueChange={setCodeType}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="qrcode">{t('qrcode')}</SelectItem>
+                  <SelectItem value="code128">{t('barcode')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="content">{t('content')}</Label>
+              <Input
+                id="content"
+                placeholder={t('content-placeholder')}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+            </div>
+
+            <Button onClick={generateCode} className="w-full">
+              <QrCode20Regular className="mr-2 h-4 w-4" />
+              {t('generate')}
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Preview */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('preview')}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="border-accent bg-accent flex aspect-square items-center justify-center rounded-lg border-2 border-dashed">
+              {empty && (
+                <div className="text-center">
+                  <QrCode20Regular className="text-muted-foreground mx-auto mb-2 h-12 w-12" />
+                  <p className="text-muted-foreground text-sm">
+                    {t('preview-placeholder')}
+                  </p>
+                </div>
+              )}
+              <canvas
+                id="quick-code"
+                className={clsx('h-48 w-48', { hidden: empty })}
+              />
+            </div>
+            {!empty && (
+              <div className="mt-4 space-y-2">
+                <Button
+                  onClick={saveBtn}
+                  variant="outline"
+                  className="w-full bg-transparent"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  {t('download')} PNG
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
