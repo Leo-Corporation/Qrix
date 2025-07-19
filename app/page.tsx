@@ -187,103 +187,109 @@ export default function Home() {
   }
 
   return (
-    <div className="mx-auto grid w-full max-w-7xl gap-8 p-4 lg:grid-cols-3">
-      <div className="col-span-2 space-y-6">
-        <Card>
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle>{t('recent-activity')}</CardTitle>
-                <CardDescription>{t('recent-desc')}</CardDescription>
+    <div>
+      <section className="mx-auto w-full max-w-7xl p-4">
+        <div className="flex items-center space-x-2">
+          <Home20Regular primaryFill="#8B2DF0" className="text-white" />
+          <p className="ml-2 font-bold">{t('home')}</p>
+        </div>
+        <h2 className="mt-5 text-3xl font-bold">{t('welcome')}</h2>
+      </section>
+      <section className="mx-auto grid w-full max-w-7xl gap-8 p-4 lg:grid-cols-3">
+        <div className="col-span-2 space-y-6">
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle>{t('recent-activity')}</CardTitle>
+                  <CardDescription>{t('recent-desc')}</CardDescription>
+                </div>
+                <Link href={'/history'}>
+                  <Button variant="outline" size="sm">
+                    {t('see-more')}
+                  </Button>
+                </Link>
               </div>
-              <Link href={'/history'}>
-                <Button variant="outline" size="sm">
-                  {t('see-more')}
-                </Button>
-              </Link>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {codes.map((code, i) => (
-                <RecentHistoryItem i={i} key={i} code={code} />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      <div className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('quick-generator')}</CardTitle>
-            <CardDescription>{t('generate-placeholder')}</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="code-type">{t('code-type')}</Label>
-              <Select value={codeType} onValueChange={setCodeType}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="qrcode">{t('qrcode')}</SelectItem>
-                  <SelectItem value="code128">{t('barcode')}</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="content">{t('content')}</Label>
-              <Input
-                id="content"
-                placeholder={t('content-placeholder')}
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-              />
-            </div>
-
-            <Button onClick={generateCode} className="w-full">
-              <QrCode20Regular className="mr-2 h-4 w-4" />
-              {t('generate')}
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Preview */}
-        <Card>
-          <CardHeader>
-            <CardTitle>{t('preview')}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="border-accent bg-accent flex aspect-square items-center justify-center rounded-lg border-2 border-dashed">
-              {empty && (
-                <div className="text-center">
-                  <QrCode20Regular className="text-muted-foreground mx-auto mb-2 h-12 w-12" />
-                  <p className="text-muted-foreground text-sm">
-                    {t('preview-placeholder')}
-                  </p>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {codes.map((code, i) => (
+                  <RecentHistoryItem i={i} key={i} code={code} />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('quick-generator')}</CardTitle>
+              <CardDescription>{t('generate-placeholder')}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="code-type">{t('code-type')}</Label>
+                <Select value={codeType} onValueChange={setCodeType}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="qrcode">{t('qrcode')}</SelectItem>
+                    <SelectItem value="code128">{t('barcode')}</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="content">{t('content')}</Label>
+                <Input
+                  id="content"
+                  placeholder={t('content-placeholder')}
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                />
+              </div>
+              <Button onClick={generateCode} className="w-full">
+                <QrCode20Regular className="mr-2 h-4 w-4" />
+                {t('generate')}
+              </Button>
+            </CardContent>
+          </Card>
+          {/* Preview */}
+          <Card>
+            <CardHeader>
+              <CardTitle>{t('preview')}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="border-accent bg-accent flex aspect-square items-center justify-center rounded-lg border-2 border-dashed">
+                {empty && (
+                  <div className="text-center">
+                    <QrCode20Regular className="text-muted-foreground mx-auto mb-2 h-12 w-12" />
+                    <p className="text-muted-foreground text-sm">
+                      {t('preview-placeholder')}
+                    </p>
+                  </div>
+                )}
+                <canvas
+                  id="quick-code"
+                  className={clsx('h-48 w-48', { hidden: empty })}
+                />
+              </div>
+              {!empty && (
+                <div className="mt-4 space-y-2">
+                  <Button
+                    onClick={saveBtn}
+                    variant="outline"
+                    className="w-full bg-transparent"
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    {t('download')} PNG
+                  </Button>
                 </div>
               )}
-              <canvas
-                id="quick-code"
-                className={clsx('h-48 w-48', { hidden: empty })}
-              />
-            </div>
-            {!empty && (
-              <div className="mt-4 space-y-2">
-                <Button
-                  onClick={saveBtn}
-                  variant="outline"
-                  className="w-full bg-transparent"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  {t('download')} PNG
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
     </div>
   );
 }
