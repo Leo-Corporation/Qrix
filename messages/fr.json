@@ -158,5 +158,6 @@
   "generate": "Générer",
   "generate-placeholder": "Générer un Code Barre ou un QR Code instantanément.",
   "quick-generator": "Générateur Rapide",
-  "download": "Télécharger"
+  "download": "Télécharger",
+  "no-recent": "Aucune activité récente trouvée."
 }

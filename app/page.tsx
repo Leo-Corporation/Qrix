@@ -8,7 +8,11 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { HistoryItem, useHistory } from '@/hooks/use-history';
-import { Home20Regular, QrCode20Regular } from '@fluentui/react-icons';
+import {
+  History20Regular,
+  Home20Regular,
+  QrCode20Regular,
+} from '@fluentui/react-icons';
 import { Copy, Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
@@ -222,6 +226,12 @@ export default function Home() {
                 {codes.map((code, i) => (
                   <RecentHistoryItem i={i} key={i} code={code} />
                 ))}
+                {codes.length === 0 && (
+                  <div className="text-muted-foreground text-center">
+                    <History20Regular className="mx-auto mb-2 h-12 w-12" />
+                    <p>{t('no-recent')}</p>
+                  </div>
+                )}
               </div>
             </CardContent>
           </Card>

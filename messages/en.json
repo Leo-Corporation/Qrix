@@ -139,7 +139,7 @@
   "recent-activity": "Recent Activity",
   "overview": "Overview",
   "recent": "Recent",
-  "recent-desc": "Your recently generated QR codes and barcodes",
+  "recent-desc": "Your recently generated QR codes and Bar Codes",
   "see-more": "See more",
   "general": "General",
   "generation": "Generation",
@@ -158,5 +158,6 @@
   "generate": "Generate",
   "generate-placeholder": "Generate a Bar Code or QR Code instantly.",
   "quick-generator": "Quick Generator",
-  "download": "Download"
+  "download": "Download",
+  "no-recent": "No recent activity found."
 }
