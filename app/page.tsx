@@ -28,10 +28,12 @@ import {
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import clsx from 'clsx';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
   const t = useTranslations();
   const { settings } = useSettings();
+  const isMobile = useIsMobile();
   useEffect(() => {
     function genBarcode() {
       try {
@@ -117,12 +119,16 @@ function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
         <div>
           <div className="flex items-center space-x-2">
             <h3 className="font-medium">{getTitle()}</h3>
-            <Badge className="text-xs">
-              {code.bcid.includes('qrcode') ? t('qrcode') : t('barcode')}
-            </Badge>
+            {!isMobile && (
+              <Badge className="text-xs">
+                {code.bcid.includes('qrcode') ? t('qrcode') : t('barcode')}
+              </Badge>
+            )}
           </div>
           <p className="text-muted-foreground max-w-xs truncate text-sm">
-            {code.text}
+            {code.text.length > (isMobile ? 18 : 50)
+              ? `${code.text.slice(0, isMobile ? 18 : 50)}...`
+              : code.text}
           </p>
         </div>
       </div>
@@ -193,9 +199,7 @@ export default function Home() {
           <Home20Regular primaryFill="#8B2DF0" className="text-white" />
           <p className="ml-2 font-bold">{t('home')}</p>
         </div>
-        <h2 className="font-border-l-muted-foreground mt-5 text-3xl">
-          {t('welcome')}
-        </h2>
+        <h2 className="mt-5 text-3xl font-bold">{t('welcome')}</h2>
       </section>
       <section className="mx-auto grid w-full max-w-7xl gap-8 p-4 lg:grid-cols-3">
         <div className="col-span-2 space-y-6">
@@ -222,7 +226,7 @@ export default function Home() {
             </CardContent>
           </Card>
         </div>
-        <div className="space-y-6">
+        <div className="col-span-2 space-y-6 lg:col-span-1">
           <Card>
             <CardHeader>
               <CardTitle>{t('quick-generator')}</CardTitle>
@@ -262,7 +266,7 @@ export default function Home() {
               <CardTitle>{t('preview')}</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="border-accent bg-accent flex aspect-square items-center justify-center rounded-lg border-2 border-dashed">
+              <div className="border-muted-foreground/50 bg-accent flex aspect-square items-center justify-center rounded-lg border-2 border-dashed">
                 {empty && (
                   <div className="text-center">
                     <QrCode20Regular className="text-muted-foreground mx-auto mb-2 h-12 w-12" />
