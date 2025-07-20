@@ -1,6 +1,6 @@
 name: Misc
 description: Your issue doesn't fit in any categories.
-title: "[Misc] "
+title: '[Misc] '
 labels: [misc]
 body:
   - type: markdown

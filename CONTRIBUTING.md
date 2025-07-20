@@ -56,7 +56,7 @@ function getUserFullName(user: User): string {
 
 ```ts
 // Use descriptive names for variables
-const shoppingCartItems: string[] = ["apples", "bananas", "oranges"];
+const shoppingCartItems: string[] = ['apples', 'bananas', 'oranges'];
 
 // Use descriptive names for functions
 function calculateTotalPrice(items: number[], taxRate: number): number {
@@ -129,9 +129,9 @@ interface ShoppingCartItem {
 
 ```ts
 enum PaymentMethod {
-  CreditCard = "credit-card",
-  PayPal = "paypal",
-  Venmo = "venmo",
+  CreditCard = 'credit-card',
+  PayPal = 'paypal',
+  Venmo = 'venmo',
 }
 
 const paymentMethod: PaymentMethod = PaymentMethod.CreditCard;

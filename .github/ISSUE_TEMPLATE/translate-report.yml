@@ -1,6 +1,6 @@
 name: Translation issues
 description: Report a translation issue.
-title: "[Translation] "
+title: '[Translation] '
 labels: [translation]
 body:
   - type: markdown

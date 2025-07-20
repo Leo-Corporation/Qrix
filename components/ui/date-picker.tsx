@@ -1,37 +1,35 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { format } from "date-fns";
+import * as React from 'react';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { Calendar16Regular } from "@fluentui/react-icons";
-import useTranslation from "next-translate/useTranslation";
+} from '@/components/ui/popover';
+import { useTranslations } from 'next-intl';
 
-export function DatePicker(props: { setDate: Function }) {
+export function DatePicker(props: { setDate: (date: string) => void }) {
+  const t = useTranslations();
   const [date, setDate] = React.useState<Date>();
-  const { t } = useTranslation("common");
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant={"outline"}
-          className={cn(
-            "justify-start border border-slate-300 text-left font-normal dark:border-slate-600",
-            !date && "text-muted-foreground",
-          )}
+          variant="outline"
+          data-empty={!date}
+          className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
         >
-          <Calendar16Regular className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>{t("select-date")}</span>}
+          <CalendarIcon />
+          {date ? format(date, 'PPP') : <span>{t('select-date')}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0 dark:border-slate-600">
+      <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           selected={date}
@@ -44,11 +42,12 @@ export function DatePicker(props: { setDate: Function }) {
     </Popover>
   );
 }
+
 function formatDate(date: Date | undefined) {
-  if (!date) return "";
-  var year = date.getFullYear();
-  var month = (1 + date.getMonth()).toString().padStart(2, "0");
-  var day = date.getDate().toString().padStart(2, "0");
+  if (!date) return '';
+  const year = date.getFullYear();
+  const month = (1 + date.getMonth()).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
 
   return year + month + day;
 }
