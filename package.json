@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fluentui/react-icons": "^2.0.314",
+    "@fluentui/react-icons": "^2.0.315",
     "@types/bwip-js": "^3.2.3",
     "bwip-js": "^4.8.0",
     "class-variance-authority": "^0.7.1",
