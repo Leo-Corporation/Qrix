@@ -13,7 +13,9 @@ import {
 } from '@/components/ui/popover';
 import { useTranslations } from 'next-intl';
 
-export function DatePicker(props: { setDate: (date: string) => void }) {
+export function DatePicker(
+  props: Readonly<{ setDate: (date: string) => void }>,
+) {
   const t = useTranslations();
   const [date, setDate] = React.useState<Date>();
 

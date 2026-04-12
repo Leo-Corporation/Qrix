@@ -79,31 +79,36 @@ export default function SettingsPage() {
   const { settings, setSettings } = useSettings();
   const [isPending, startTransition] = useTransition();
 
-  if (settings.textsize === undefined) settings.textsize = 8;
-  if (settings.textxalign === undefined) settings.textxalign = 'center';
-  if (settings.textyalign === undefined) settings.textyalign = 'below';
-  if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
-  if (settings.qrTextxalign === undefined) settings.qrTextxalign = 'center';
-  if (settings.qrTextyalign === undefined) settings.qrTextyalign = 'below';
-  if (settings.qrShowText === undefined) settings.qrShowText = false;
-  if (settings.qrType === undefined) settings.qrType = 'qrcode';
-  if (settings.qrRotation === undefined) settings.qrRotation = 'N';
-  if (settings.barcodeRotation === undefined) settings.barcodeRotation = 'N';
+  const resolvedSettings: Settings = { ...settings };
+  resolvedSettings.textsize ??= 8;
+  resolvedSettings.textxalign ??= 'center';
+  resolvedSettings.textyalign ??= 'below';
+  resolvedSettings.qrTextsize ??= 8;
+  resolvedSettings.qrTextxalign ??= 'center';
+  resolvedSettings.qrTextyalign ??= 'below';
+  resolvedSettings.qrShowText ??= false;
+  resolvedSettings.qrType ??= 'qrcode';
+  resolvedSettings.qrRotation ??= 'N';
+  resolvedSettings.barcodeRotation ??= 'N';
 
-  const [barFg, setBarFg] = useState(settings.barcodeFg);
-  const [barBg, setBarBg] = useState(settings.barcodeBg);
-  const [qrFg, setQrFg] = useState(settings.qrFg);
-  const [qrBg, setQrBg] = useState(settings.qrBg);
-  const [type, setType] = useState(settings.barcodeType);
-  const [qrType, setQrType] = useState(settings.qrType);
-  const [format, setFormat] = useState(settings.format);
-  const [xalign, setXAlign] = useState<TextXAlign>(settings.textxalign);
-  const [yalign, setYAlign] = useState<TextYAlign>(settings.textyalign);
-  const [fontSize, setFontSize] = useState(settings.textsize);
-  const [qrXAlign, setQrXAlign] = useState<TextXAlign>(settings.qrTextxalign);
-  const [qrYAlign, setQrYAlign] = useState<TextYAlign>(settings.qrTextyalign);
-  const [qrFontSize, setQrFontSize] = useState(settings.qrTextsize);
-  const [qrShowText, setQrShowText] = useState(settings.qrShowText);
+  const updateSettings = (updates: Partial<Settings>) => {
+    setSettings((previous) => ({ ...previous, ...updates }));
+  };
+
+  const [barFg, setBarFg] = useState(resolvedSettings.barcodeFg);
+  const [barBg, setBarBg] = useState(resolvedSettings.barcodeBg);
+  const [qrFg, setQrFg] = useState(resolvedSettings.qrFg);
+  const [qrBg, setQrBg] = useState(resolvedSettings.qrBg);
+  const [type, setType] = useState(resolvedSettings.barcodeType);
+  const [qrType, setQrType] = useState(resolvedSettings.qrType);
+  const [format, setFormat] = useState(resolvedSettings.format);
+  const [xalign, setXAlign] = useState<TextXAlign>(resolvedSettings.textxalign);
+  const [yalign, setYAlign] = useState<TextYAlign>(resolvedSettings.textyalign);
+  const [fontSize, setFontSize] = useState(resolvedSettings.textsize);
+  const [qrXAlign, setQrXAlign] = useState<TextXAlign>(resolvedSettings.qrTextxalign);
+  const [qrYAlign, setQrYAlign] = useState<TextYAlign>(resolvedSettings.qrTextyalign);
+  const [qrFontSize, setQrFontSize] = useState(resolvedSettings.qrTextsize);
+  const [qrShowText, setQrShowText] = useState(resolvedSettings.qrShowText);
   const [open, setOpen] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [barRotation, setBarRotation] = useState<RotateOption>('N');
@@ -152,15 +157,13 @@ export default function SettingsPage() {
   function handleFontSizeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newValue = Number(event.target.value);
     setFontSize(newValue);
-    settings.textsize = newValue;
-    setSettings(settings);
+    updateSettings({ textsize: newValue });
   }
 
   function handleQrFontSizeChange(event: React.ChangeEvent<HTMLInputElement>) {
     const newValue = Number(event.target.value);
     setQrFontSize(newValue);
-    settings.qrTextsize = newValue;
-    setSettings(settings);
+    updateSettings({ qrTextsize: newValue });
   }
 
   function toTextAlign(s: string): TextXAlign {
@@ -296,8 +299,7 @@ export default function SettingsPage() {
               defaultValue={format}
               onValueChange={(e: 'png' | 'jpg' | 'jpeg' | 'bmp') => {
                 setFormat(e);
-                settings.format = e;
-                setSettings(settings);
+                updateSettings({ format: e });
               }}
             >
               <SelectTrigger className="h-auto w-[200px] px-2 py-1 sm:justify-self-end">
@@ -373,8 +375,7 @@ export default function SettingsPage() {
                                   currentValue === type ? '' : currentValue,
                                 );
                                 setOpen(false);
-                                settings.barcodeType = currentValue;
-                                setSettings(settings);
+                                updateSettings({ barcodeType: currentValue });
                               }}
                             >
                               <Checkmark16Regular
@@ -403,8 +404,7 @@ export default function SettingsPage() {
               name="fg"
               id="foreground-color"
               onChange={(e) => {
-                settings.barcodeFg = e.target.value;
-                setSettings(settings);
+                updateSettings({ barcodeFg: e.target.value });
                 setBarFg(e.target.value);
               }}
             />
@@ -416,8 +416,7 @@ export default function SettingsPage() {
               name="bg"
               id="background-color"
               onChange={(e) => {
-                settings.barcodeBg = e.target.value;
-                setSettings(settings);
+                updateSettings({ barcodeBg: e.target.value });
                 setBarBg(e.target.value);
               }}
             />
@@ -425,9 +424,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={xalign}
               onValueChange={(e) => {
-                settings.textxalign = toTextAlign(e);
-                setSettings(settings);
-                setXAlign(toTextAlign(e));
+                const value = toTextAlign(e);
+                updateSettings({ textxalign: value });
+                setXAlign(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
@@ -446,9 +445,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={yalign}
               onValueChange={(e) => {
-                settings.textyalign = toTextYAlign(e);
-                setSettings(settings);
-                setYAlign(toTextYAlign(e));
+                const value = toTextYAlign(e);
+                updateSettings({ textyalign: value });
+                setYAlign(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
@@ -464,9 +463,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={barRotation}
               onValueChange={(e) => {
-                settings.barcodeRotation = toRotation(e);
-                setSettings(settings);
-                setBarRotation(toRotation(e));
+                const value = toRotation(e);
+                updateSettings({ barcodeRotation: value });
+                setBarRotation(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
@@ -532,8 +531,7 @@ export default function SettingsPage() {
                                   currentValue === qrType ? '' : currentValue,
                                 );
                                 setQrOpen(false);
-                                settings.qrType = currentValue;
-                                setSettings(settings);
+                                updateSettings({ qrType: currentValue });
                               }}
                             >
                               <Checkmark16Regular
@@ -562,8 +560,7 @@ export default function SettingsPage() {
               name="qrfg"
               id="qr-foreground-color"
               onChange={(e) => {
-                settings.qrFg = e.target.value;
-                setSettings(settings);
+                updateSettings({ qrFg: e.target.value });
                 setQrBg(e.target.value);
               }}
             />
@@ -575,8 +572,7 @@ export default function SettingsPage() {
               name="qrbg"
               id="qr-background-color"
               onChange={(e) => {
-                settings.qrBg = e.target.value;
-                setSettings(settings);
+                updateSettings({ qrBg: e.target.value });
                 setQrFg(e.target.value);
               }}
             />
@@ -585,8 +581,7 @@ export default function SettingsPage() {
               id="show-text"
               defaultChecked={qrShowText}
               onCheckedChange={(v) => {
-                settings.qrShowText = v;
-                setSettings(settings);
+                updateSettings({ qrShowText: v });
                 setQrShowText(v);
               }}
             ></Switch>
@@ -595,9 +590,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={qrXAlign}
               onValueChange={(e) => {
-                settings.qrTextxalign = toTextAlign(e);
-                setSettings(settings);
-                setQrXAlign(toTextAlign(e));
+                const value = toTextAlign(e);
+                updateSettings({ qrTextxalign: value });
+                setQrXAlign(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
@@ -616,9 +611,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={qrYAlign}
               onValueChange={(e) => {
-                settings.qrTextyalign = toTextYAlign(e);
-                setSettings(settings);
-                setQrYAlign(toTextYAlign(e));
+                const value = toTextYAlign(e);
+                updateSettings({ qrTextyalign: value });
+                setQrYAlign(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
@@ -634,9 +629,9 @@ export default function SettingsPage() {
             <Select
               defaultValue={qrRotation}
               onValueChange={(e) => {
-                settings.qrRotation = toRotation(e);
-                setSettings(settings);
-                setQrRotation(toRotation(e));
+                const value = toRotation(e);
+                updateSettings({ qrRotation: value });
+                setQrRotation(value);
               }}
             >
               <SelectTrigger className="h-auto w-[150px] p-1">
