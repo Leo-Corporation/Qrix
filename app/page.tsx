@@ -33,51 +33,37 @@ import {
 import { Input } from '@/components/ui/input';
 import clsx from 'clsx';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  copyCanvasContentsToClipboard,
+  createHistoryItemId,
+  getHistoryCanvasId,
+  getHistoryItemKey,
+} from '@/lib/history-utils';
 
-function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
+function RecentHistoryItem({ code }: Readonly<{ code: HistoryItem }>) {
   const t = useTranslations();
   const { settings } = useSettings();
   const isMobile = useIsMobile();
+  const canvasId = getHistoryCanvasId(code);
+
   useEffect(() => {
     function genBarcode() {
       try {
         // The return value is the canvas element
-        bwipjs.toCanvas(`code-${code.text}-${code.bcid}-${i}`, code);
+        bwipjs.toCanvas(canvasId, code);
       } catch (e) {
         // `e` may be a string or Error object
         console.error(e);
       }
     }
     genBarcode();
-  }, [code, i]);
-  function copyCanvasContentsToClipboard(
-    canvas: HTMLCanvasElement,
-    onDone: () => void,
-    onError: (err: Error) => void,
-  ) {
-    canvas.toBlob((blob) => {
-      // check for null blob
-      if (blob) {
-        const data = [new ClipboardItem({ [blob.type]: blob })];
-        navigator.clipboard.write(data).then(
-          () => {
-            onDone();
-          },
-          (err) => {
-            onError(err);
-          },
-        );
-      } else {
-        // handle null blob case
-        onError(new Error('Blob is null'));
-      }
-    });
-  }
+  }, [canvasId, code]);
 
   function copyBtn() {
-    const canvas: HTMLCanvasElement = document.getElementById(
-      `code-${code.text}-${code.bcid}-${i}`,
-    ) as HTMLCanvasElement;
+    const canvas = document.getElementById(
+      canvasId,
+    ) as HTMLCanvasElement | null;
+    if (!canvas) return;
     copyCanvasContentsToClipboard(
       canvas,
       () => {
@@ -104,8 +90,9 @@ function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
 
   function saveBtn() {
     const canvas = document.getElementById(
-      `code-${code.text}-${code.bcid}-${i}`,
-    ) as HTMLCanvasElement;
+      canvasId,
+    ) as HTMLCanvasElement | null;
+    if (!canvas) return;
     canvas.toBlob(function (blob) {
       if (blob) {
         saveAs(blob, `${code.text}.${settings.format}`);
@@ -116,10 +103,7 @@ function RecentHistoryItem({ code, i }: { code: HistoryItem; i: number }) {
   return (
     <div className="hover:bg-accent flex items-center justify-between rounded-lg border p-4 transition-colors">
       <div className="flex items-center space-x-4">
-        <canvas
-          id={`code-${code.text}-${code.bcid}-${i}`}
-          className="h-12 w-12"
-        ></canvas>
+        <canvas id={canvasId} className="h-12 w-12"></canvas>
         <div>
           <div className="flex items-center space-x-2">
             <h3 className="font-medium">{getTitle()}</h3>
@@ -160,6 +144,7 @@ export default function Home() {
   function generateCode() {
     if (!inputText) return;
     const code = {
+      id: createHistoryItemId(),
       bcid: codeType, // Barcode type
       text: inputText, // Text to encode
       scale: 3, // 3x scaling factor
@@ -223,8 +208,11 @@ export default function Home() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {codes.map((code, i) => (
-                  <RecentHistoryItem i={i} key={i} code={code} />
+                {codes.map((code) => (
+                  <RecentHistoryItem
+                    key={getHistoryItemKey(code)}
+                    code={code}
+                  />
                 ))}
                 {codes.length === 0 && (
                   <div className="text-muted-foreground text-center">

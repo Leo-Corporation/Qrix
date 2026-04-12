@@ -9,6 +9,7 @@ export interface History {
 }
 
 export interface HistoryItem {
+  id?: string;
   bcid: string; // Barcode type
   text: string; // Text to encode
   scale: number; // 3x scaling factor

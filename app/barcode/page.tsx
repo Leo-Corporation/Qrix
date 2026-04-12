@@ -1,6 +1,8 @@
 'use client';
 import {
   Calendar3Day20Regular,
+  Checkmark16Regular,
+  ChevronDown16Regular,
   Copy16Regular,
   DismissCircle16Filled,
   Save16Regular,
@@ -9,6 +11,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import bwipjs from 'bwip-js';
+import * as React from 'react';
 import { SetStateAction, useState } from 'react';
 import {
   Select,
@@ -23,7 +26,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import * as React from 'react';
 import saveAs from 'file-saver';
 import { cn } from '@/lib/utils';
 import {
@@ -39,10 +41,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import {
-  Checkmark16Regular,
-  ChevronDown16Regular,
-} from '@fluentui/react-icons';
 import { useTranslations } from 'next-intl';
 import {
   RotateOption,
@@ -53,13 +51,18 @@ import {
 import { barcodeTypes } from '@/lib/barcodeTypes';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useHistory } from '@/hooks/use-history';
+import {
+  copyCanvasContentsToClipboard,
+  createHistoryItemId,
+} from '@/lib/history-utils';
+
 export default function BarcodePage() {
   const t = useTranslations();
   const { settings } = useSettings();
   const { setHistory } = useHistory();
-  if (settings.textsize === undefined) settings.textsize = 8;
-  if (settings.textxalign === undefined) settings.textxalign = 'center';
-  if (settings.textyalign === undefined) settings.textyalign = 'below';
+  settings.textsize ??= 8;
+  settings.textxalign ??= 'center';
+  settings.textyalign ??= 'below';
 
   const [content, setContent] = useState('');
   const [alt, setAlt] = useState('');
@@ -156,6 +159,7 @@ export default function BarcodePage() {
         barCodes: [
           ...prev.barCodes,
           {
+            id: createHistoryItemId(),
             bcid: type, // Barcode type
             text: content, // Text to encode
             scale: 3, // 3x scaling factor
@@ -181,29 +185,6 @@ export default function BarcodePage() {
     }
   }
 
-  function copyCanvasContentsToClipboard(
-    canvas: HTMLCanvasElement,
-    onDone: () => void,
-    onError: (err: Error) => void,
-  ) {
-    canvas.toBlob((blob) => {
-      // check for null blob
-      if (blob) {
-        const data = [new ClipboardItem({ [blob.type]: blob })];
-        navigator.clipboard.write(data).then(
-          () => {
-            onDone();
-          },
-          (err) => {
-            onError(err);
-          },
-        );
-      } else {
-        // handle null blob case
-        onError(new Error('Blob is null'));
-      }
-    });
-  }
   function copyBtn() {
     const canvas: HTMLCanvasElement = document.getElementById(
       'barcode',

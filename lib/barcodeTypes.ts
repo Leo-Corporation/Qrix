@@ -89,8 +89,8 @@ export const barcodeTypes = [
   },
 ];
 export function getLabelFromValue(value: string): string {
-  for (let i = 0; i < barcodeTypes.length; i++) {
-    if (barcodeTypes[i].value === value) return barcodeTypes[i].label;
+  for (const element of barcodeTypes) {
+    if (element.value === value) return element.label;
   }
   return '';
 }

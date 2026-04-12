@@ -30,6 +30,7 @@ import {
 import { useTranslations } from 'next-intl';
 import { ItemType, useHistory } from '@/hooks/use-history';
 import HistoryElement from '@/components/history-card';
+import { getHistoryItemKey } from '@/lib/history-utils';
 
 export default function HistoryPage() {
   const t = useTranslations();
@@ -139,7 +140,7 @@ export default function HistoryPage() {
                   return (
                     <HistoryElement
                       index={i}
-                      key={item.text + i}
+                      key={getHistoryItemKey(item)}
                       item={item}
                       deleteEvent={deleteItem}
                     />
@@ -173,7 +174,7 @@ export default function HistoryPage() {
                   return (
                     <HistoryElement
                       index={i}
-                      key={item.text + i}
+                      key={getHistoryItemKey(item)}
                       item={item}
                       deleteEvent={deleteItem}
                     />

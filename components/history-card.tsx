@@ -37,26 +37,32 @@ import { HistoryItem, ItemType } from '@/hooks/use-history';
 import { useTranslations } from 'next-intl';
 import { useSettings } from '@/hooks/use-settings';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  copyCanvasContentsToClipboard,
+  getHistoryCanvasId,
+  isQrCode,
+} from '@/lib/history-utils';
 
-export default function HistoryElement(props: {
-  item: HistoryItem;
-  index: number;
-  deleteEvent: (i: number, type: ItemType) => void;
-  home?: boolean;
-}) {
+export default function HistoryElement(
+  props: Readonly<{
+    item: HistoryItem;
+    index: number;
+    deleteEvent: (i: number, type: ItemType) => void;
+    home?: boolean;
+  }>,
+) {
   const t = useTranslations();
   const { settings } = useSettings();
   const isMobile = useIsMobile();
   const [url, setURL] = useState('');
+  const canvasId = getHistoryCanvasId(props.item);
+  const metadataEntries = Object.entries(props.item.metadata ?? {});
 
   useEffect(() => {
     function genBarcode() {
       try {
         // The return value is the canvas element
-        const canvas = bwipjs.toCanvas(
-          `code-${props.item.text}-${props.index}`,
-          props.item,
-        );
+        const canvas = bwipjs.toCanvas(canvasId, props.item);
         setURL(canvas.toDataURL());
       } catch (e) {
         // `e` may be a string or Error object
@@ -64,34 +70,13 @@ export default function HistoryElement(props: {
       }
     }
     genBarcode();
-  }, [props.item, props.index]);
-  function copyCanvasContentsToClipboard(
-    canvas: HTMLCanvasElement,
-    onDone: () => void,
-    onError: (err: Error) => void,
-  ) {
-    canvas.toBlob((blob) => {
-      // check for null blob
-      if (blob) {
-        const data = [new ClipboardItem({ [blob.type]: blob })];
-        navigator.clipboard.write(data).then(
-          () => {
-            onDone();
-          },
-          (err) => {
-            onError(err);
-          },
-        );
-      } else {
-        // handle null blob case
-        onError(new Error('Blob is null'));
-      }
-    });
-  }
+  }, [canvasId, props.item]);
+
   function copyBtn() {
-    const canvas: HTMLCanvasElement = document.getElementById(
-      `code-${props.item.text}-${props.index}`,
-    ) as HTMLCanvasElement;
+    const canvas = document.getElementById(
+      canvasId,
+    ) as HTMLCanvasElement | null;
+    if (!canvas) return;
     copyCanvasContentsToClipboard(
       canvas,
       () => {
@@ -104,24 +89,14 @@ export default function HistoryElement(props: {
   }
   function saveBtn() {
     const canvas = document.getElementById(
-      `code-${props.item.text}-${props.index}`,
-    ) as HTMLCanvasElement;
+      canvasId,
+    ) as HTMLCanvasElement | null;
+    if (!canvas) return;
     canvas.toBlob(function (blob) {
       if (blob) {
         saveAs(blob, `${props.item.text}.${settings.format}`);
       }
     });
-  }
-
-  function isQrCode(bcid: string): boolean {
-    switch (bcid) {
-      case 'qrcode':
-        return true;
-      case 'swissqrcode':
-        return true;
-      default:
-        return false;
-    }
   }
 
   function deleteBtn() {
@@ -131,14 +106,33 @@ export default function HistoryElement(props: {
     );
   }
 
-  const keys = props.item.metadata ? Object.keys(props.item.metadata) : [];
-  const vals = props.item.metadata ? Object.values(props.item.metadata) : [];
+  function renderMetadata() {
+    return metadataEntries.map(([key, value]) => (
+      <div key={key} className="my-2">
+        <h3 className="font-bold">
+          {t(key === 'title' ? 'event-title' : key)}
+        </h3>
+        {typeof value === 'object' && value !== null ? (
+          <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
+            {Object.entries(value as Record<string, unknown>).map(
+              ([nestedKey, nestedValue]) => (
+                <div key={`${key}-${nestedKey}`}>
+                  <h3 className="font-bold">{t(nestedKey)}</h3>
+                  <p>{String(nestedValue)}</p>
+                </div>
+              ),
+            )}
+          </div>
+        ) : (
+          <p>{String(value)}</p>
+        )}
+      </div>
+    ));
+  }
+
   return (
     <TableRow>
-      <canvas
-        className="hidden"
-        id={`code-${props.item.text}-${props.index}`}
-      ></canvas>
+      <canvas className="hidden" id={canvasId}></canvas>
       <TableCell
         className={`${isQrCode(props.item.bcid) ? 'h-[150px]' : 'h-[65px]'}`}
       >
@@ -176,25 +170,7 @@ export default function HistoryElement(props: {
                       />
                     </div>
                     <ScrollArea className="max-h-[250px] overflow-y-scroll p-4">
-                      {keys.map((key, i) => (
-                        <span key={i} className="my-2">
-                          <h3 className="font-bold" key={i}>
-                            {t(key === 'title' ? 'event-title' : key)}
-                          </h3>
-                          {typeof vals[i] === 'object' ? (
-                            <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
-                              {Object.keys(vals[i]).map((k, j) => (
-                                <span key={j}>
-                                  <h3 className="font-bold">{t(k)}</h3>
-                                  <p>{Object.values(vals[i])[j] as string}</p>
-                                </span>
-                              ))}
-                            </div>
-                          ) : (
-                            <p>{vals[i]}</p>
-                          )}
-                        </span>
-                      ))}
+                      {renderMetadata()}
                     </ScrollArea>
                     <DrawerFooter>
                       <div className="flex justify-center space-x-2">
@@ -257,27 +233,7 @@ export default function HistoryElement(props: {
                           />
                         </div>
                         <ScrollArea className="max-h-[250px]">
-                          {keys.map((key, i) => (
-                            <span key={i} className="my-2">
-                              <h3 className="font-bold" key={i}>
-                                {t(key === 'title' ? 'event-title' : key)}
-                              </h3>
-                              {typeof vals[i] === 'object' ? (
-                                <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
-                                  {Object.keys(vals[i]).map((k, j) => (
-                                    <span key={j}>
-                                      <h3 className="font-bold">{t(k)}</h3>
-                                      <p>
-                                        {Object.values(vals[i])[j] as string}
-                                      </p>
-                                    </span>
-                                  ))}
-                                </div>
-                              ) : (
-                                <p>{vals[i]}</p>
-                              )}
-                            </span>
-                          ))}
+                          {renderMetadata()}
                         </ScrollArea>
                       </div>
                     ) : (

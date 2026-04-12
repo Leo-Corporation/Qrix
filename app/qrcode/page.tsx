@@ -56,15 +56,19 @@ import {
 import { useTranslations } from 'next-intl';
 import { ContactInfo, CalendarEvent } from '@/lib/calendar';
 import { useHistory } from '@/hooks/use-history';
+import {
+  copyCanvasContentsToClipboard,
+  createHistoryItemId,
+} from '@/lib/history-utils';
 
 export default function BarcodePage() {
   const t = useTranslations();
   const { settings } = useSettings();
   const { setHistory } = useHistory();
-  if (settings.qrType === undefined) settings.qrType = 'qrcode';
-  if (settings.qrTextsize === undefined) settings.qrTextsize = 8;
-  if (settings.qrTextxalign === undefined) settings.qrTextxalign = 'center';
-  if (settings.qrTextyalign === undefined) settings.qrTextyalign = 'below';
+  settings.qrType ??= 'qrcode';
+  settings.qrTextsize ??= 8;
+  settings.qrTextxalign ??= 'center';
+  settings.qrTextyalign ??= 'below';
   const [content, setContent] = useState('');
 
   const [fg, setFg] = useState(settings.qrFg);
@@ -82,7 +86,7 @@ export default function BarcodePage() {
   const [fontSize, setFontSize] = useState(settings.qrTextsize);
   const [alt, setAlt] = useState('');
   const [open, setOpen] = useState(false);
-  const [type, setType] = useState(settings.qrType || 'qrcode');
+  const [type, setType] = useState(settings.qrType ?? 'qrcode');
   const [showText, setShowText] = useState(settings.qrShowText);
   const [tab, setTab] = useState('text');
 
@@ -188,6 +192,7 @@ export default function BarcodePage() {
           qrCodes: [
             ...prev.qrCodes,
             {
+              id: createHistoryItemId(),
               bcid: type, // Barcode type
               text: textContent, // Text to encode
               scale: 3, // 3x scaling factor
@@ -253,29 +258,6 @@ export default function BarcodePage() {
     }
   }
 
-  function copyCanvasContentsToClipboard(
-    canvas: HTMLCanvasElement,
-    onDone: () => void,
-    onError: (err: Error) => void,
-  ) {
-    canvas.toBlob((blob) => {
-      // check for null blob
-      if (blob) {
-        const data = [new ClipboardItem({ [blob.type]: blob })];
-        navigator.clipboard.write(data).then(
-          () => {
-            onDone();
-          },
-          (err) => {
-            onError(err);
-          },
-        );
-      } else {
-        // handle null blob case
-        onError(new Error('Blob is null'));
-      }
-    });
-  }
   function copyBtn() {
     const canvas: HTMLCanvasElement = document.getElementById(
       'qrcode',
