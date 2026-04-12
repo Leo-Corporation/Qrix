@@ -105,8 +105,12 @@ export default function SettingsPage() {
   const [xalign, setXAlign] = useState<TextXAlign>(resolvedSettings.textxalign);
   const [yalign, setYAlign] = useState<TextYAlign>(resolvedSettings.textyalign);
   const [fontSize, setFontSize] = useState(resolvedSettings.textsize);
-  const [qrXAlign, setQrXAlign] = useState<TextXAlign>(resolvedSettings.qrTextxalign);
-  const [qrYAlign, setQrYAlign] = useState<TextYAlign>(resolvedSettings.qrTextyalign);
+  const [qrXAlign, setQrXAlign] = useState<TextXAlign>(
+    resolvedSettings.qrTextxalign,
+  );
+  const [qrYAlign, setQrYAlign] = useState<TextYAlign>(
+    resolvedSettings.qrTextyalign,
+  );
   const [qrFontSize, setQrFontSize] = useState(resolvedSettings.qrTextsize);
   const [qrShowText, setQrShowText] = useState(resolvedSettings.qrShowText);
   const [open, setOpen] = useState(false);

@@ -40,9 +40,7 @@ import {
   getHistoryItemKey,
 } from '@/lib/history-utils';
 
-function RecentHistoryItem({
-  code,
-}: Readonly<{ code: HistoryItem }>) {
+function RecentHistoryItem({ code }: Readonly<{ code: HistoryItem }>) {
   const t = useTranslations();
   const { settings } = useSettings();
   const isMobile = useIsMobile();
@@ -62,7 +60,9 @@ function RecentHistoryItem({
   }, [canvasId, code]);
 
   function copyBtn() {
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
+    const canvas = document.getElementById(
+      canvasId,
+    ) as HTMLCanvasElement | null;
     if (!canvas) return;
     copyCanvasContentsToClipboard(
       canvas,
@@ -103,10 +103,7 @@ function RecentHistoryItem({
   return (
     <div className="hover:bg-accent flex items-center justify-between rounded-lg border p-4 transition-colors">
       <div className="flex items-center space-x-4">
-        <canvas
-          id={canvasId}
-          className="h-12 w-12"
-        ></canvas>
+        <canvas id={canvasId} className="h-12 w-12"></canvas>
         <div>
           <div className="flex items-center space-x-2">
             <h3 className="font-medium">{getTitle()}</h3>
@@ -212,7 +209,10 @@ export default function Home() {
             <CardContent>
               <div className="space-y-4">
                 {codes.map((code) => (
-                  <RecentHistoryItem key={getHistoryItemKey(code)} code={code} />
+                  <RecentHistoryItem
+                    key={getHistoryItemKey(code)}
+                    code={code}
+                  />
                 ))}
                 {codes.length === 0 && (
                   <div className="text-muted-foreground text-center">

@@ -73,7 +73,9 @@ export default function HistoryElement(
   }, [canvasId, props.item]);
 
   function copyBtn() {
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
+    const canvas = document.getElementById(
+      canvasId,
+    ) as HTMLCanvasElement | null;
     if (!canvas) return;
     copyCanvasContentsToClipboard(
       canvas,
@@ -86,7 +88,9 @@ export default function HistoryElement(
     );
   }
   function saveBtn() {
-    const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
+    const canvas = document.getElementById(
+      canvasId,
+    ) as HTMLCanvasElement | null;
     if (!canvas) return;
     canvas.toBlob(function (blob) {
       if (blob) {
@@ -105,7 +109,9 @@ export default function HistoryElement(
   function renderMetadata() {
     return metadataEntries.map(([key, value]) => (
       <div key={key} className="my-2">
-        <h3 className="font-bold">{t(key === 'title' ? 'event-title' : key)}</h3>
+        <h3 className="font-bold">
+          {t(key === 'title' ? 'event-title' : key)}
+        </h3>
         {typeof value === 'object' && value !== null ? (
           <div className="rounded-md border border-slate-200 p-2 text-sm dark:border-slate-800">
             {Object.entries(value as Record<string, unknown>).map(

@@ -159,7 +159,7 @@ export default function BarcodePage() {
         barCodes: [
           ...prev.barCodes,
           {
-              id: createHistoryItemId(),
+            id: createHistoryItemId(),
             bcid: type, // Barcode type
             text: content, // Text to encode
             scale: 3, // 3x scaling factor

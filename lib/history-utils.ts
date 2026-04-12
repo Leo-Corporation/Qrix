@@ -3,7 +3,10 @@ import { HistoryItem } from '@/hooks/use-history';
 const legacyKeyMap = new WeakMap<object, string>();
 
 export function createHistoryItemId(): string {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+  if (
+    typeof crypto !== 'undefined' &&
+    typeof crypto.randomUUID === 'function'
+  ) {
     return crypto.randomUUID();
   }
 
@@ -49,4 +52,3 @@ export function copyCanvasContentsToClipboard(
     onError(new Error('Blob is null'));
   });
 }
-

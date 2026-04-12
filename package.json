@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "prettier": "prettier --write ."
+    "prettier": "prettier -c .",
+    "prettier:fix": "prettier -w ."
   },
   "dependencies": {
     "@fluentui/react-icons": "^2.0.323",
