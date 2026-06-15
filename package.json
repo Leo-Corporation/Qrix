@@ -11,7 +11,7 @@
     "prettier:fix": "prettier -w ."
   },
   "dependencies": {
-    "@fluentui/react-icons": "^2.0.326",
+    "@fluentui/react-icons": "^2.0.330",
     "@types/bwip-js": "^3.2.3",
     "bwip-js": "^4.10.1",
     "class-variance-authority": "^0.7.1",
