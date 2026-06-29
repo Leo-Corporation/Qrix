@@ -13,7 +13,7 @@
   "dependencies": {
     "@fluentui/react-icons": "^2.0.331",
     "@types/bwip-js": "^3.2.3",
-    "bwip-js": "^4.10.1",
+    "bwip-js": "^4.11.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
